@@ -58,8 +58,8 @@ body {
 nav {
   background: white;
   border-bottom: 1px solid var(--border);
-  padding: 0 40px;
-  height: 60px;
+  padding: 0 64px;
+  height: 72px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -105,7 +105,7 @@ nav {
 
 /* Hero */
 .hero {
-  padding: 80px 40px 60px;
+  padding: 80px 64px 60px;
   text-align: center;
   background: white;
 }
@@ -342,7 +342,7 @@ nav {
 
 /* Social Proof */
 .social-proof {
-  padding: 48px 40px;
+  padding: 48px 64px;
   background: var(--bg);
   text-align: center;
   border-top: 1px solid var(--border);
@@ -380,7 +380,7 @@ nav {
 
 /* How It Works */
 .how {
-  padding: 70px 40px;
+  padding: 70px 64px;
   background: white;
 }
 
@@ -430,7 +430,7 @@ nav {
 
 /* Waiver Types */
 .types-section {
-  padding: 60px 40px;
+  padding: 60px 64px;
   background: var(--bg);
 }
 
@@ -491,7 +491,7 @@ nav {
 /* Footer */
 footer {
   background: var(--dark);
-  padding: 36px 40px;
+  padding: 36px 64px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -600,7 +600,7 @@ footer {
 
 /* Responsive */
 @media (max-width: 768px) {
-  nav { padding: 0 20px; }
+  nav { padding: 0 24px; }
   .nav-links { gap: 16px; }
   .hero { padding: 48px 20px 40px; }
   .hero h1 { font-size: 36px; letter-spacing: -1px; }
