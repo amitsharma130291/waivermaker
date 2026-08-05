@@ -2,6 +2,7 @@
  * waiver-definitions.ts
  * Single source of truth for waiver sections used by both PDF generation and browser preview.
  * No state-specific legal assertions — all language is general-purpose.
+ * Framework: 10/10 master waiver structure (Aug 2026 revision).
  */
 
 export type WaiverData = {
@@ -16,6 +17,7 @@ export type WaiverData = {
   emergencyContact?: boolean;
   photoConsent?: boolean;
   climbingTypes?: string[];
+  minorMode?: boolean;
 };
 
 export type WaiverSection = {
@@ -23,32 +25,99 @@ export type WaiverSection = {
   title: string;
   body: (data: WaiverData) => string;
   tooltip?: string;
+  /** When true, the PDF renderer treats body as fill-in lines, not prose. */
+  isForm?: boolean;
 };
 
 // ---------------------------------------------------------------------------
-// Core sections (present in all waiver types)
+// Helpers
 // ---------------------------------------------------------------------------
 
-function coreSection_AssumptionOfRisk(data: WaiverData): WaiverSection {
+function normalizeRisks(raw: string | undefined, fallback: string): string {
+  if (!raw || !raw.trim()) return fallback;
+  let s = raw.trim();
+  // lowercase first character if it's a capital that follows "including "
+  s = s.charAt(0).toLowerCase() + s.slice(1);
+  // strip trailing period so we can append one consistently
+  s = s.replace(/\.$/, '');
+  return s;
+}
+
+// ---------------------------------------------------------------------------
+// Shared / Core sections
+// ---------------------------------------------------------------------------
+
+function coreSection_ParticipantInfo(): WaiverSection {
   return {
-    id: 'assumption-of-risk',
-    title: 'ASSUMPTION OF RISK & RELEASE OF LIABILITY',
+    id: 'participant-info',
+    title: 'PARTICIPANT INFORMATION',
+    isForm: true,
+    body: (_d) =>
+      'Full Legal Name: _____________________________________________\n\n' +
+      'Date of Birth: _______________________________________________\n\n' +
+      'Address: ____________________________________________________\n\n' +
+      'City: ________________________  State: _______  ZIP: __________\n\n' +
+      'Phone: ______________________________________________________\n\n' +
+      'Email: ______________________________________________________',
+  };
+}
+
+function coreSection_EmergencyContact(): WaiverSection {
+  return {
+    id: 'emergency-contact',
+    title: 'EMERGENCY CONTACT',
+    isForm: true,
+    body: (_d) =>
+      'Emergency Contact Name: ______________________________________\n\n' +
+      'Relationship: ________________________________________________\n\n' +
+      'Emergency Phone: ____________________________________________',
+  };
+}
+
+function coreSection_ActivityDescription(data: WaiverData): WaiverSection {
+  return {
+    id: 'activity-description',
+    title: 'ACTIVITY / PARTICIPATION DESCRIPTION',
     body: (d) => {
-      const bn = d.businessName || '[Business Name]';
       const at = d.activityType || 'the selected activity';
-      const risks = d.specificRisks
-        ? d.specificRisks
-        : 'risks of injury, illness, property damage, and other foreseeable or unforeseeable hazards';
-      return `I understand that ${at} activities offered by ${bn} involve inherent and other risks, including ${risks}. I voluntarily choose to participate and release ${bn} and its owners, staff, agents, and contractors from claims arising from those inherent risks, to the extent permitted by applicable law.`;
+      const desc = d.activityDescription
+        ? `The specific activities include: ${d.activityDescription}.`
+        : '';
+      return `I am participating in ${at} activities offered by ${d.businessName || '[Business Name]'}. ${desc}`.trim();
     },
   };
 }
 
-function coreSection_Indemnification(data: WaiverData): WaiverSection {
+function coreSection_AssumptionOfRisk(): WaiverSection {
+  return {
+    id: 'assumption-of-risk',
+    title: 'ASSUMPTION OF RISK',
+    tooltip: 'I voluntarily accept the inherent risks of participating in this activity.',
+    body: (d) => {
+      const bn = d.businessName || '[Business Name]';
+      const at = d.activityType || 'the selected activity';
+      return `I understand that the risks described in this document cannot be completely eliminated. I voluntarily choose to participate in ${at} activities offered by ${bn} with knowledge of those risks and accept the risks inherent in the activities described, to the extent permitted by applicable law.`;
+    },
+  };
+}
+
+function coreSection_ReleaseOfLiability(): WaiverSection {
+  return {
+    id: 'release-of-liability',
+    title: 'RELEASE OF LIABILITY',
+    tooltip: 'A release of claims arising from the inherent risks of the activity, to the extent permitted by law.',
+    body: (d) => {
+      const bn = d.businessName || '[Business Name]';
+      return `In consideration of being permitted to participate, I, for myself and on behalf of my heirs, assigns, and personal representatives, hereby release and discharge ${bn} and its owners, officers, employees, agents, and contractors from any and all claims, demands, and causes of action arising from my participation in these activities, to the extent permitted by applicable law. This release does not apply to claims arising from gross negligence or intentional misconduct.`;
+    },
+  };
+}
+
+function coreSection_Indemnification(): WaiverSection {
   return {
     id: 'indemnification',
     title: 'INDEMNIFICATION',
-    tooltip: 'The participant agrees to compensate the business for any losses caused by their own actions.',
+    tooltip: 'The participant agrees to compensate the business for losses caused by their own actions or omissions.',
     body: (d) => {
       const bn = d.businessName || '[Business Name]';
       return `I agree to indemnify and hold harmless ${bn} and its representatives from losses, liability, damage, or costs resulting from my own acts or omissions while participating in these activities.`;
@@ -56,49 +125,154 @@ function coreSection_Indemnification(data: WaiverData): WaiverSection {
   };
 }
 
-function coreSection_EmergencyMedical(data: WaiverData): WaiverSection {
+function coreSection_EmergencyMedical(): WaiverSection {
   return {
     id: 'emergency-medical',
     title: 'EMERGENCY MEDICAL AUTHORIZATION',
     body: (d) => {
       const bn = d.businessName || '[Business Name]';
-      return `If I am incapacitated in an emergency, I authorise ${bn} to seek emergency medical treatment for me. I understand that I remain responsible for related medical costs.`;
+      return `If I am incapacitated in an emergency, I authorise ${bn} to seek emergency medical treatment on my behalf. I understand that I remain responsible for related medical costs.`;
     },
   };
 }
 
-function coreSection_GoverningLaw(data: WaiverData): WaiverSection {
+function coreSection_GoverningLaw(): WaiverSection {
   return {
     id: 'governing-law',
     title: 'GOVERNING LAW',
-    tooltip: 'Identifies which state\'s law applies to this document. Selecting a state does not guarantee the waiver satisfies all requirements of that state\'s law.',
+    tooltip: "Identifies which state's law applies to this document. Selecting a state does not guarantee the waiver satisfies all requirements of that state's law.",
     body: (d) => {
       const st = d.state || '[State]';
-      return `This document is governed by the laws of the State of ${st}. Selecting a state identifies the governing-law section only; it does not establish that this document satisfies every legal requirement in that state.`;
+      return `This document is governed by the laws of the State of ${st}. Selecting a state sets this governing-law section only; it does not establish that this document satisfies every legal requirement applicable in that jurisdiction.`;
     },
   };
 }
 
-function coreSection_Signature(data: WaiverData): WaiverSection {
+function coreSection_Severability(): WaiverSection {
   return {
-    id: 'signature',
-    title: 'SIGNATURE',
+    id: 'severability',
+    title: 'SEVERABILITY',
     body: (_d) =>
-      'Participant Signature: __________________________________   Date: __________________\nPrinted Name: __________________________________\n\nParent / Guardian Signature (if applicable): ______________________________   Date: __________________',
+      'If any provision of this document is found to be unenforceable, the remaining provisions shall continue in full force and effect. This document constitutes the entire agreement between the parties with respect to the subject matter herein.',
   };
 }
 
-function coreSection_EmergencyContact(data: WaiverData): WaiverSection {
+function coreSection_ParticipantAcknowledgement(): WaiverSection {
   return {
-    id: 'emergency-contact',
-    title: 'EMERGENCY CONTACT',
+    id: 'participant-acknowledgement',
+    title: 'PARTICIPANT ACKNOWLEDGEMENT',
     body: (_d) =>
-      'Name: __________________________________  Relationship: __________________\nPhone: __________________________________',
+      'By signing below, I acknowledge that I have read this document in its entirety, understand its terms, understand that it contains a release of claims, had an opportunity to ask questions before signing, and voluntarily agree to its terms.',
+  };
+}
+
+function coreSection_Signature(includeMinor: boolean): WaiverSection {
+  const minorBlock = includeMinor
+    ? '\n\n\nIF PARTICIPANT IS A MINOR\n\n' +
+      'Minor Participant Name: _______________________________________\n\n' +
+      'Minor Date of Birth: _________________________________________\n\n' +
+      'Parent / Guardian Name: ______________________________________\n\n' +
+      'Relationship to Minor: _______________________________________\n\n' +
+      'Parent / Guardian Signature: _________________________________\n\n' +
+      'Date: _______________________________________________________'
+    : '';
+
+  return {
+    id: 'signature',
+    title: 'SIGNATURE',
+    isForm: true,
+    body: (_d) =>
+      'Participant Signature: _______________________________________\n\n' +
+      'Printed Name: _______________________________________________\n\n' +
+      'Date: _______________________________________________________' +
+      minorBlock,
+  };
+}
+
+function coreSection_PhotoConsent(): WaiverSection {
+  return {
+    id: 'photo-consent',
+    title: 'PHOTO / MEDIA CONSENT (OPTIONAL)',
+    isForm: true,
+    body: (d) => {
+      const bn = d.businessName || '[Business Name]';
+      return (
+        `☐ YES — I permit ${bn} to use photographs or video of my participation for promotional, educational, or organisational purposes.\n\n` +
+        `☐ NO — I do not grant photo or media consent.\n\n` +
+        `Initials: ___________`
+      );
+    },
   };
 }
 
 // ---------------------------------------------------------------------------
-// Tattoo sections
+// Gym / Fitness
+// ---------------------------------------------------------------------------
+
+function gymFitnessSections(data: WaiverData): WaiverSection[] {
+  const extraRisks = normalizeRisks(
+    data.specificRisks,
+    'dropped weights, equipment malfunction or misuse, collision with other participants, cardiovascular stress, dizziness or loss of balance, dehydration, and aggravation of pre-existing injuries or conditions'
+  );
+
+  return [
+    {
+      id: 'gym-risk-acknowledgement',
+      title: 'GYM & FITNESS RISK ACKNOWLEDGEMENT',
+      body: (_d) =>
+        `I understand that gym and fitness activities involve inherent and other risks, including: strenuous physical exertion; muscle strains and sprains; joint injuries; falls; ${extraRisks}; risks associated with free weights, resistance machines, and cardiovascular equipment; and risks in group fitness settings. These risks exist even when reasonable safety measures are in place.`,
+    },
+    {
+      id: 'health-fitness-acknowledgement',
+      title: 'HEALTH & FITNESS ACKNOWLEDGEMENT',
+      body: (_d) =>
+        'I understand that physical exercise may place stress on the cardiovascular and musculoskeletal systems. I am responsible for deciding whether participation is appropriate for me and for seeking medical advice when I have questions about my ability to participate. I agree to stop participating and seek appropriate assistance if I experience unusual pain, dizziness, shortness of breath, faintness, or other concerning symptoms.',
+    },
+    {
+      id: 'gym-participant-responsibilities',
+      title: 'PARTICIPANT RESPONSIBILITIES',
+      body: (d) => {
+        const bn = d.businessName || '[Business Name]';
+        return `I agree to: follow posted rules and reasonable instructions from ${bn} staff; use equipment only for its intended purpose and within my experience and capabilities; request assistance when unsure how equipment works; stop using equipment that appears unsafe or damaged; and promptly report hazardous conditions to staff.`;
+      },
+    },
+  ];
+}
+
+// ---------------------------------------------------------------------------
+// Yoga Studio
+// ---------------------------------------------------------------------------
+
+function yogaSections(data: WaiverData): WaiverSection[] {
+  const extraRisks = normalizeRisks(
+    data.specificRisks,
+    'falls during balancing or inversion poses, muscle or joint strain from overstretching, heat-related effects in heated classes, dehydration, and use of props'
+  );
+
+  return [
+    {
+      id: 'yoga-risk-acknowledgement',
+      title: 'YOGA ACTIVITY RISK ACKNOWLEDGEMENT',
+      body: (_d) =>
+        `I understand that yoga activities involve inherent and other risks, including: physical exertion; overstretching; inversions; ${extraRisks}. These risks exist even with qualified instruction and reasonable safety measures in place.`,
+    },
+    {
+      id: 'yoga-health-acknowledgement',
+      title: 'HEALTH ACKNOWLEDGEMENT',
+      body: (_d) =>
+        'I am responsible for assessing whether yoga participation is appropriate for my current physical condition. I will inform the instructor of any injuries, medical conditions, or limitations before class, and I will modify or discontinue poses if I experience pain, dizziness, or other concerning symptoms.',
+    },
+    {
+      id: 'yoga-participant-responsibilities',
+      title: 'PARTICIPANT RESPONSIBILITIES',
+      body: (_d) =>
+        'I agree to follow instructor guidance, use props and studio equipment as directed, and practice within my current abilities. I will report unsafe conditions and stop participating if I experience concerning symptoms.',
+    },
+  ];
+}
+
+// ---------------------------------------------------------------------------
+// Tattoo Studio
 // ---------------------------------------------------------------------------
 
 function tattooSections(data: WaiverData): WaiverSection[] {
@@ -108,78 +282,66 @@ function tattooSections(data: WaiverData): WaiverSection[] {
       title: 'TATTOO PROCEDURE CONSENT',
       body: (d) => {
         const desc = d.activityDescription || 'the selected tattoo service';
-        return `I consent to the tattoo procedure described as ${desc} and confirm that I have had an opportunity to ask questions before the procedure.`;
+        return `I consent to the tattoo procedure described as: ${desc}. I confirm that I have had an opportunity to ask questions and that I am proceeding voluntarily.`;
       },
+    },
+    {
+      id: 'tattoo-risk-acknowledgement',
+      title: 'TATTOO RISK ACKNOWLEDGEMENT',
+      body: (_d) =>
+        'I understand that tattooing involves skin penetration and carries risks including: skin irritation; allergic reaction to ink or other materials; infection; scarring; keloid formation; colour variation or fading; unexpected healing outcomes; and, in rare cases, bloodborne pathogen exposure despite standard precautions.',
     },
     {
       id: 'health-disclosure',
       title: 'HEALTH DISCLOSURE',
       body: (_d) =>
-        'I have disclosed relevant allergies, skin conditions, blood disorders, medications, and other health information that could affect the procedure or healing process.',
-    },
-    {
-      id: 'ink-allergy',
-      title: 'INK ALLERGY & SKIN REACTION ACKNOWLEDGEMENT',
-      body: (_d) =>
-        'I understand that skin irritation, allergic reaction, infection, scarring, colour variation, and other reactions can occur despite reasonable care.',
+        'I have disclosed all relevant allergies, skin conditions, blood disorders, medications, and other health information that could affect the procedure or my healing process. I understand that providing accurate health information is my responsibility.',
     },
     {
       id: 'bloodborne-pathogen',
-      title: 'BLOODBORNE PATHOGEN & STERILISATION ACKNOWLEDGEMENT',
+      title: 'STERILISATION & BLOODBORNE PATHOGEN ACKNOWLEDGEMENT',
       body: (_d) =>
-        "I acknowledge the studio's stated sterilisation and single-use practices and understand that tattooing involves skin penetration and related risks.",
+        "I acknowledge the studio's stated sterilisation protocols and single-use equipment practices. I understand that despite standard precautions, a residual risk of infection or bloodborne pathogen exposure cannot be completely eliminated.",
     },
     {
       id: 'aftercare-responsibility',
       title: 'AFTERCARE RESPONSIBILITY',
       body: (_d) =>
-        'I accept responsibility for following aftercare instructions and for seeking appropriate medical advice if I have concerns about healing.',
+        'I accept full responsibility for following the aftercare instructions provided and for seeking appropriate medical advice promptly if I have any concerns about healing, infection, or adverse reactions.',
     },
     {
       id: 'result-appearance',
-      title: 'RESULT / APPEARANCE ACKNOWLEDGEMENT',
+      title: 'RESULT & APPEARANCE ACKNOWLEDGEMENT',
       body: (_d) =>
-        'I understand that healed results, colour retention, and appearance can vary with skin type, placement, aftercare, and individual healing.',
+        'I understand that healed results, colour retention, and final appearance can vary significantly with skin type, placement, aftercare adherence, and individual healing responses. The studio does not guarantee a specific outcome.',
+    },
+    {
+      id: 'tattoo-participant-responsibilities',
+      title: 'PARTICIPANT RESPONSIBILITIES',
+      body: (_d) =>
+        'I confirm that I am 18 years of age or older (or have presented valid parental consent), that I am not under the influence of alcohol or drugs, and that I have eaten recently. I agree to follow all studio safety rules.',
     },
   ];
-
-  if (data.photoConsent) {
-    sections.push({
-      id: 'photo-consent',
-      title: 'PHOTO / PORTFOLIO CONSENT',
-      body: (d) => {
-        const bn = d.businessName || '[Business Name]';
-        return `I consent to ${bn} using photographs of the work for portfolio and promotional purposes.`;
-      },
-    });
-  }
 
   return sections;
 }
 
 // ---------------------------------------------------------------------------
-// Rock Climbing sections
+// Rock Climbing
 // ---------------------------------------------------------------------------
 
 function rockClimbingSections(data: WaiverData): WaiverSection[] {
+  const extraRisks = normalizeRisks(
+    data.specificRisks,
+    'falling objects, equipment failure, landing surface hazards, and the actions or errors of other climbers'
+  );
+
   return [
     {
-      id: 'climbing-risks',
-      title: 'CLIMBING RISKS ACKNOWLEDGEMENT',
+      id: 'climbing-risk-acknowledgement',
+      title: 'CLIMBING RISK ACKNOWLEDGEMENT',
       body: (_d) =>
-        'I understand climbing risks include falls, wall or rock failure, falling objects, equipment failure, landing hazards, and the actions of other participants.',
-    },
-    {
-      id: 'equipment-inspection',
-      title: 'EQUIPMENT INSPECTION RESPONSIBILITY',
-      body: (_d) =>
-        'I am responsible for inspecting equipment I use and for reporting any concern to staff before participating.',
-    },
-    {
-      id: 'belayer-competency',
-      title: 'BELAYER COMPETENCY',
-      body: (_d) =>
-        "For top-rope or lead climbing, I confirm that I will belay only when competent and will follow the facility's safety requirements.",
+        `I understand that climbing activities involve inherent and other risks, including: falls; wall or rock failure; ${extraRisks}; and risks during belaying. These risks exist even when reasonable safety measures and supervision are in place.`,
     },
     {
       id: 'climbing-type',
@@ -187,177 +349,193 @@ function rockClimbingSections(data: WaiverData): WaiverSection[] {
       body: (d) => {
         const types =
           d.climbingTypes && d.climbingTypes.length
-            ? d.climbingTypes.join(' / ')
-            : 'Bouldering / Top-rope / Lead / Outdoor';
-        return `I acknowledge the climbing types that may be involved: ${types}.`;
+            ? d.climbingTypes.join(', ')
+            : 'bouldering, top-rope, lead climbing, and/or outdoor climbing';
+        return `I acknowledge that my participation may involve: ${types}. I understand the risks specific to each format I choose to undertake.`;
       },
+    },
+    {
+      id: 'equipment-inspection',
+      title: 'EQUIPMENT INSPECTION RESPONSIBILITY',
+      body: (_d) =>
+        'I am responsible for inspecting all equipment I use before each session and for immediately reporting to staff any equipment that appears worn, damaged, or unsafe.',
+    },
+    {
+      id: 'belayer-competency',
+      title: 'BELAYER COMPETENCY',
+      body: (_d) =>
+        "For top-rope or lead climbing, I confirm that I will belay only when I am competent to do so and will comply with the facility's belay certification and safety requirements.",
     },
     {
       id: 'rescue-evacuation',
       title: 'RESCUE & EVACUATION ACKNOWLEDGEMENT',
       body: (_d) =>
-        'I understand that rescue or evacuation may be delayed or difficult and that emergency response conditions can vary.',
+        'I understand that rescue or evacuation — particularly in outdoor settings — may be delayed or logistically difficult, and that emergency response conditions can vary significantly.',
+    },
+    {
+      id: 'climbing-participant-responsibilities',
+      title: 'PARTICIPANT RESPONSIBILITIES',
+      body: (d) => {
+        const bn = d.businessName || '[Business Name]';
+        return `I agree to follow ${bn}'s posted rules and staff instructions; use equipment only as directed and within my skill level; complete any required safety orientation; and immediately report unsafe conditions.`;
+      },
     },
   ];
 }
 
 // ---------------------------------------------------------------------------
-// Volunteer sections
+// Volunteer
 // ---------------------------------------------------------------------------
 
 function volunteerSections(data: WaiverData): WaiverSection[] {
-  const sections: WaiverSection[] = [
+  return [
     {
       id: 'volunteer-participation',
       title: 'VOLUNTEER PARTICIPATION ACKNOWLEDGEMENT',
       body: (d) => {
         const bn = d.businessName || '[Business Name]';
-        return `I voluntarily participate in activities organised by ${bn}.`;
+        const desc = d.activityDescription
+          ? `My volunteer activities may include: ${d.activityDescription}.`
+          : 'My volunteer activities will include tasks assigned by the organisation.';
+        return `I voluntarily participate in activities organised by ${bn}. ${desc}`;
       },
     },
     {
-      id: 'scope-of-activities',
-      title: 'SCOPE OF VOLUNTEER ACTIVITIES',
-      body: (d) =>
-        d.activityDescription
-          ? `My volunteer activities may include: ${d.activityDescription}.`
-          : 'My volunteer activities may include tasks assigned by the organisation.',
+      id: 'volunteer-risk-acknowledgement',
+      title: 'RISK ACKNOWLEDGEMENT',
+      body: (d) => {
+        const extraRisks = normalizeRisks(
+          d.specificRisks,
+          'physical exertion, travel, environmental conditions, exposure to weather, and the actions of third parties'
+        );
+        return `I understand that volunteer work may involve inherent and other risks, including: ${extraRisks}. These risks vary by activity and setting.`;
+      },
     },
     {
-      id: 'known-risks',
-      title: 'KNOWN & INHERENT RISKS',
+      id: 'volunteer-responsibilities',
+      title: 'VOLUNTEER RESPONSIBILITIES',
       body: (_d) =>
-        'I understand that volunteer work may involve physical, travel, environmental, and other risks depending on the activity.',
-    },
-    {
-      id: 'safety-instructions',
-      title: 'SAFETY INSTRUCTIONS ACKNOWLEDGEMENT',
-      body: (_d) =>
-        'I agree to follow reasonable safety instructions and to report unsafe conditions promptly.',
+        'I agree to follow reasonable safety instructions provided by the organisation, report unsafe conditions promptly, and conduct myself in a manner that does not endanger myself or others.',
     },
     {
       id: 'volunteer-status',
       title: 'VOLUNTEER STATUS ACKNOWLEDGEMENT',
       body: (_d) =>
-        'I understand that I am participating as a volunteer and not as an employee.',
+        'I understand that I am participating as an unpaid volunteer and not as an employee or independent contractor. I do not expect compensation for my services.',
     },
   ];
+}
 
-  if (data.photoConsent) {
-    sections.push({
-      id: 'photo-media-consent',
-      title: 'PHOTO / MEDIA CONSENT',
+// ---------------------------------------------------------------------------
+// Dog Grooming
+// ---------------------------------------------------------------------------
+
+function dogGroomingSections(data: WaiverData): WaiverSection[] {
+  const extraRisks = normalizeRisks(
+    data.specificRisks,
+    'nicks or skin irritation from grooming tools, adverse reactions to grooming products, and stress-related health events in animals with undisclosed or underlying conditions'
+  );
+
+  return [
+    {
+      id: 'dog-grooming-risk-acknowledgement',
+      title: 'GROOMING RISK ACKNOWLEDGEMENT',
+      body: (_d) =>
+        `I understand that grooming may involve risks including: animal stress; bites or scratches from the animal; ${extraRisks}. These risks exist even when experienced, careful staff perform the service.`,
+    },
+    {
+      id: 'pet-health-disclosure',
+      title: 'PET HEALTH DISCLOSURE',
+      body: (_d) =>
+        "I confirm that I have disclosed my pet's relevant health conditions, behavioural history, medications, allergies, and any prior grooming incidents. I understand that providing accurate health information is my responsibility and that withholding information may affect my pet's safety.",
+    },
+    {
+      id: 'animal-care-acknowledgement',
+      title: 'ANIMAL CARE ACKNOWLEDGEMENT',
       body: (d) => {
         const bn = d.businessName || '[Business Name]';
-        return `I consent to ${bn} using photographs or media of my volunteer participation for organisational purposes.`;
+        return `I understand that grooming may be stressful for animals. I authorise ${bn} to pause or discontinue grooming if staff consider it necessary for the animal's safety or welfare, and I agree that I remain responsible for applicable service charges in that event.`;
       },
-    });
-  }
-
-  return sections;
-}
-
-// ---------------------------------------------------------------------------
-// Gym / Fitness sections
-// ---------------------------------------------------------------------------
-
-function gymFitnessSections(_data: WaiverData): WaiverSection[] {
-  return [
-    {
-      id: 'gym-activity-risks',
-      title: 'ACTIVITY-SPECIFIC RISK ACKNOWLEDGEMENT',
-      body: (_d) =>
-        'I understand that gym and fitness activities may involve physical exertion, equipment use, muscle strain, joint injury, overexertion, and slip-and-fall hazards.',
     },
     {
-      id: 'equipment-facility',
-      title: 'EQUIPMENT & FACILITY USE',
+      id: 'dog-grooming-responsibilities',
+      title: 'OWNER RESPONSIBILITIES',
       body: (_d) =>
-        'I will use equipment and facilities within my capabilities, follow reasonable instructions, and report unsafe conditions or equipment concerns.',
+        'I confirm that my pet is current on required vaccinations, is free of contagious conditions at the time of appointment, and is not aggressive in a way I have not disclosed. I agree to be reachable by phone during the grooming appointment.',
     },
   ];
 }
 
 // ---------------------------------------------------------------------------
-// Yoga sections
+// Horse Riding
 // ---------------------------------------------------------------------------
 
-function yogaSections(_data: WaiverData): WaiverSection[] {
+function horseRidingSections(data: WaiverData): WaiverSection[] {
+  const extraRisks = normalizeRisks(
+    data.specificRisks,
+    'terrain and trail hazards, interaction with other riders or animals, and weather-related conditions'
+  );
+
   return [
     {
-      id: 'yoga-activity-risks',
-      title: 'ACTIVITY-SPECIFIC RISK ACKNOWLEDGEMENT',
-      body: (_d) =>
-        'I understand that yoga activities may involve physical exertion, stretching, inversions, heat exposure, dehydration, and use of props.',
-    },
-    {
-      id: 'yoga-equipment',
-      title: 'EQUIPMENT & FACILITY USE',
-      body: (_d) =>
-        'I will use equipment and studio facilities within my capabilities, follow instructor guidance, and report any concerns about my physical condition before class.',
-    },
-  ];
-}
-
-// ---------------------------------------------------------------------------
-// Dog Grooming sections
-// ---------------------------------------------------------------------------
-
-function dogGroomingSections(_data: WaiverData): WaiverSection[] {
-  return [
-    {
-      id: 'dog-grooming-risks',
-      title: 'ACTIVITY-SPECIFIC RISK ACKNOWLEDGEMENT',
-      body: (_d) =>
-        'I understand that grooming may involve animal stress, bites, scratches, pet medical events, and grooming tools. I have disclosed my pet\'s health conditions and medications.',
-    },
-    {
-      id: 'animal-care',
-      title: 'ANIMAL CARE ACKNOWLEDGEMENT',
-      body: (_d) =>
-        'I understand that grooming may be stressful for an animal and that the business may pause or stop service when it considers that necessary for safety or welfare.',
-    },
-  ];
-}
-
-// ---------------------------------------------------------------------------
-// Horse Riding sections
-// ---------------------------------------------------------------------------
-
-function horseRidingSections(_data: WaiverData): WaiverSection[] {
-  return [
-    {
-      id: 'equine-risks',
+      id: 'equine-risk-acknowledgement',
       title: 'EQUINE ACTIVITY RISK ACKNOWLEDGEMENT',
       body: (_d) =>
-        'I understand that horse riding and related activities carry inherent risks including falls, unpredictable horse behaviour, kicks, bites, terrain hazards, and equipment issues, even when reasonable safety measures are in place.',
+        `I understand that horse riding and related equine activities carry inherent and other risks, including: falls; unpredictable horse behaviour; kicks; bites; equipment failure or slippage; ${extraRisks}. These risks exist even when horses are well-trained and reasonable safety measures are used.`,
     },
     {
-      id: 'equine-activity',
-      title: 'EQUINE ACTIVITY ACKNOWLEDGEMENT',
+      id: 'equine-unpredictability',
+      title: 'HORSE UNPREDICTABILITY ACKNOWLEDGEMENT',
       body: (_d) =>
-        'I understand that horses are unpredictable animals and that riding and related activities carry inherent risks even when reasonable safety measures are used. I acknowledge that equine activity laws vary by state, and I have been advised to verify any state-specific notice or wording requirements with a local attorney.',
+        'I acknowledge that horses are living animals whose behaviour cannot be fully predicted or controlled. Even experienced, calm horses can react unexpectedly to environmental stimuli.',
+    },
+    {
+      id: 'equine-activity-laws',
+      title: 'EQUINE ACTIVITY LAW NOTICE',
+      body: (_d) =>
+        'I have been advised that many states have enacted equine activity liability acts that may affect my rights. I am encouraged to consult a licensed attorney in my state to understand any applicable statutory provisions.',
+    },
+    {
+      id: 'equine-participant-responsibilities',
+      title: 'PARTICIPANT RESPONSIBILITIES',
+      body: (d) => {
+        const bn = d.businessName || '[Business Name]';
+        return `I agree to follow all instructions given by ${bn} staff and instructors; wear appropriate protective equipment as required; disclose my prior riding experience honestly; and immediately inform staff of any safety concern I observe.`;
+      },
     },
   ];
 }
 
 // ---------------------------------------------------------------------------
-// Personal Training sections
+// Personal Training
 // ---------------------------------------------------------------------------
 
-function personalTrainingSections(_data: WaiverData): WaiverSection[] {
+function personalTrainingSections(data: WaiverData): WaiverSection[] {
+  const extraRisks = normalizeRisks(
+    data.specificRisks,
+    'muscle strains, joint injuries, cardiovascular stress, dehydration, falls, and aggravation of pre-existing injuries or conditions'
+  );
+
   return [
     {
-      id: 'pt-activity-risks',
-      title: 'ACTIVITY-SPECIFIC RISK ACKNOWLEDGEMENT',
+      id: 'pt-risk-acknowledgement',
+      title: 'PERSONAL TRAINING RISK ACKNOWLEDGEMENT',
       body: (_d) =>
-        'I understand that personal training activities may involve physical exertion, muscle strain, joint injury, equipment use, and health conditions that could be affected by exercise.',
+        `I understand that personal training activities involve inherent and other risks, including: strenuous physical exertion; ${extraRisks}. These risks exist even with qualified trainer supervision.`,
     },
     {
-      id: 'pt-equipment',
-      title: 'EQUIPMENT & FACILITY USE',
+      id: 'pt-health-acknowledgement',
+      title: 'HEALTH ACKNOWLEDGEMENT',
       body: (_d) =>
-        'I will use equipment and facilities within my capabilities, follow trainer instructions, and disclose any health conditions that may affect my participation.',
+        'I am responsible for assessing whether personal training participation is appropriate for my current physical condition and for seeking medical clearance when advisable. I will fully disclose any health conditions, injuries, or physical limitations to my trainer before each session, and I will stop exercising immediately and seek assistance if I experience unusual pain, dizziness, shortness of breath, or faintness.',
+    },
+    {
+      id: 'pt-participant-responsibilities',
+      title: 'PARTICIPANT RESPONSIBILITIES',
+      body: (d) => {
+        const bn = d.businessName || '[Business Name]';
+        return `I agree to follow my trainer's instructions and exercise within my current abilities; use equipment only as directed; inform ${bn} of any injury or change in my physical condition; and report unsafe equipment or conditions immediately.`;
+      },
     },
   ];
 }
@@ -373,7 +551,7 @@ function personalTrainingSections(_data: WaiverData): WaiverSection[] {
 export function getWaiverDefinition(activityType: string, data: WaiverData): WaiverSection[] {
   const at = activityType || 'Gym/Fitness';
 
-  // Activity-specific sections (numbered 4+ in the document)
+  // Activity-specific sections
   let activitySections: WaiverSection[] = [];
 
   switch (at) {
@@ -408,27 +586,52 @@ export function getWaiverDefinition(activityType: string, data: WaiverData): Wai
           title: 'ACTIVITY-SPECIFIC RISK ACKNOWLEDGEMENT',
           body: (d) => {
             const activity = d.activityType || 'the selected activity';
+            const extraRisks = normalizeRisks(
+              d.specificRisks,
+              'physical exertion, equipment use, facility conditions, and related hazards'
+            );
             const desc = d.activityDescription ? ` The activity includes: ${d.activityDescription}.` : '';
-            return `I understand that ${activity} activities may involve physical exertion, equipment use, facility conditions, and related risks.${desc}`;
+            return `I understand that ${activity} activities may involve inherent and other risks, including: ${extraRisks}.${desc}`;
+          },
+        },
+        {
+          id: 'general-participant-responsibilities',
+          title: 'PARTICIPANT RESPONSIBILITIES',
+          body: (d) => {
+            const bn = d.businessName || '[Business Name]';
+            return `I agree to follow the rules and reasonable instructions of ${bn} staff, use equipment within my capabilities, and report unsafe conditions promptly.`;
           },
         },
       ];
   }
 
-  // Build full section list
+  // Build full section list per 10/10 framework
   const sections: WaiverSection[] = [
-    coreSection_AssumptionOfRisk(data),
-    coreSection_Indemnification(data),
-    coreSection_EmergencyMedical(data),
+    // Block 1: Participant identity
+    coreSection_ParticipantInfo(),
+    coreSection_EmergencyContact(),
+    // Block 2: Activity
+    coreSection_ActivityDescription(data),
+    // Block 3: Risk + responsibilities (vertical-specific)
     ...activitySections,
-    coreSection_GoverningLaw(data),
+    // Block 4: Legal core
+    coreSection_AssumptionOfRisk(),
+    coreSection_ReleaseOfLiability(),
+    coreSection_Indemnification(),
+    coreSection_EmergencyMedical(),
+    // Block 5: Governing law + document terms
+    coreSection_GoverningLaw(),
+    coreSection_Severability(),
   ];
 
-  if (data.emergencyContact) {
-    sections.push(coreSection_EmergencyContact(data));
+  // Optional photo consent (its own section, separate from liability)
+  if (data.photoConsent) {
+    sections.push(coreSection_PhotoConsent());
   }
 
-  sections.push(coreSection_Signature(data));
+  // Participant acknowledgement + signature always last
+  sections.push(coreSection_ParticipantAcknowledgement());
+  sections.push(coreSection_Signature(data.minorMode === true));
 
   return sections;
 }
@@ -438,115 +641,107 @@ export function getWaiverDefinition(activityType: string, data: WaiverData): Wai
  * for the given activity type.
  */
 export function getWaiverChecklist(activityType: string): string[] {
+  const core = [
+    'Assumption of risk & voluntary participation',
+    'Release of liability (to the extent permitted by law)',
+    'Indemnification (own acts/omissions only)',
+    'Emergency medical authorization',
+    'Governing-law section with disclaimer',
+    'Severability clause',
+    'Participant acknowledgement',
+    'Signature fields',
+  ];
+
   switch (activityType) {
     case 'Tattoo Studio':
       return [
         'Procedure consent',
-        'Health disclosures',
-        'Ink allergy & reaction risks',
-        'Bloodborne pathogen acknowledgement',
+        'Tattoo risk acknowledgement',
+        'Health disclosure',
+        'Sterilisation & bloodborne pathogen acknowledgement',
         'Aftercare responsibility',
-        'Result / appearance acknowledgement',
-        'Assumption of risk & release',
-        'Optional photo consent',
-        'Governing-law section',
-        'Signature fields',
+        'Result & appearance acknowledgement',
+        'Participant responsibilities',
+        'Optional photo / portfolio consent',
+        ...core,
       ];
     case 'Rock Climbing':
       return [
-        'Climbing risks acknowledgement',
+        'Climbing risk acknowledgement',
+        'Climbing type acknowledgement (bouldering / top-rope / lead)',
         'Equipment inspection responsibility',
-        'Belayer competency clause',
-        'Type of climbing (bouldering/top-rope/lead)',
-        'Rescue & evacuation clause',
-        'Assumption of risk & release',
-        'Governing-law section',
-        'Signature fields',
+        'Belayer competency',
+        'Rescue & evacuation acknowledgement',
+        'Participant responsibilities',
+        ...core,
       ];
     case 'Volunteer':
       return [
         'Volunteer participation acknowledgement',
-        'Scope of activities',
-        'Known risks disclosure',
-        'Safety instructions acknowledgement',
+        'Volunteer risk acknowledgement',
+        'Volunteer responsibilities',
         'Volunteer status (not employee)',
-        'Optional photo/media consent',
-        'Assumption of risk & release',
-        'Governing-law section',
-        'Signature fields',
+        'Optional photo / media consent',
+        ...core,
       ];
     case 'Gym/Fitness':
       return [
-        'Activity risk acknowledgement',
-        'Equipment & facility use',
-        'Assumption of risk & release',
-        'Indemnification',
-        'Emergency medical authorization',
-        'Governing-law section',
-        'Signature fields',
+        'Gym & fitness risk acknowledgement (weights, cardio, group fitness)',
+        'Health & fitness acknowledgement',
+        'Participant responsibilities',
+        'Optional photo / media consent',
+        ...core,
       ];
     case 'Yoga Studio':
       return [
-        'Activity risk acknowledgement (stretching, inversions, heat)',
-        'Equipment & facility use',
-        'Assumption of risk & release',
-        'Indemnification',
-        'Emergency medical authorization',
-        'Governing-law section',
-        'Signature fields',
+        'Yoga activity risk acknowledgement (stretching, inversions, heat)',
+        'Health acknowledgement',
+        'Participant responsibilities',
+        'Optional photo / media consent',
+        ...core,
       ];
     case 'Dog Grooming':
       return [
-        'Pet health condition disclosure',
-        'Animal stress & grooming risk acknowledgement',
+        'Grooming risk acknowledgement',
+        'Pet health disclosure',
         'Animal care acknowledgement',
-        'Assumption of risk & release',
-        'Emergency medical authorization',
-        'Governing-law section',
-        'Signature fields',
+        'Owner responsibilities',
+        ...core,
       ];
     case 'Horse Riding':
       return [
         'Equine activity risk acknowledgement',
-        'Unpredictable horse behaviour disclosure',
-        'Assumption of risk & release',
-        'Indemnification',
-        'Emergency medical authorization',
-        'Governing-law section',
-        'Signature fields',
+        'Horse unpredictability acknowledgement',
+        'Equine activity law notice',
+        'Participant responsibilities',
+        ...core,
       ];
     case 'Personal Training':
       return [
-        'Activity risk acknowledgement',
-        'Equipment & facility use',
-        'Assumption of risk & release',
-        'Indemnification',
-        'Emergency medical authorization',
-        'Governing-law section',
-        'Signature fields',
+        'Personal training risk acknowledgement',
+        'Health acknowledgement',
+        'Participant responsibilities',
+        'Optional photo / media consent',
+        ...core,
       ];
     default:
       return [
-        'Activity risk acknowledgement',
-        'Assumption of risk & release',
-        'Indemnification',
-        'Emergency medical authorization',
-        'Governing-law section',
-        'Signature fields',
+        'Activity-specific risk acknowledgement',
+        'Participant responsibilities',
+        ...core,
       ];
   }
 }
 
 /**
  * Returns a version string for the template of a given activity type.
- * Useful for footer/audit trail.
  */
 export function getWaiverTemplateVersion(activityType: string): string {
   const slug = (activityType || 'general')
     .toLowerCase()
     .replace(/[^a-z0-9]+/g, '-')
     .replace(/^-|-$/g, '');
-  return `${slug}-waiver v1.0`;
+  return `${slug}-waiver v2.0`;
 }
 
 /**
@@ -557,12 +752,13 @@ export function getWaiverTemplateVersion(activityType: string): string {
 export function serializeWaiverDefinition(
   activityType: string,
   data: WaiverData
-): Array<{ id: string; title: string; body: string; tooltip?: string }> {
+): Array<{ id: string; title: string; body: string; tooltip?: string; isForm?: boolean }> {
   return getWaiverDefinition(activityType, data).map((s) => ({
     id: s.id,
     title: s.title,
     body: s.body(data),
     tooltip: s.tooltip,
+    isForm: s.isForm,
   }));
 }
 
