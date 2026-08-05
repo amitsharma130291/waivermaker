@@ -17,16 +17,6 @@
       <button class="nav-link-hide nav-dropdown-toggle" aria-haspopup="true" aria-expanded="false">
         Waiver Types <span class="nav-caret">▾</span>
       </button>
-      <div class="nav-dropdown-menu" role="menu">
-        <a href="/gym-waiver/" role="menuitem">💪 Gym &amp; Fitness</a>
-        <a href="/tattoo-waiver/" role="menuitem">🎨 Tattoo Studio</a>
-        <a href="/yoga-waiver/" role="menuitem">🧘 Yoga Studio</a>
-        <a href="/volunteer-waiver/" role="menuitem">🤝 Volunteer</a>
-        <a href="/rock-climbing-waiver/" role="menuitem">🧗 Rock Climbing</a>
-        <a href="/dog-grooming-waiver/" role="menuitem">🐕 Dog Grooming</a>
-        <a href="/horse-riding-waiver/" role="menuitem">🏇 Horse Riding</a>
-        <a href="/personal-trainer-waiver/" role="menuitem">🏋️ Personal Trainer</a>
-      </div>
     </div>
     <a href="/tattoo-waiver/template/" class="nav-link-hide">Templates</a>
     <a href="/about/" class="nav-link-hide">About</a>
@@ -34,6 +24,30 @@
     <a href="/" class="nav-cta">Generate My Waiver</a>
   </div>
 </nav>
+
+<!-- Portal menu — appended to body by JS so it escapes ALL stacking contexts -->
+<template id="nav-menu-tpl">
+  <div id="nav-portal-menu" role="menu" style="
+    display:none;
+    position:fixed;
+    background:#fff;
+    border:1px solid #e2e8f0;
+    border-radius:10px;
+    box-shadow:0 16px 48px rgba(0,0,0,0.18);
+    min-width:220px;
+    z-index:2147483647;
+    padding:8px 0 6px;
+  ">
+    <a href="/gym-waiver/" role="menuitem">💪 Gym &amp; Fitness</a>
+    <a href="/tattoo-waiver/" role="menuitem">🎨 Tattoo Studio</a>
+    <a href="/yoga-waiver/" role="menuitem">🧘 Yoga Studio</a>
+    <a href="/volunteer-waiver/" role="menuitem">🤝 Volunteer</a>
+    <a href="/rock-climbing-waiver/" role="menuitem">🧗 Rock Climbing</a>
+    <a href="/dog-grooming-waiver/" role="menuitem">🐕 Dog Grooming</a>
+    <a href="/horse-riding-waiver/" role="menuitem">🏇 Horse Riding</a>
+    <a href="/personal-trainer-waiver/" role="menuitem">🏋️ Personal Trainer</a>
+  </div>
+</template>
 
 <style>
   .logo-link {
@@ -86,9 +100,7 @@
     letter-spacing: 0.18em;
     text-transform: uppercase;
   }
-  .nav-dropdown {
-    position: relative;
-  }
+  .nav-dropdown { position: relative; }
   .nav-dropdown-toggle {
     background: none;
     border: none;
@@ -97,88 +109,69 @@
     padding: 0;
     color: inherit;
   }
-  .nav-caret {
-    font-size: 11px;
-    margin-left: 2px;
-  }
-  .nav-dropdown-menu {
-    display: none;
-    position: fixed;
-    top: 72px;
-    left: auto;
-    background: #fff;
-    border: 1px solid #e2e8f0;
-    border-radius: 10px;
-    box-shadow: 0 12px 32px rgba(0,0,0,0.14);
-    min-width: 220px;
-    z-index: 9999;
-    padding: 8px 0 6px;
-  }
-  /* Invisible hover bridge — covers the gap between the toggle and the menu */
-  .nav-dropdown-menu::before {
-    content: '';
-    position: absolute;
-    top: -12px;
-    left: 0;
-    right: 0;
-    height: 12px;
-    background: transparent;
-  }
-  .nav-dropdown-menu a {
-    display: block;
-    padding: 9px 16px;
-    font-size: 14px;
-    color: #0f172a;
-    text-decoration: none;
-    white-space: nowrap;
-  }
-  .nav-dropdown-menu a:hover {
-    background: #f0fdf4;
-    color: #059669;
-  }
-  .nav-dropdown-toggle[aria-expanded="true"] + .nav-dropdown-menu {
-    display: block;
-  }
+  .nav-caret { font-size: 11px; margin-left: 2px; }
+
+  /* Portal menu link styles injected via JS */
 </style>
 
 <script>
-  const dropdown = document.querySelector('.nav-dropdown');
-  const toggle = document.querySelector('.nav-dropdown-toggle');
-  const menu = document.querySelector('.nav-dropdown-menu');
-  let hideTimer: ReturnType<typeof setTimeout> | null = null;
+  // Clone menu from template and append to body (portal pattern)
+  const tpl = document.getElementById('nav-menu-tpl') as HTMLTemplateElement | null;
+  const toggle = document.querySelector('.nav-dropdown-toggle') as HTMLElement | null;
 
-  if (dropdown && toggle && menu) {
+  if (tpl && toggle) {
+    const menu = tpl.content.firstElementChild!.cloneNode(true) as HTMLElement;
+
+    // Style the links inside
+    const style = document.createElement('style');
+    style.textContent = `
+      #nav-portal-menu a {
+        display: block;
+        padding: 9px 18px;
+        font-size: 14px;
+        color: #0f172a;
+        text-decoration: none;
+        white-space: nowrap;
+        font-family: 'Inter', sans-serif;
+      }
+      #nav-portal-menu a:hover {
+        background: #f0fdf4;
+        color: #059669;
+      }
+    `;
+    document.head.appendChild(style);
+    document.body.appendChild(menu);
+
+    let hideTimer: ReturnType<typeof setTimeout> | null = null;
+
     const show = () => {
       if (hideTimer) clearTimeout(hideTimer);
-      // Position menu using fixed coords so it escapes all stacking contexts
-      const rect = (toggle as HTMLElement).getBoundingClientRect();
-      (menu as HTMLElement).style.left = rect.left + 'px';
-      (toggle as HTMLElement).setAttribute('aria-expanded', 'true');
-      (menu as HTMLElement).style.display = 'block';
+      const rect = toggle.getBoundingClientRect();
+      menu.style.top = (rect.bottom + 6) + 'px';
+      menu.style.left = rect.left + 'px';
+      menu.style.display = 'block';
+      toggle.setAttribute('aria-expanded', 'true');
     };
+
     const hide = () => {
       hideTimer = setTimeout(() => {
-        (toggle as HTMLElement).setAttribute('aria-expanded', 'false');
-        (menu as HTMLElement).style.display = 'none';
-      }, 100);
+        menu.style.display = 'none';
+        toggle.setAttribute('aria-expanded', 'false');
+      }, 120);
     };
 
-    dropdown.addEventListener('mouseenter', show);
-    dropdown.addEventListener('mouseleave', hide);
-    menu.addEventListener('mouseenter', show);
+    toggle.addEventListener('mouseenter', show);
+    toggle.addEventListener('mouseleave', hide);
+    toggle.addEventListener('click', () => {
+      menu.style.display === 'block' ? hide() : show();
+    });
+    menu.addEventListener('mouseenter', () => { if (hideTimer) clearTimeout(hideTimer); });
     menu.addEventListener('mouseleave', hide);
 
-    // Click support for keyboard / mobile
-    toggle.addEventListener('click', () => {
-      const expanded = (toggle as HTMLElement).getAttribute('aria-expanded') === 'true';
-      if (expanded) hide(); else show();
-    });
-
-    // Close when clicking outside
     document.addEventListener('click', (e) => {
-      if (!(dropdown as HTMLElement).contains(e.target as Node)) {
-        (toggle as HTMLElement).setAttribute('aria-expanded', 'false');
-        (menu as HTMLElement).style.display = 'none';
+      if (!toggle.contains(e.target as Node) && !menu.contains(e.target as Node)) {
+        menu.style.display = 'none';
+        toggle.setAttribute('aria-expanded', 'false');
       }
     });
   }
