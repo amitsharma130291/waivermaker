@@ -197,8 +197,8 @@ function coreSection_PhotoConsent(): WaiverSection {
     body: (d) => {
       const bn = d.businessName || '[Business Name]';
       return (
-        `☐ YES — I permit ${bn} to use photographs or video of my participation for promotional, educational, or organisational purposes.\n\n` +
-        `☐ NO — I do not grant photo or media consent.\n\n` +
+        `[ ] YES — I permit ${bn} to use photographs or video of my participation for promotional, educational, or organisational purposes.\n\n` +
+        `[ ] NO — I do not grant photo or media consent.\n\n` +
         `Initials: ___________`
       );
     },

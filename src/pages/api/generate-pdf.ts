@@ -158,23 +158,34 @@ export const GET: APIRoute = async ({ url }) => {
     }
 
     // -------------------------------------------------------------------------
-    // Footer on every page
+    // Footer on every page — draw AFTER all content using bufferedPageRange.
+    // Two separate .text() calls avoid PDFKit concatenating lines into one
+    // flowing block that could spill past the page boundary.
     // -------------------------------------------------------------------------
-    const range = doc.bufferedPageRange();
-    for (let i = 0; i < range.count; i++) {
-      doc.switchToPage(i);
-      const footerY = doc.page.height - 58;
+    const addFooterToPage = (pageIndex: number) => {
+      doc.switchToPage(pageIndex);
+      const footerY = doc.page.height - 52;
       doc
         .font(body)
         .fontSize(7)
         .fillColor(muted)
         .text(
-          `Generated with WaiverMaker  ·  Template: ${templateVersion}  ·  Generated: ${generatedDate}  ·  waivermaker.com\n` +
-          `This document is an informational template only. It does not constitute legal advice. Consult a licensed attorney in your jurisdiction for advice specific to your situation.`,
+          `Generated with WaiverMaker  ·  Template: ${templateVersion}  ·  Generated: ${generatedDate}  ·  waivermaker.com`,
           58,
           footerY,
           { width: pageW, align: 'center', lineGap: 1 }
+        )
+        .text(
+          'This document is an informational template only. It does not constitute legal advice. Consult a licensed attorney in your jurisdiction for advice specific to your situation.',
+          58,
+          doc.y,
+          { width: pageW, align: 'center', lineGap: 1 }
         );
+    };
+
+    const range = doc.bufferedPageRange();
+    for (let i = 0; i < range.count; i++) {
+      addFooterToPage(i);
     }
 
     doc.end();

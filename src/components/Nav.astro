@@ -104,7 +104,7 @@
   .nav-dropdown-menu {
     display: none;
     position: absolute;
-    top: calc(100% + 8px);
+    top: calc(100% + 0px);
     left: 0;
     background: #fff;
     border: 1px solid #e2e8f0;
@@ -112,7 +112,18 @@
     box-shadow: 0 8px 24px rgba(0,0,0,0.10);
     min-width: 200px;
     z-index: 100;
-    padding: 6px 0;
+    padding: 8px 0 6px;
+    margin-top: 0;
+  }
+  /* Invisible hover bridge — covers the gap between the toggle and the menu */
+  .nav-dropdown-menu::before {
+    content: '';
+    position: absolute;
+    top: -12px;
+    left: 0;
+    right: 0;
+    height: 12px;
+    background: transparent;
   }
   .nav-dropdown-menu a {
     display: block;
@@ -126,23 +137,46 @@
     background: #f0fdf4;
     color: #059669;
   }
-  .nav-dropdown:hover .nav-dropdown-menu,
   .nav-dropdown-toggle[aria-expanded="true"] + .nav-dropdown-menu {
     display: block;
   }
 </style>
 
 <script>
+  const dropdown = document.querySelector('.nav-dropdown');
   const toggle = document.querySelector('.nav-dropdown-toggle');
   const menu = document.querySelector('.nav-dropdown-menu');
-  if (toggle && menu) {
+  let hideTimer: ReturnType<typeof setTimeout> | null = null;
+
+  if (dropdown && toggle && menu) {
+    const show = () => {
+      if (hideTimer) clearTimeout(hideTimer);
+      (toggle as HTMLElement).setAttribute('aria-expanded', 'true');
+      (menu as HTMLElement).style.display = 'block';
+    };
+    const hide = () => {
+      hideTimer = setTimeout(() => {
+        (toggle as HTMLElement).setAttribute('aria-expanded', 'false');
+        (menu as HTMLElement).style.display = 'none';
+      }, 100);
+    };
+
+    dropdown.addEventListener('mouseenter', show);
+    dropdown.addEventListener('mouseleave', hide);
+    menu.addEventListener('mouseenter', show);
+    menu.addEventListener('mouseleave', hide);
+
+    // Click support for keyboard / mobile
     toggle.addEventListener('click', () => {
-      const expanded = toggle.getAttribute('aria-expanded') === 'true';
-      toggle.setAttribute('aria-expanded', String(!expanded));
+      const expanded = (toggle as HTMLElement).getAttribute('aria-expanded') === 'true';
+      if (expanded) hide(); else show();
     });
+
+    // Close when clicking outside
     document.addEventListener('click', (e) => {
-      if (!toggle.contains(e.target as Node) && !menu.contains(e.target as Node)) {
-        toggle.setAttribute('aria-expanded', 'false');
+      if (!(dropdown as HTMLElement).contains(e.target as Node)) {
+        (toggle as HTMLElement).setAttribute('aria-expanded', 'false');
+        (menu as HTMLElement).style.display = 'none';
       }
     });
   }
