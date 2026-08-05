@@ -4,6 +4,8 @@ export interface Props {
 }
 const { preselectedActivity = 'Gym/Fitness' } = Astro.props;
 
+import { serializeAllChecklists, serializeWaiverDefinition } from '../data/waiver-definitions';
+
 const US_STATES = [
   'Alabama','Alaska','Arizona','Arkansas','California','Colorado','Connecticut',
   'Delaware','Florida','Georgia','Hawaii','Idaho','Illinois','Indiana','Iowa',
@@ -19,10 +21,26 @@ const ACTIVITY_TYPES = [
   'Gym/Fitness','Tattoo Studio','Yoga Studio','Dog Grooming',
   'Rock Climbing','Horse Riding','Volunteer','Personal Training'
 ];
+
+// Serialize the checklists for all activity types for browser use
+const allChecklistsJSON = JSON.stringify(serializeAllChecklists());
+
+// Pre-render a baseline definition for the preselected activity so the
+// browser has a starting point before the user fills in any fields.
+// The browser will re-interpolate user values client-side using this structure.
+const baselineDefinitionJSON = JSON.stringify(
+  serializeWaiverDefinition(preselectedActivity, {
+    businessName: '[Business Name]',
+    state: '[State]',
+    ownerName: '[Owner / Manager]',
+    businessAddress: '[Address]',
+    activityType: preselectedActivity,
+  })
+);
 ---
 
 <div class="form-wrapper" id="generator">
-  <!-- Progress bar rendered by JS -->
+  <!-- Progress bar -->
   <div class="form-progress" id="form-progress">
     <div class="progress-step active-step" id="step-indicator-1">
       <div class="dot">1</div><span>Business Info</span>
@@ -90,7 +108,7 @@ const ACTIVITY_TYPES = [
         </div>
         <div class="form-group full">
           <label for="activity-description">Description of Activities</label>
-          <textarea id="activity-description" name="activityDescription" placeholder="Describe the activities participants will engage in (e.g. weightlifting, cardio classes, use of gym equipment)..." rows={3}></textarea>
+          <textarea id="activity-description" name="activityDescription" placeholder="Describe the activities participants will engage in..." rows={3}></textarea>
         </div>
         <div class="form-group full">
           <label for="specific-risks">Specific Risks to Disclose</label>
@@ -110,6 +128,12 @@ const ACTIVITY_TYPES = [
             Require emergency contact information on waiver
           </label>
         </div>
+        <div class="form-group full">
+          <label style="display:flex;align-items:center;gap:10px;cursor:pointer;font-weight:500;">
+            <input type="checkbox" id="photo-consent" name="photoConsent" style="width:auto;margin:0;" />
+            Include optional photo / media consent clause
+          </label>
+        </div>
       </div>
       <div style="display:flex;gap:12px;margin-top:8px;">
         <button type="button" class="form-submit" id="back-step-2" style="background:white;color:var(--emerald);border:1.5px solid var(--emerald);flex:0 0 auto;width:auto;padding:15px 24px;">
@@ -125,7 +149,7 @@ const ACTIVITY_TYPES = [
     <!-- Step 3: Preview & Download -->
     <div id="step-3" class="form-step" style="display:none">
       <div class="waiver-preview" id="waiver-preview-text">
-        <!-- Populated by JS -->
+        <!-- Populated by JS using shared definition data -->
       </div>
       <button type="button" class="form-submit" id="download-btn">
         Download Free PDF →
@@ -151,7 +175,18 @@ const ACTIVITY_TYPES = [
   </div>
 </details>
 
+<!-- Shared definition data embedded server-side — used by client JS below -->
+<script type="application/json" id="wm-checklists">{allChecklistsJSON}</script>
+<script type="application/json" id="wm-baseline-definition">{baselineDefinitionJSON}</script>
+
 <script>
+  // ---------------------------------------------------------------------------
+  // Load shared definition data embedded by the server
+  // ---------------------------------------------------------------------------
+  const allChecklists: Record<string, string[]> = JSON.parse(
+    document.getElementById('wm-checklists')!.textContent || '{}'
+  );
+
   // Form data store
   const formData: Record<string, string | boolean> = {};
 
@@ -195,85 +230,136 @@ const ACTIVITY_TYPES = [
     formData.specificRisks = (document.getElementById('specific-risks') as HTMLTextAreaElement)?.value.trim();
     formData.minAge = (document.getElementById('min-age') as HTMLSelectElement)?.value || '18+';
     formData.emergencyContact = (document.getElementById('emergency-contact') as HTMLInputElement)?.checked;
+    formData.photoConsent = (document.getElementById('photo-consent') as HTMLInputElement)?.checked;
   }
 
-  function buildWaiverText(): string {
+  // ---------------------------------------------------------------------------
+  // Build preview HTML from the shared waiver definition data.
+  // We call the server API to get sections for the current form state,
+  // then render them as HTML matching the PDF section structure.
+  // ---------------------------------------------------------------------------
+  async function buildWaiverPreview(): Promise<string> {
+    const params = new URLSearchParams();
+    Object.entries(formData).forEach(([k, v]) => params.set(k, String(v)));
+
+    // Fetch the rendered sections from the PDF endpoint with format=sections
+    // Since the endpoint doesn't return JSON sections directly, we build the
+    // preview HTML by interpolating user values into the same template
+    // structure produced by the shared definitions module on the server.
+    // We fetch a lightweight JSON definitions endpoint.
+    const res = await fetch(`/api/waiver-sections?${params.toString()}`).catch(() => null);
+    if (res && res.ok) {
+      const sections: Array<{ id: string; title: string; body: string }> = await res.json();
+      return renderSectionsToHTML(sections);
+    }
+
+    // Fallback: render using placeholder text when the API isn't available
+    return renderFallbackPreview();
+  }
+
+  function renderSectionsToHTML(sections: Array<{ id: string; title: string; body: string }>): string {
     const bn = formData.businessName as string || '[Business Name]';
     const st = formData.state as string || '[State]';
     const own = formData.ownerName as string || '[Owner]';
-    const at = formData.activityType as string || 'activities';
-    const minAge = formData.minAge as string || '18+';
-    const ec = formData.emergencyContact;
+    const addr = formData.businessAddress as string || '';
+
+    let html = `
+      <h3>LIABILITY WAIVER AND RELEASE</h3>
+      <p><strong>${bn}</strong>${addr ? ' | ' + addr : ''} | ${st}</p>
+      <p><strong>Owner/Manager:</strong> ${own}</p>
+      <hr style="border:none;border-top:1px solid #E5E7EB;margin:12px 0;" />
+    `;
+
+    const unnumbered = new Set(['governing-law', 'signature', 'emergency-contact']);
+    let num = 0;
+    for (const section of sections) {
+      const label = unnumbered.has(section.id)
+        ? `<strong>${section.title}</strong>`
+        : `<strong>${++num}. ${section.title}</strong>`;
+      // Preserve line breaks in signature / emergency contact sections
+      const bodyHtml = section.body.replace(/\n/g, '<br/>');
+      html += `<p>${label}: ${bodyHtml}</p>`;
+    }
+
+    html += `<p style="margin-top:12px;font-size:10px;color:#9CA3AF;text-align:center;">Generated by WaiverMaker.com — Not legal advice. Consult an attorney for your specific situation.</p>`;
+    return html;
+  }
+
+  function renderFallbackPreview(): string {
+    const bn = formData.businessName as string || '[Business Name]';
+    const st = formData.state as string || '[State]';
+    const own = formData.ownerName as string || '[Owner]';
+    const at = formData.activityType as string || 'the selected activity';
     const risks = formData.specificRisks as string;
     const actDesc = formData.activityDescription as string;
+    const ec = formData.emergencyContact;
 
     return `
-      <h3>LIABILITY WAIVER AND RELEASE OF LIABILITY</h3>
+      <h3>LIABILITY WAIVER AND RELEASE</h3>
       <p><strong>${bn}</strong> | ${formData.businessAddress} | ${st}</p>
       <p><strong>Owner/Manager:</strong> ${own}</p>
       <hr style="border:none;border-top:1px solid #E5E7EB;margin:12px 0;" />
-      <p>I, the undersigned Participant, wish to participate in activities offered by <strong>${bn}</strong>, including but not limited to: ${actDesc || at + ' activities'}.</p>
-      <p><strong>ASSUMPTION OF RISK:</strong> I understand and acknowledge that participation in ${at} activities involves inherent risks, dangers, and hazards. ${risks ? 'These risks include, without limitation: ' + risks + '.' : 'I voluntarily assume all such risks.'}</p>
-      <p><strong>RELEASE OF LIABILITY:</strong> In consideration of being permitted to participate in activities at ${bn}, I hereby release, waive, discharge, and covenant not to sue ${bn}, its owners, officers, employees, agents, and representatives from any and all liability, claims, demands, actions, and causes of action arising from my participation in ${at} activities in the State of ${st}.</p>
-      <p><strong>INDEMNIFICATION:</strong> I agree to indemnify and hold harmless ${bn} and its representatives from any loss, liability, damage, or cost they may incur due to my participation.</p>
-      <p><strong>MEDICAL AUTHORIZATION:</strong> In the event of an emergency, I authorize ${bn} to seek medical treatment on my behalf. I acknowledge that I am responsible for all medical expenses.</p>
-      ${ec ? '<p><strong>EMERGENCY CONTACT:</strong> Emergency Contact Name: _________________ Phone: _________________</p>' : ''}
-      <p><strong>PARTICIPANT ELIGIBILITY:</strong> I confirm that I meet the minimum age requirement of ${minAge} to participate in activities at ${bn}.</p>
-      <p><strong>GOVERNING LAW:</strong> This waiver shall be governed by the laws of the State of ${st}.</p>
-      <p><strong>SEVERABILITY:</strong> If any provision of this waiver is found to be unenforceable, the remaining provisions shall continue in full force and effect.</p>
-      <p>By signing below, I acknowledge that I have read and understand this waiver, and I am signing it voluntarily.</p>
-      <div class="sig-line">
-        Participant Signature: _________________________________ Date: ___________<br/>
-        Printed Name: _________________________________
-      </div>
+      <p><strong>1. ASSUMPTION OF RISK:</strong> I understand that ${at} activities offered by ${bn} involve inherent and other risks, including ${risks || 'risks of injury, illness, property damage, and other hazards'}. I voluntarily choose to participate and release ${bn} and its owners, staff, agents, and contractors from claims arising from those inherent risks, to the extent permitted by applicable law.</p>
+      <p><strong>2. INDEMNIFICATION:</strong> I agree to indemnify and hold harmless ${bn} and its representatives from losses, liability, damage, or costs resulting from my own acts or omissions while participating in these activities.</p>
+      <p><strong>3. EMERGENCY MEDICAL AUTHORIZATION:</strong> If I am incapacitated in an emergency, I authorise ${bn} to seek emergency medical treatment for me. I understand that I remain responsible for related medical costs.</p>
+      ${actDesc ? `<p><strong>4. ACTIVITY DETAILS:</strong> The activity includes: ${actDesc}.</p>` : ''}
+      ${ec ? '<p><strong>EMERGENCY CONTACT:</strong> Name: _________________ Phone: _________________</p>' : ''}
+      <p><strong>GOVERNING LAW:</strong> This document is governed by the laws of the State of ${st}.</p>
+      <p><strong>SIGNATURE:</strong> Participant Signature: _________________________________ Date: ___________<br/>Printed Name: _________________________________</p>
       <p style="margin-top:12px;font-size:10px;color:#9CA3AF;text-align:center;">Generated by WaiverMaker.com — Not legal advice. Consult an attorney for your specific situation.</p>
     `;
   }
 
-
-  const inclusionLists: Record<string, string[]> = {
-    'Tattoo Studio': ['Procedure consent', 'Health disclosures', 'Ink allergy & reaction risks', 'Bloodborne pathogen acknowledgement', 'Aftercare responsibility', 'Assumption of risk & release', 'Optional photo consent', 'Governing-law section', 'Signature fields'],
-    'Rock Climbing': ['Climbing risks acknowledgement', 'Equipment inspection responsibility', 'Belayer competency clause', 'Type of climbing (bouldering/top-rope/lead)', 'Rescue & evacuation clause', 'Assumption of risk & release', 'Governing-law section', 'Signature fields'],
-    'Volunteer': ['Volunteer participation acknowledgement', 'Scope of activities', 'Known risks disclosure', 'Emergency medical authorization', 'Volunteer status (not employee)', 'Optional photo/media consent', 'Assumption of risk & release', 'Governing-law section', 'Signature fields']
-  };
-  const coreInclusions = ['Assumption of risk & release', 'Indemnification', 'Emergency medical authorization', 'Activity risks', 'Governing-law section', 'Signature fields'];
+  // ---------------------------------------------------------------------------
+  // Checklist — uses the shared definitions data embedded by the server
+  // ---------------------------------------------------------------------------
   function updateInclusionList() {
-    const activity = (document.getElementById('activity-type') as HTMLSelectElement)?.value;
+    const activity = (document.getElementById('activity-type') as HTMLSelectElement)?.value || 'Gym/Fitness';
     const list = document.getElementById('waiver-includes-list');
-    if (list) list.innerHTML = (inclusionLists[activity] || coreInclusions).map(item => `<li>✓ ${item}</li>`).join('');
+    const items = allChecklists[activity] || allChecklists['Gym/Fitness'] || [];
+    if (list) list.innerHTML = items.map(item => `<li>✓ ${item}</li>`).join('');
   }
   updateInclusionList();
   document.getElementById('activity-type')?.addEventListener('change', updateInclusionList);
 
+  // ---------------------------------------------------------------------------
   // Event listeners
+  // ---------------------------------------------------------------------------
   document.getElementById('next-step-1')?.addEventListener('click', () => {
     if (collectStep1()) showStep(2);
   });
 
   document.getElementById('back-step-2')?.addEventListener('click', () => showStep(1));
 
-  document.getElementById('next-step-2')?.addEventListener('click', () => {
+  document.getElementById('next-step-2')?.addEventListener('click', async () => {
     collectStep2();
     const preview = document.getElementById('waiver-preview-text');
-    if (preview) preview.innerHTML = buildWaiverText();
-    showStep(3);
+    if (preview) {
+      preview.innerHTML = '<p style="color:#6B7280;text-align:center;">Building preview…</p>';
+      showStep(3);
+      preview.innerHTML = await buildWaiverPreview();
+    } else {
+      showStep(3);
+    }
   });
 
   document.getElementById('back-step-3')?.addEventListener('click', () => showStep(2));
 
   document.getElementById('download-btn')?.addEventListener('click', () => {
-    // Download the PDF directly — free
     const params = new URLSearchParams();
     Object.entries(formData).forEach(([k, v]) => params.set(k, String(v)));
     window.location.href = `/api/generate-pdf?${params.toString()}`;
   });
 
-  // Sync type picker selection
+  // Sync type picker selection (homepage TypePicker buttons)
   document.addEventListener('click', (e) => {
     const btn = (e.target as HTMLElement).closest('[data-value]') as HTMLElement | null;
     if (btn && btn.dataset.value) {
       const sel = document.getElementById('activity-type') as HTMLSelectElement | null;
-      if (sel) sel.value = btn.dataset.value;
+      if (sel) {
+        sel.value = btn.dataset.value;
+        updateInclusionList();
+      }
     }
   });
 </script>

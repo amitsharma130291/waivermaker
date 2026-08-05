@@ -16,7 +16,7 @@ export const waiverTypes: WaiverType[] = [
     activityType: 'Gym/Fitness',
     metaDescription: 'Generate a gym & fitness liability waiver for your business. Customised with your governing state, free to preview. Free to preview and download.',
     intro: [
-      'A gym and fitness liability waiver protects your business from claims arising from injuries that occur during workouts, personal training sessions, or use of gym equipment. Whether you run a CrossFit box, a traditional gym, or a boutique fitness studio, a signed waiver is your first line of legal defense.',
+      'A gym and fitness liability waiver protects your business from claims arising from injuries that occur during workouts, personal training sessions, or use of gym equipment. Whether you run a CrossFit box, a traditional gym, or a boutique fitness studio, a signed waiver can form part of your gym\'s broader risk-management and participant-consent process.',
       'Gyms and fitness centers face a unique set of liability risks: dropped weights, equipment malfunctions, overexertion injuries, and slip-and-fall incidents are all common. Your waiver should clearly disclose these risks and obtain the participant\'s informed consent before they step onto your floor.',
       'WaiverMaker generates a gym waiver customised with your selected governing state, your specific activities, and the risks your business actually faces — in under two minutes.',
     ],
@@ -38,7 +38,7 @@ export const waiverTypes: WaiverType[] = [
     title: 'Tattoo Studio Waiver',
     emoji: '🎨',
     activityType: 'Tattoo Studio',
-    metaDescription: 'Create a tattoo studio liability waiver in minutes. Covers informed consent, health disclosure, aftercare, and state law. Free to preview and download.',
+    metaDescription: 'Create a tattoo studio liability waiver in minutes. Covers informed consent, health disclosure, ink allergy risks, aftercare, and client acknowledgement. Free to preview and download.',
     intro: [
       'A tattoo studio waiver serves a dual purpose: it protects your business from liability and demonstrates your professionalism to clients. Every reputable tattoo studio requires clients to sign before any work begins.',
       'The risks in tattooing go beyond the needle — clients may have undisclosed health conditions like blood thinners, diabetes, or skin sensitivities that affect healing. Your waiver collects this information and documents that the client was fully informed before consenting to the procedure.',
@@ -110,7 +110,7 @@ export const waiverTypes: WaiverType[] = [
     title: 'Rock Climbing Waiver',
     emoji: '🧗',
     activityType: 'Rock Climbing',
-    metaDescription: 'Generate a rock climbing liability waiver for your gym or guide service. Covers fall risk, equipment, and state law. Free to preview and download.',
+    metaDescription: 'Generate a rock climbing liability waiver for your gym or guide service. Covers falls, equipment, belaying, rescue considerations and more. Free to preview and download.',
     intro: [
       'Rock climbing gyms and outdoor guide services face significant liability exposure. Falls, equipment failure, belay errors, and route-related hazards are inherent to the sport — and participants must clearly understand and accept these risks before you allow them to climb.',
       'Whether you run an indoor bouldering gym, a top-rope facility, or take clients on outdoor climbing trips, your waiver needs to address the specific risks of your environment. Indoor walls have different hazards than granite crags, and your waiver should reflect that.',
@@ -134,7 +134,7 @@ export const waiverTypes: WaiverType[] = [
     title: 'Dog Grooming Waiver',
     emoji: '🐕',
     activityType: 'Dog Grooming',
-    metaDescription: 'Generate a dog grooming liability waiver for your salon or mobile service. Covers stress, medical conditions, and state law. Free to preview and download.',
+    metaDescription: 'Generate a dog grooming liability waiver for your salon or mobile service. Covers pet handling risks, bites, allergies, medical conditions, and animal behaviour. Free to preview and download.',
     intro: [
       'Dog groomers face liability from multiple angles: injuries to the groomer from biting or scratching, injuries to the pet during grooming, and stress-related health events in dogs with undisclosed medical conditions. A grooming waiver documents the owner\'s consent and protects your business.',
       'Older dogs, brachycephalic breeds (like Bulldogs and Pugs), and pets with heart or respiratory conditions are at elevated risk during grooming sessions. Your waiver collects this information upfront and establishes that the owner is aware of and accepts these risks.',
@@ -158,15 +158,15 @@ export const waiverTypes: WaiverType[] = [
     title: 'Horse Riding Waiver',
     emoji: '🏇',
     activityType: 'Horse Riding',
-    metaDescription: 'Create a horse riding liability waiver for your stable or riding school. Customised with your governing state, covers fall risk and equine liability laws. Free to preview and download.',
+    metaDescription: 'Create a horse riding liability waiver for your stable or riding school. Covers fall risk, equine-specific risks, and your selected governing state. Free to preview and download.',
     intro: [
-      'Horse riding is one of the highest-risk leisure activities available to the public, and most states have enacted specific Equine Liability Acts that affect how waivers must be written. Your horse riding waiver must acknowledge both common law liability and your state\'s specific equine statutes.',
+      'WaiverMaker generates a horse riding waiver with equine-specific risk acknowledgements and your selected governing state. Equine activity laws vary by state, so businesses should verify any state-specific statutory notice or wording requirements separately.',
       'Stables, riding schools, trail ride operators, and equine therapy providers all need signed waivers before any rider mounts. The inherent unpredictability of horses — spooking, bucking, biting — must be clearly disclosed to participants regardless of their experience level.',
-      'WaiverMaker generates a horse riding waiver that incorporates your state\'s equine liability language, covers your specific services, and documents meaningful informed consent.',
+      'Your waiver documents that participants have been informed of these inherent risks and have chosen to proceed voluntarily.',
     ],
     clauses: [
       'Equine unpredictability and inherent risk acknowledgment',
-      'Includes a governing-law section identifying your selected state',
+      'Governing-law section identifying your selected state',
       'Fall and impact injury risk disclosure',
       'Rider experience and skill level declaration',
       'Equipment inspection and proper fit responsibility',
