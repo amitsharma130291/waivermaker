@@ -103,9 +103,9 @@
   }
   .nav-dropdown-menu {
     display: none;
-    position: absolute;
-    top: calc(100% + 8px);
-    left: 0;
+    position: fixed;
+    top: 72px;
+    left: auto;
     background: #fff;
     border: 1px solid #e2e8f0;
     border-radius: 10px;
@@ -113,7 +113,6 @@
     min-width: 220px;
     z-index: 9999;
     padding: 8px 0 6px;
-    margin-top: 0;
   }
   /* Invisible hover bridge — covers the gap between the toggle and the menu */
   .nav-dropdown-menu::before {
@@ -151,6 +150,9 @@
   if (dropdown && toggle && menu) {
     const show = () => {
       if (hideTimer) clearTimeout(hideTimer);
+      // Position menu using fixed coords so it escapes all stacking contexts
+      const rect = (toggle as HTMLElement).getBoundingClientRect();
+      (menu as HTMLElement).style.left = rect.left + 'px';
       (toggle as HTMLElement).setAttribute('aria-expanded', 'true');
       (menu as HTMLElement).style.display = 'block';
     };
