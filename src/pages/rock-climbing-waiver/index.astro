@@ -4,6 +4,8 @@ import Base from '../../layouts/Base.astro';
 import Nav from '../../components/Nav.astro';
 import WaiverForm from '../../components/WaiverForm.astro';
 import Footer from '../../components/Footer.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import RelatedWaivers from '../../components/RelatedWaivers.astro';
 import '../../styles/global.css';
 ---
 <Base
@@ -11,6 +13,11 @@ import '../../styles/global.css';
   description="Generate a rock climbing liability waiver covering equipment risks, falling hazards, and route difficulty. Free to preview and download. No signup needed."
 >
   <Nav />
+
+  <Breadcrumbs items={[
+    { label: 'Home', href: '/' },
+    { label: 'Rock Climbing Waiver', href: '/rock-climbing-waiver/' },
+  ]} />
 
   <!-- Hero + Tool: 2-column on desktop, stacked on mobile -->
   <section class="seo-hero">
@@ -234,6 +241,7 @@ import '../../styles/global.css';
   </div>
 
   <p class="last-reviewed">Last reviewed for accuracy: August 2026 · Template v1.0</p>
+  <RelatedWaivers currentSlug="rock-climbing-waiver" />
   <Footer />
 </Base>
 

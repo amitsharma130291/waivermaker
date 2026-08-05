@@ -5,7 +5,7 @@ import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
 import '../styles/global.css';
 ---
-<Base title="Privacy Policy — WaiverMaker" description="WaiverMaker.com privacy policy.">
+<Base title="Privacy Policy — WaiverMaker" description="WaiverMaker.com privacy policy." noindex={true}>
   <Nav />
   <div class="landing-content" style="padding-top:60px;">
     <h1 style="font-size:32px;font-weight:900;margin-bottom:24px;color:var(--dark);">Privacy Policy</h1>
@@ -14,11 +14,50 @@ import '../styles/global.css';
     <p>When you use WaiverMaker.com, we collect the information you provide in the waiver generator form, including business name, contact email, and activity details. We use this information solely to generate your waiver document.</p>
     <h2>How We Use Your Information</h2>
     <p>Your information is used to generate the PDF waiver you request. We do not sell, rent, or share your personal information with third parties except as required to comply with law.</p>
-    
     <h2>Cookies</h2>
     <p>We use essential cookies to operate the site. We do not use third-party tracking cookies.</p>
     <h2>Contact</h2>
     <p>Questions? Email us at <a href="mailto:support@waivermaker.com" style="color:var(--emerald);">support@waivermaker.com</a></p>
   </div>
+
+  <div class="policy-cta">
+    <a href="/">&larr; Back to WaiverMaker</a>
+    <a href="/" class="cta-button">Generate Free Waiver &rarr;</a>
+  </div>
+
   <Footer />
 </Base>
+
+<style>
+  .policy-cta {
+    max-width: 680px;
+    margin: 0 auto 60px;
+    padding: 24px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    border-top: 1px solid #e2e8f0;
+  }
+  .policy-cta a:first-child {
+    color: var(--muted, #64748b);
+    text-decoration: none;
+    font-size: 14px;
+  }
+  .policy-cta a:first-child:hover {
+    color: #0f172a;
+  }
+  .cta-button {
+    display: inline-block;
+    background: #059669;
+    color: #fff !important;
+    font-weight: 700;
+    font-size: 14px;
+    padding: 10px 20px;
+    border-radius: 8px;
+    text-decoration: none;
+  }
+  .cta-button:hover {
+    background: #047857;
+  }
+</style>

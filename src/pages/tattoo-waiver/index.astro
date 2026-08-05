@@ -4,6 +4,8 @@ import Base from '../../layouts/Base.astro';
 import Nav from '../../components/Nav.astro';
 import WaiverForm from '../../components/WaiverForm.astro';
 import Footer from '../../components/Footer.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import RelatedWaivers from '../../components/RelatedWaivers.astro';
 import '../../styles/global.css';
 ---
 <Base
@@ -11,6 +13,17 @@ import '../../styles/global.css';
   description="Generate a tattoo studio liability waiver in 30 seconds. Free to preview and download. No account needed."
 >
   <Nav />
+
+  <Breadcrumbs items={[
+    { label: 'Home', href: '/' },
+    { label: 'Tattoo Waiver', href: '/tattoo-waiver/' },
+  ]} />
+
+  <!-- Sub-page links -->
+  <div style="max-width:900px;margin:0 auto 16px;padding:0 20px;display:flex;gap:16px;font-size:14px;">
+    <a href="/tattoo-waiver/template/" style="color:#059669;text-decoration:none;">📄 View full template</a>
+    <a href="/tattoo-waiver/form/" style="color:#059669;text-decoration:none;">📝 Quick form</a>
+  </div>
 
   <!-- Hero + Tool: 2-column on desktop, stacked on mobile -->
   <section class="seo-hero">
@@ -197,6 +210,7 @@ import '../../styles/global.css';
   </div>
 
   <p class="last-reviewed">Last reviewed for accuracy: August 2026 · Template v1.0</p>
+  <RelatedWaivers currentSlug="tattoo-waiver" />
   <Footer />
 </Base>
 

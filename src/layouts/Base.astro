@@ -3,15 +3,39 @@ export interface Props {
   title: string;
   description?: string;
   canonical?: string;
+  noindex?: boolean;
+  schema?: object | object[];
 }
 
 const {
   title,
   description = 'Generate professional liability waivers for your business in minutes. Completely free — no account needed.',
   canonical,
+  noindex = false,
+  schema,
 } = Astro.props;
 
-const canonicalUrl = canonical || Astro.url.href;
+const canonicalUrl = canonical || `https://waivermaker.com${Astro.url.pathname}`;
+
+// Normalise schema to array for multi-block support
+const schemaBlocks: object[] = schema
+  ? Array.isArray(schema) ? schema : [schema]
+  : [];
+
+const webAppSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebApplication',
+  name: 'WaiverMaker',
+  url: 'https://waivermaker.com',
+  description: 'Free liability waiver generator for gyms, tattoo studios, climbing facilities, volunteer organisations and more.',
+  applicationCategory: 'BusinessApplication',
+  offers: {
+    '@type': 'Offer',
+    price: '0',
+    priceCurrency: 'USD',
+  },
+  operatingSystem: 'Web',
+};
 ---
 <!DOCTYPE html>
 <html lang="en">
@@ -21,12 +45,21 @@ const canonicalUrl = canonical || Astro.url.href;
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonicalUrl} />
+    <meta name="robots" content={noindex ? 'noindex, follow' : 'index, follow'} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalUrl} />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+    <!-- WebApplication schema on every page -->
+    <script type="application/ld+json" set:html={JSON.stringify(webAppSchema)} />
+    <!-- Page-specific schema blocks -->
+    {schemaBlocks.map(s => (
+      <script type="application/ld+json" set:html={JSON.stringify(s)} />
+    ))}
+    <slot name="head" />
   </head>
   <body>
     <slot />

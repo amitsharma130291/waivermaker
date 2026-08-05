@@ -1,0 +1,94 @@
+---
+export interface Props {
+  currentSlug: string;
+}
+const { currentSlug } = Astro.props;
+
+const allWaivers = [
+  { slug: 'gym-waiver',              emoji: '💪', name: 'Gym & Fitness Waiver' },
+  { slug: 'tattoo-waiver',           emoji: '🎨', name: 'Tattoo Studio Waiver' },
+  { slug: 'yoga-waiver',             emoji: '🧘', name: 'Yoga Studio Waiver' },
+  { slug: 'volunteer-waiver',        emoji: '🤝', name: 'Volunteer Waiver' },
+  { slug: 'rock-climbing-waiver',    emoji: '🧗', name: 'Rock Climbing Waiver' },
+  { slug: 'dog-grooming-waiver',     emoji: '🐕', name: 'Dog Grooming Waiver' },
+  { slug: 'horse-riding-waiver',     emoji: '🏇', name: 'Horse Riding Waiver' },
+  { slug: 'personal-trainer-waiver', emoji: '🏋️', name: 'Personal Trainer Waiver' },
+];
+
+// Contextual related waiver map
+const relatedMap: Record<string, string[]> = {
+  'tattoo-waiver':           ['gym-waiver', 'personal-trainer-waiver', 'volunteer-waiver'],
+  'rock-climbing-waiver':    ['gym-waiver', 'volunteer-waiver', 'horse-riding-waiver'],
+  'volunteer-waiver':        ['dog-grooming-waiver', 'yoga-waiver', 'gym-waiver'],
+  'gym-waiver':              ['personal-trainer-waiver', 'rock-climbing-waiver', 'yoga-waiver'],
+  'yoga-waiver':             ['personal-trainer-waiver', 'gym-waiver', 'dog-grooming-waiver'],
+  'dog-grooming-waiver':     ['volunteer-waiver', 'gym-waiver', 'personal-trainer-waiver'],
+  'horse-riding-waiver':     ['rock-climbing-waiver', 'volunteer-waiver', 'gym-waiver'],
+  'personal-trainer-waiver': ['gym-waiver', 'yoga-waiver', 'rock-climbing-waiver'],
+};
+
+const relatedSlugs = relatedMap[currentSlug] || allWaivers.filter(w => w.slug !== currentSlug).slice(0, 3).map(w => w.slug);
+const related = relatedSlugs.map(slug => allWaivers.find(w => w.slug === slug)!).filter(Boolean);
+---
+<section class="related-waivers">
+  <h2>Related Waivers</h2>
+  <div class="related-grid">
+    {related.map(w => (
+      <a href={`/${w.slug}/`} class="related-card">
+        <span class="related-icon">{w.emoji}</span>
+        <span class="related-name">{w.name}</span>
+        <span class="related-cta">Generate free &rsaquo;</span>
+      </a>
+    ))}
+  </div>
+</section>
+
+<style>
+  .related-waivers {
+    max-width: 900px;
+    margin: 48px auto 0;
+    padding: 0 20px;
+  }
+  .related-waivers h2 {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 16px;
+    color: var(--dark, #0f172a);
+  }
+  .related-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 12px;
+  }
+  .related-card {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 16px;
+    text-decoration: none;
+    transition: box-shadow 0.15s, transform 0.15s;
+  }
+  .related-card:hover {
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    transform: translateY(-2px);
+  }
+  .related-icon {
+    font-size: 28px;
+  }
+  .related-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--dark, #0f172a);
+    line-height: 1.3;
+  }
+  .related-cta {
+    font-size: 13px;
+    color: var(--emerald, #059669);
+    font-weight: 500;
+    margin-top: 4px;
+  }
+</style>

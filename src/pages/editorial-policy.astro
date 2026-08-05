@@ -3,11 +3,16 @@ export const prerender = true;
 import Base from '../layouts/Base.astro';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
 import '../styles/global.css';
 ---
-<Base title="Editorial & Template Policy | WaiverMaker" description="How WaiverMaker creates, reviews, and describes its waiver templates.">
+<Base title="Editorial &amp; Template Policy | WaiverMaker" description="How WaiverMaker creates, reviews, and describes its waiver templates.">
   <Nav />
   <main class="legal-page"><article class="legal-content">
+    <Breadcrumbs items={[
+      { label: 'Home', href: '/' },
+      { label: 'Editorial Policy', href: '/editorial-policy/' },
+    ]} />
     <h1>Editorial &amp; Template Policy</h1>
     <h2>How our templates are created</h2><p>WaiverMaker templates are built by reviewing commonly used waiver provisions for each activity type, drawing on standard legal document structures used across the industry. Templates include provisions that are commonly relevant to that activity.</p>
     <h2>What "activity-specific" means</h2><p>Each activity type generates a document with clauses relevant to that activity's common risks and consent requirements: for example, a tattoo waiver includes bloodborne pathogen acknowledgement and aftercare responsibility; a rock climbing waiver includes equipment inspection and belayer competency clauses. "Activity-specific" refers to the clauses included, not to a determination that the document satisfies every legal requirement in any particular jurisdiction.</p>
@@ -18,5 +23,49 @@ import '../styles/global.css';
     <h2>What we don't guarantee</h2><ul><li>Is enforceable in your jurisdiction</li><li>Satisfies all applicable laws, regulations, or insurer requirements</li><li>Has been reviewed or approved by an attorney</li><li>Is appropriate for your specific situation</li></ul>
     <h2>Legal advice disclaimer</h2><p>Nothing on WaiverMaker.com constitutes legal advice. For advice specific to your business and jurisdiction, consult a licensed attorney.</p>
   </article></main>
+
+  <!-- Generator CTA -->
+  <div class="editorial-cta">
+    <h2>Generate Your Free Waiver</h2>
+    <p>The tool this policy describes — free, no account required.</p>
+    <a href="/" class="cta-button">Generate My Waiver &rarr;</a>
+  </div>
+
   <Footer />
 </Base>
+
+<style>
+  .editorial-cta {
+    max-width: 680px;
+    margin: 0 auto 60px;
+    padding: 36px 40px;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    text-align: center;
+  }
+  .editorial-cta h2 {
+    font-size: 22px;
+    font-weight: 800;
+    color: #0f172a;
+    margin-bottom: 8px;
+  }
+  .editorial-cta p {
+    color: #475569;
+    margin-bottom: 20px;
+  }
+  .cta-button {
+    display: inline-block;
+    background: #059669;
+    color: #fff;
+    font-weight: 700;
+    font-size: 15px;
+    padding: 14px 28px;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: background 0.15s;
+  }
+  .cta-button:hover {
+    background: #047857;
+  }
+</style>

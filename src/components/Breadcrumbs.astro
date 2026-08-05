@@ -1,0 +1,70 @@
+---
+export interface Props {
+  items: Array<{ label: string; href: string }>;
+}
+const { items } = Astro.props;
+
+const schemaItems = items.map((item, i) => ({
+  '@type': 'ListItem',
+  position: i + 1,
+  name: item.label,
+  item: `https://waivermaker.com${item.href}`,
+}));
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: schemaItems,
+};
+---
+<nav aria-label="breadcrumb" class="breadcrumb-nav">
+  <ol class="breadcrumb-list">
+    {items.map((item, i) => (
+      <li class="breadcrumb-item">
+        {i < items.length - 1 ? (
+          <a href={item.href}>{item.label}</a>
+        ) : (
+          <span aria-current="page">{item.label}</span>
+        )}
+        {i < items.length - 1 && <span class="bc-sep" aria-hidden="true">›</span>}
+      </li>
+    ))}
+  </ol>
+</nav>
+<script type="application/ld+json" set:html={JSON.stringify(schema)} />
+
+<style>
+  .breadcrumb-nav {
+    max-width: 900px;
+    margin: 0 auto 16px;
+    padding: 0 20px;
+  }
+  .breadcrumb-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    align-items: center;
+    font-size: 14px;
+    color: var(--muted, #64748b);
+  }
+  .breadcrumb-item {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .breadcrumb-item a {
+    color: var(--emerald, #059669);
+    text-decoration: none;
+  }
+  .breadcrumb-item a:hover {
+    text-decoration: underline;
+  }
+  .breadcrumb-item span[aria-current] {
+    color: var(--dark, #0f172a);
+  }
+  .bc-sep {
+    color: var(--muted, #64748b);
+  }
+</style>

@@ -1,12 +1,107 @@
 ---
 ---
-<footer>
-  <a href="/" class="footer-logo">waiver<span>maker</span></a>
-  <div>© 2026 WaiverMaker.com · Not legal advice</div>
-  <div class="footer-links">
-    <a href="/privacy/">Privacy</a>
-    <a href="/terms/">Terms</a>
-    <a href="/editorial-policy/">Editorial Policy</a>
-    <a href="mailto:support@waivermaker.com">Contact</a>
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <a href="/" class="footer-logo">waiver<span>maker</span></a>
+      <p class="footer-tagline">Free liability waiver generator.<br>No account needed.</p>
+      <p class="footer-legal">&copy; 2026 WaiverMaker.com &middot; Not legal advice</p>
+    </div>
+
+    <div class="footer-col">
+      <h3 class="footer-heading">Waiver Types</h3>
+      <ul>
+        <li><a href="/gym-waiver/">Gym Waiver</a></li>
+        <li><a href="/tattoo-waiver/">Tattoo Waiver</a></li>
+        <li><a href="/rock-climbing-waiver/">Rock Climbing Waiver</a></li>
+        <li><a href="/volunteer-waiver/">Volunteer Waiver</a></li>
+        <li><a href="/yoga-waiver/">Yoga Waiver</a></li>
+        <li><a href="/dog-grooming-waiver/">Dog Grooming Waiver</a></li>
+        <li><a href="/horse-riding-waiver/">Horse Riding Waiver</a></li>
+        <li><a href="/personal-trainer-waiver/">Personal Trainer Waiver</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-col">
+      <h3 class="footer-heading">Tools</h3>
+      <ul>
+        <li><a href="/">Generator</a></li>
+        <li><a href="/tattoo-waiver/template/">Template Viewer</a></li>
+        <li><a href="/tattoo-waiver/form/">Quick Form</a></li>
+      </ul>
+      <h3 class="footer-heading" style="margin-top:20px;">Company</h3>
+      <ul>
+        <li><a href="/about/">About</a></li>
+        <li><a href="/editorial-policy/">Editorial Policy</a></li>
+        <li><a href="/privacy/">Privacy</a></li>
+        <li><a href="/terms/">Terms</a></li>
+        <li><a href="mailto:support@waivermaker.com">Contact</a></li>
+      </ul>
+    </div>
   </div>
 </footer>
+
+<style>
+  .site-footer {
+    background: #0f172a;
+    color: #94a3b8;
+    padding: 48px 40px 32px;
+    margin-top: 60px;
+  }
+  .footer-inner {
+    max-width: 960px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 40px;
+  }
+  .footer-logo {
+    font-size: 20px;
+    font-weight: 800;
+    color: #fff;
+    text-decoration: none;
+  }
+  .footer-logo span {
+    color: var(--emerald, #059669);
+  }
+  .footer-tagline {
+    font-size: 13px;
+    margin-top: 10px;
+    line-height: 1.6;
+  }
+  .footer-legal {
+    font-size: 12px;
+    margin-top: 16px;
+    color: #64748b;
+  }
+  .footer-heading {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #64748b;
+    margin-bottom: 10px;
+  }
+  .footer-col ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+  }
+  .footer-col ul a {
+    color: #94a3b8;
+    text-decoration: none;
+    font-size: 14px;
+    transition: color 0.15s;
+  }
+  .footer-col ul a:hover {
+    color: #fff;
+  }
+  @media (max-width: 640px) {
+    .footer-inner {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

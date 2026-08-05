@@ -3,6 +3,7 @@ export const prerender = true;
 import Base from '../../layouts/Base.astro';
 import Nav from '../../components/Nav.astro';
 import Footer from '../../components/Footer.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import '../../styles/global.css';
 ---
 <Base
@@ -10,6 +11,16 @@ import '../../styles/global.css';
   description="View and customise a free tattoo studio liability waiver template. Edit your studio name and state — preview updates live. Download clean PDF free."
 >
   <Nav />
+
+  <Breadcrumbs items={[
+    { label: 'Home', href: '/' },
+    { label: 'Tattoo Waiver', href: '/tattoo-waiver/' },
+    { label: 'Template', href: '/tattoo-waiver/template/' },
+  ]} />
+  <div style="max-width:900px;margin:0 auto 12px;padding:0 20px;font-size:14px;display:flex;gap:16px;">
+    <a href="/tattoo-waiver/" style="color:#64748b;text-decoration:none;">← Back to Tattoo Waiver</a>
+    <a href="/tattoo-waiver/form/" style="color:#059669;text-decoration:none;">📝 Or fill the full form →</a>
+  </div>
 
   <!-- Hero + Template Viewer: 2-col desktop, stacked mobile -->
   <section class="template-hero">
