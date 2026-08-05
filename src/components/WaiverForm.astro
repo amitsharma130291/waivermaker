@@ -181,11 +181,15 @@ const baselineDefinitionJSON = JSON.stringify(
 
 <script>
   // ---------------------------------------------------------------------------
-  // Load shared definition data embedded by the server
+  // Load shared definition data — defensive parse so script never crashes
   // ---------------------------------------------------------------------------
-  const allChecklists: Record<string, string[]> = JSON.parse(
-    document.getElementById('wm-checklists')!.textContent || '{}'
-  );
+  let allChecklists: Record<string, string[]> = {};
+  try {
+    const raw = document.getElementById('wm-checklists')?.textContent;
+    if (raw) allChecklists = JSON.parse(raw);
+  } catch (e) {
+    console.error('[WaiverForm] Failed to parse wm-checklists:', e);
+  }
 
   // Form data store
   const formData: Record<string, string | boolean> = {};
@@ -207,7 +211,7 @@ const baselineDefinitionJSON = JSON.stringify(
     const businessName = (document.getElementById('business-name') as HTMLInputElement)?.value.trim();
     const state = (document.getElementById('state') as HTMLSelectElement)?.value;
     const ownerName = (document.getElementById('owner-name') as HTMLInputElement)?.value.trim();
-    const contactEmail = (document.getElementById('contact-email') as HTMLInputElement)?.value.trim();
+    const contactEmail = (document.getElementById('contact-email') as HTMLInputElement)?.value?.trim() || '';
     const businessAddress = (document.getElementById('business-address') as HTMLInputElement)?.value.trim();
 
     if (!businessName) { alert('Please enter your business name.'); return false; }
@@ -314,10 +318,14 @@ const baselineDefinitionJSON = JSON.stringify(
   // Checklist — uses the shared definitions data embedded by the server
   // ---------------------------------------------------------------------------
   function updateInclusionList() {
-    const activity = (document.getElementById('activity-type') as HTMLSelectElement)?.value || 'Gym/Fitness';
-    const list = document.getElementById('waiver-includes-list');
-    const items = allChecklists[activity] || allChecklists['Gym/Fitness'] || [];
-    if (list) list.innerHTML = items.map(item => `<li>✓ ${item}</li>`).join('');
+    try {
+      const activity = (document.getElementById('activity-type') as HTMLSelectElement)?.value || 'Gym/Fitness';
+      const list = document.getElementById('waiver-includes-list');
+      const items = allChecklists[activity] || allChecklists['Gym/Fitness'] || [];
+      if (list) list.innerHTML = items.map(item => `<li>✓ ${item}</li>`).join('');
+    } catch (e) {
+      console.error('[WaiverForm] updateInclusionList error:', e);
+    }
   }
   updateInclusionList();
   document.getElementById('activity-type')?.addEventListener('change', updateInclusionList);
@@ -332,13 +340,23 @@ const baselineDefinitionJSON = JSON.stringify(
   document.getElementById('back-step-2')?.addEventListener('click', () => showStep(1));
 
   document.getElementById('next-step-2')?.addEventListener('click', async () => {
-    collectStep2();
-    const preview = document.getElementById('waiver-preview-text');
-    if (preview) {
-      preview.innerHTML = '<p style="color:#6B7280;text-align:center;">Building preview…</p>';
-      showStep(3);
-      preview.innerHTML = await buildWaiverPreview();
-    } else {
+    try {
+      collectStep2();
+      const preview = document.getElementById('waiver-preview-text');
+      if (preview) {
+        preview.innerHTML = '<p style="color:#6B7280;text-align:center;">Building preview…</p>';
+        showStep(3);
+        try {
+          preview.innerHTML = await buildWaiverPreview();
+        } catch (e) {
+          console.error('[WaiverForm] buildWaiverPreview error:', e);
+          preview.innerHTML = renderFallbackPreview();
+        }
+      } else {
+        showStep(3);
+      }
+    } catch (e) {
+      console.error('[WaiverForm] next-step-2 handler error:', e);
       showStep(3);
     }
   });
