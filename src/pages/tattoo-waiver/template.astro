@@ -1,0 +1,564 @@
+---
+export const prerender = true;
+import Base from '../../layouts/Base.astro';
+import Nav from '../../components/Nav.astro';
+import Footer from '../../components/Footer.astro';
+import '../../styles/global.css';
+---
+<Base
+  title="Tattoo Waiver Template | Free Tattoo Studio Liability Waiver"
+  description="View and customise a free tattoo studio liability waiver template. Edit your studio name and state — preview updates live. Download clean PDF for $9.99."
+>
+  <Nav />
+
+  <!-- Hero + Template Viewer: 2-col desktop, stacked mobile -->
+  <section class="template-hero">
+    <div class="template-hero-inner">
+
+      <!-- Left: Controls -->
+      <div class="template-left">
+        <div class="hero-badge">✓ Free to view &amp; copy · $9.99 clean PDF</div>
+        <h1>Tattoo Studio Liability Waiver Template</h1>
+        <p class="hero-sub">Edit the fields below to customise this template for your studio. Free to view and copy — download a clean PDF for $9.99.</p>
+
+        <div class="template-fields">
+          <div class="tfield-group">
+            <label for="studio-name">Studio Name</label>
+            <input type="text" id="studio-name" placeholder="Iron Lotus Tattoo" value="Iron Lotus Tattoo" />
+          </div>
+          <div class="tfield-group">
+            <label for="state">State</label>
+            <input type="text" id="state" placeholder="California" value="California" />
+          </div>
+          <div class="tfield-group">
+            <label for="owner-name">Owner Name</label>
+            <input type="text" id="owner-name" placeholder="Jane Smith" value="Jane Smith" />
+          </div>
+        </div>
+
+        <div class="template-actions">
+          <button class="btn-download" id="download-btn">
+            Download PDF — $9.99 →
+          </button>
+          <button class="btn-copy" id="copy-btn">
+            Copy Text
+          </button>
+        </div>
+
+        <p class="template-note">🔒 Preview is free · Watermark removed in paid PDF · Not legal advice</p>
+      </div>
+
+      <!-- Right: Live waiver preview -->
+      <div class="template-right">
+        <div class="waiver-doc" id="waiver-preview">
+          <!-- Populated by JS on load and on input -->
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Below-fold content -->
+  <div class="template-content">
+
+    <!-- What this template covers -->
+    <section class="tc-section">
+      <h2>What This Template Covers</h2>
+      <p>This tattoo studio liability waiver template includes all 11 clauses recommended for a legally complete tattoo consent form:</p>
+      <ul class="clause-list">
+        <li><strong>Informed Consent &amp; Voluntary Participation</strong> — confirms the client is choosing the tattoo freely and understands its permanent nature.</li>
+        <li><strong>Acknowledgement of Risks</strong> — discloses allergic reactions, infection, scarring, keloid formation, and fading or migration of ink over time.</li>
+        <li><strong>Bloodborne Pathogen &amp; Sterilisation Acknowledgement</strong> — documents that the studio follows sterilisation protocols and the client is aware of infection risks.</li>
+        <li><strong>Aftercare Responsibility</strong> — places healing responsibility on the client and confirms they received aftercare instructions.</li>
+        <li><strong>Age Verification</strong> — confirms the client is 18+ or has documented guardian consent.</li>
+        <li><strong>Photographic / Social Media Consent</strong> — optional clause for portfolio and promotional use (checkbox format).</li>
+        <li><strong>Assumption of Risk &amp; Release of Liability</strong> — the client releases the studio from claims arising from disclosed risks.</li>
+        <li><strong>Indemnification</strong> — the client agrees to hold the studio harmless from any costs arising from their participation.</li>
+        <li><strong>No Medical Advice Disclaimer</strong> — confirms the studio does not provide medical advice and the client should consult a physician with health concerns.</li>
+        <li><strong>Governing Law</strong> — populated with the chosen state, specifying which state's laws govern the waiver.</li>
+        <li><strong>Signature + Date Line</strong> — client signature, printed name, and date fields.</li>
+      </ul>
+    </section>
+
+    <!-- How to use -->
+    <section class="tc-section alt-bg">
+      <h2>How to Use This Waiver</h2>
+      <div class="steps-row">
+        <div class="step-item">
+          <div class="step-n">1</div>
+          <h3>Customise</h3>
+          <p>Enter your studio name, state, and owner name above. The document updates in real time so you can review the final text before downloading.</p>
+        </div>
+        <div class="step-item">
+          <div class="step-n">2</div>
+          <h3>Print or Go Digital</h3>
+          <p>Download a clean, watermark-free PDF for $9.99. Print it for in-person signing, or use a digital signature tool (DocuSign, Adobe Sign) for online clients.</p>
+        </div>
+        <div class="step-item">
+          <div class="step-n">3</div>
+          <h3>Collect Signatures</h3>
+          <p>Have every client sign before their appointment begins — not after. Keep signed copies for at least 5–7 years or the duration of your state's statute of limitations.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="tc-section">
+      <h2>Template FAQ</h2>
+      <div class="faq-list">
+        <details class="faq-item">
+          <summary>Is this template legally valid in my state?</summary>
+          <p>This template is drafted to reflect standard liability waiver requirements across US states. The governing law clause is auto-populated with your chosen state. However, waiver enforceability varies by state and circumstance — we recommend having an attorney review any waiver before regular use. This template is not a substitute for legal advice.</p>
+        </details>
+        <details class="faq-item">
+          <summary>What's the difference between this template and the generator?</summary>
+          <p>The template on this page shows you the full waiver text immediately — you can read, copy, and customise it right now. The <a href="/tattoo-waiver/form/">waiver generator</a> walks you through a guided 3-step form that collects more detail (business address, specific risks, emergency contact preferences) and produces a more personalised document.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Can I copy the text and use it for free?</summary>
+          <p>Yes — the template text is free to copy and use. The $9.99 download gives you a professionally formatted, watermark-free PDF ready for printing or digital distribution. If you only need the text, copy it from the preview above using the "Copy Text" button.</p>
+        </details>
+      </div>
+    </section>
+
+    <!-- Related -->
+    <section class="tc-section related-section">
+      <h2>More Tattoo Studio Resources</h2>
+      <div class="related-links">
+        <a href="/tattoo-waiver/" class="related-card">
+          <span class="related-icon">🎨</span>
+          <div>
+            <strong>Tattoo Waiver Generator</strong>
+            <p>Generate a fully customised tattoo studio waiver in 30 seconds — pre-set to Tattoo Studio.</p>
+          </div>
+          <span class="related-arrow">›</span>
+        </a>
+        <a href="/tattoo-waiver/form/" class="related-card">
+          <span class="related-icon">📝</span>
+          <div>
+            <strong>Tattoo Waiver Form</strong>
+            <p>Dedicated full-page form — enter all your studio details and preview your complete waiver.</p>
+          </div>
+          <span class="related-arrow">›</span>
+        </a>
+      </div>
+    </section>
+
+  </div>
+
+  <Footer />
+</Base>
+
+<script>
+  // Generate the full waiver HTML from current field values
+  function generateWaiverHTML(studioName: string, ownerName: string, state: string): string {
+    return `
+      <div class="wdoc-watermark">WaiverMaker.com — Preview Only</div>
+
+      <div class="wdoc-header">
+        <div class="wdoc-logo">TATTOO STUDIO LIABILITY WAIVER &amp; INFORMED CONSENT</div>
+        <div class="wdoc-meta">${studioName} | State of ${state}</div>
+      </div>
+
+      <p class="wdoc-intro">Please read this entire document carefully before signing. By signing below, you acknowledge that you have read, understood, and voluntarily agree to all terms contained herein.</p>
+
+      <h3 class="wdoc-clause-title">1. Informed Consent &amp; Voluntary Participation</h3>
+      <p>I, the undersigned Client, voluntarily consent to receive a permanent tattoo from <strong>${studioName}</strong> ("Studio"), located in the State of ${state}. I understand that tattooing is a permanent body modification and that I am making this decision freely and without coercion.</p>
+
+      <h3 class="wdoc-clause-title">2. Acknowledgement of Risks</h3>
+      <p>I acknowledge and understand that tattooing involves inherent risks, including but not limited to: allergic reactions to tattoo ink pigments (including nickel, chromium, cobalt, and other metals in coloured inks); risk of infection; scarring; keloid formation; and fading, migration, or spreading of ink over time. I have disclosed any known allergies, skin conditions, or medical concerns to the Studio prior to this procedure.</p>
+
+      <h3 class="wdoc-clause-title">3. Bloodborne Pathogen &amp; Sterilisation Acknowledgement</h3>
+      <p>I acknowledge that ${studioName} uses single-use, sterile needles and equipment for each client and follows established sterilisation protocols. I understand that, despite these precautions, there remains a risk of bloodborne pathogen transmission (including but not limited to Hepatitis B, Hepatitis C, and HIV) and I voluntarily accept this risk.</p>
+
+      <h3 class="wdoc-clause-title">4. Aftercare Responsibility</h3>
+      <p>I understand that proper aftercare is essential to healing and that the Studio has provided or will provide me with aftercare instructions. I accept full responsibility for following those instructions. I acknowledge that healing outcomes vary by individual and that the Studio cannot guarantee any particular result.</p>
+
+      <h3 class="wdoc-clause-title">5. Age Verification</h3>
+      <p>I confirm that I am 18 years of age or older, or that I have obtained verifiable written consent from my parent or legal guardian as required by the laws of ${state}. I understand that providing false information regarding my age voids this waiver and all related agreements.</p>
+
+      <h3 class="wdoc-clause-title">6. Photographic / Social Media Consent (Optional)</h3>
+      <p>&#9744; I consent to ${studioName} photographing the completed tattoo for portfolio, social media, and promotional purposes. My name will not be used without separate written permission.</p>
+      <p>&#9744; I do not consent to photography of my tattoo.</p>
+
+      <h3 class="wdoc-clause-title">7. Assumption of Risk &amp; Release of Liability</h3>
+      <p>In consideration of being permitted to receive services from ${studioName}, I hereby release, waive, discharge, and covenant not to sue ${studioName}, its owner(s), employees, agents, and representatives from any and all liability, claims, demands, actions, and causes of action arising from or related to the tattooing procedure, including any injury, reaction, or complication arising from risks disclosed in this document.</p>
+
+      <h3 class="wdoc-clause-title">8. Indemnification</h3>
+      <p>I agree to indemnify and hold harmless ${studioName}, ${ownerName}, and their representatives from any loss, liability, damage, or cost they may incur as a result of my participation in services at the Studio, to the fullest extent permitted by the laws of ${state}.</p>
+
+      <h3 class="wdoc-clause-title">9. No Medical Advice Disclaimer</h3>
+      <p>I understand that ${studioName} does not provide medical advice and that nothing in this consent form or any communication with Studio staff constitutes medical advice. I am advised to consult a licensed physician regarding any health concerns before proceeding with a tattoo.</p>
+
+      <h3 class="wdoc-clause-title">10. Governing Law</h3>
+      <p>This waiver and release shall be governed by and construed in accordance with the laws of the State of ${state}, without regard to its conflict of law provisions. Any disputes arising under this agreement shall be resolved in the courts of ${state}.</p>
+
+      <h3 class="wdoc-clause-title">11. Severability</h3>
+      <p>If any provision of this waiver is found to be unenforceable, the remaining provisions shall continue in full force and effect.</p>
+
+      <div class="wdoc-sig">
+        <p>By signing below, I acknowledge that I have read this entire document, that I understand its terms, and that I am signing it voluntarily.</p>
+        <div class="sig-fields">
+          <div class="sig-field"><span>Client Signature:</span> <span class="sig-line"></span></div>
+          <div class="sig-field"><span>Date:</span> <span class="sig-line short"></span></div>
+          <div class="sig-field"><span>Printed Name:</span> <span class="sig-line"></span></div>
+          <div class="sig-field"><span>Studio Representative:</span> <span class="sig-line"></span></div>
+        </div>
+      </div>
+
+      <p class="wdoc-footer">Generated by WaiverMaker.com · Not legal advice · Consult an attorney for your specific situation.</p>
+    `;
+  }
+
+  function updatePreview() {
+    const studioName = (document.getElementById('studio-name') as HTMLInputElement)?.value || '[Studio Name]';
+    const ownerName  = (document.getElementById('owner-name')  as HTMLInputElement)?.value || '[Owner Name]';
+    const state      = (document.getElementById('state')       as HTMLInputElement)?.value || '[State]';
+    const preview = document.getElementById('waiver-preview');
+    if (preview) preview.innerHTML = generateWaiverHTML(studioName, ownerName, state);
+  }
+
+  // Wire inputs
+  ['studio-name', 'owner-name', 'state'].forEach(id => {
+    document.getElementById(id)?.addEventListener('input', updatePreview);
+  });
+
+  // Initial render
+  updatePreview();
+
+  // Copy text
+  document.getElementById('copy-btn')?.addEventListener('click', () => {
+    const preview = document.getElementById('waiver-preview');
+    if (!preview) return;
+    const text = preview.innerText || preview.textContent || '';
+    navigator.clipboard.writeText(text).then(() => {
+      const btn = document.getElementById('copy-btn') as HTMLButtonElement;
+      if (btn) { btn.textContent = 'Copied!'; setTimeout(() => { btn.textContent = 'Copy Text'; }, 2000); }
+    });
+  });
+
+  // Download (Dodo placeholder)
+  document.getElementById('download-btn')?.addEventListener('click', () => {
+    const params = new URLSearchParams();
+    params.set('activityType', 'Tattoo Studio');
+    params.set('businessName', (document.getElementById('studio-name') as HTMLInputElement)?.value || '');
+    params.set('state', (document.getElementById('state') as HTMLInputElement)?.value || '');
+    params.set('ownerName', (document.getElementById('owner-name') as HTMLInputElement)?.value || '');
+    window.location.href = `/api/generate-pdf?${params.toString()}`;
+  });
+</script>
+
+<style>
+  /* Hero 2-col layout */
+  .template-hero {
+    background: white;
+    padding: 60px 40px;
+    border-bottom: 1px solid #E5E7EB;
+  }
+  .template-hero-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    align-items: start;
+  }
+
+  /* Left column: controls */
+  .template-left { padding-top: 8px; }
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: #ECFDF5;
+    color: #059669;
+    padding: 5px 14px;
+    border-radius: 100px;
+    font-size: 12px;
+    font-weight: 600;
+    margin-bottom: 20px;
+  }
+  .template-left h1 {
+    font-size: 36px;
+    font-weight: 900;
+    line-height: 1.1;
+    letter-spacing: -1px;
+    color: #111827;
+    margin-bottom: 14px;
+  }
+  .hero-sub {
+    font-size: 16px;
+    color: #6B7280;
+    line-height: 1.6;
+    margin-bottom: 24px;
+  }
+
+  /* Inline edit fields */
+  .template-fields { display: flex; flex-direction: column; gap: 14px; margin-bottom: 24px; }
+  .tfield-group { display: flex; flex-direction: column; gap: 5px; }
+  .tfield-group label {
+    font-size: 12px;
+    font-weight: 600;
+    color: #374151;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .tfield-group input {
+    padding: 10px 14px;
+    border: 1.5px solid #E5E7EB;
+    border-radius: 8px;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    color: #111827;
+    outline: none;
+    transition: border-color 0.15s, box-shadow 0.15s;
+  }
+  .tfield-group input:focus {
+    border-color: #059669;
+    box-shadow: 0 0 0 3px rgba(5,150,105,0.1);
+  }
+
+  /* Action buttons */
+  .template-actions { display: flex; gap: 12px; margin-bottom: 14px; }
+  .btn-download {
+    background: #059669;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 10px;
+    font-weight: 700;
+    font-size: 14px;
+    cursor: pointer;
+    flex: 1;
+    transition: background 0.15s;
+  }
+  .btn-download:hover { background: #047857; }
+  .btn-copy {
+    background: white;
+    color: #059669;
+    border: 1.5px solid #059669;
+    padding: 12px 20px;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .btn-copy:hover { background: #ECFDF5; }
+  .template-note {
+    font-size: 12px;
+    color: #6B7280;
+    line-height: 1.5;
+  }
+
+  /* Right column: document viewer */
+  .template-right {
+    position: sticky;
+    top: 80px;
+  }
+  .waiver-doc {
+    background: white;
+    border: 1.5px solid #E5E7EB;
+    border-radius: 12px;
+    padding: 32px;
+    max-height: 80vh;
+    overflow-y: auto;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+    position: relative;
+    font-size: 13px;
+    line-height: 1.7;
+    color: #374151;
+  }
+
+  /* Waiver document internal styles */
+  :global(.wdoc-watermark) {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(-35deg);
+    font-size: 22px;
+    font-weight: 800;
+    color: rgba(5,150,105,0.08);
+    white-space: nowrap;
+    pointer-events: none;
+    user-select: none;
+    letter-spacing: 2px;
+  }
+  :global(.wdoc-header) {
+    text-align: center;
+    margin-bottom: 20px;
+    padding-bottom: 16px;
+    border-bottom: 2px solid #111827;
+  }
+  :global(.wdoc-logo) {
+    font-size: 14px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    color: #111827;
+    margin-bottom: 4px;
+  }
+  :global(.wdoc-meta) {
+    font-size: 12px;
+    color: #6B7280;
+  }
+  :global(.wdoc-intro) {
+    font-style: italic;
+    margin-bottom: 16px;
+    font-size: 12px;
+    color: #6B7280;
+  }
+  :global(.wdoc-clause-title) {
+    font-size: 12px;
+    font-weight: 700;
+    color: #111827;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-top: 16px;
+    margin-bottom: 6px;
+  }
+  :global(.wdoc-sig) {
+    margin-top: 24px;
+    padding-top: 16px;
+    border-top: 1.5px solid #E5E7EB;
+  }
+  :global(.sig-fields) {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin-top: 14px;
+  }
+  :global(.sig-field) {
+    display: flex;
+    align-items: flex-end;
+    gap: 10px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #374151;
+  }
+  :global(.sig-line) {
+    flex: 1;
+    border-bottom: 1px solid #111827;
+    display: inline-block;
+    min-width: 80px;
+  }
+  :global(.sig-line.short) { flex: 0 0 80px; }
+  :global(.wdoc-footer) {
+    margin-top: 20px;
+    font-size: 10px;
+    color: #9CA3AF;
+    text-align: center;
+  }
+
+  /* Below-fold content */
+  .template-content { background: white; }
+  .tc-section {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 60px 40px;
+  }
+  .tc-section.alt-bg {
+    max-width: 100%;
+    background: #F9FAFB;
+    border-top: 1px solid #E5E7EB;
+    border-bottom: 1px solid #E5E7EB;
+    padding: 60px 40px;
+  }
+  .tc-section h2 {
+    font-size: 28px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    color: #111827;
+    margin-bottom: 16px;
+  }
+  .tc-section > p {
+    color: #6B7280;
+    line-height: 1.6;
+    margin-bottom: 20px;
+  }
+
+  .clause-list {
+    padding-left: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .clause-list li {
+    font-size: 14px;
+    color: #374151;
+    line-height: 1.6;
+  }
+  .clause-list strong { color: #111827; }
+
+  .steps-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  .step-item { text-align: center; }
+  .step-n {
+    width: 44px;
+    height: 44px;
+    background: #059669;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 18px;
+    margin: 0 auto 14px;
+  }
+  .step-item h3 { font-size: 15px; font-weight: 700; color: #111827; margin-bottom: 8px; }
+  .step-item p { font-size: 13px; color: #6B7280; line-height: 1.6; }
+
+  .faq-list { display: flex; flex-direction: column; gap: 10px; }
+  .faq-item {
+    border: 1.5px solid #E5E7EB;
+    border-radius: 10px;
+    padding: 16px 20px;
+  }
+  .faq-item summary {
+    font-weight: 600;
+    color: #111827;
+    font-size: 15px;
+    list-style: none;
+    cursor: pointer;
+  }
+  .faq-item summary::-webkit-details-marker { display: none; }
+  .faq-item[open] summary { color: #059669; margin-bottom: 10px; }
+  .faq-item p { color: #6B7280; font-size: 14px; line-height: 1.6; margin: 0; }
+  .faq-item a { color: #059669; }
+
+  .related-section { border-top: 1px solid #E5E7EB; }
+  .related-links { display: flex; flex-direction: column; gap: 12px; }
+  .related-card {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    background: white;
+    border: 1.5px solid #E5E7EB;
+    border-radius: 12px;
+    padding: 20px;
+    text-decoration: none;
+    color: #111827;
+    transition: all 0.15s;
+  }
+  .related-card:hover { border-color: #059669; transform: translateY(-1px); }
+  .related-icon { font-size: 24px; }
+  .related-card strong { display: block; font-size: 15px; margin-bottom: 3px; }
+  .related-card p { font-size: 13px; color: #6B7280; margin: 0; }
+  .related-arrow { margin-left: auto; color: #6B7280; font-size: 20px; }
+
+  @media (max-width: 768px) {
+    .template-hero { padding: 40px 20px; }
+    .template-hero-inner { grid-template-columns: 1fr; gap: 32px; }
+    .template-left h1 { font-size: 28px; }
+    .template-right { position: static; }
+    .waiver-doc { max-height: 60vh; }
+    .steps-row { grid-template-columns: 1fr; }
+    .tc-section { padding: 40px 20px; }
+    .tc-section.alt-bg { padding: 40px 20px; }
+  }
+</style>

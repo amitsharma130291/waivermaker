@@ -1,0 +1,344 @@
+---
+export const prerender = true;
+import Base from '../../layouts/Base.astro';
+import Nav from '../../components/Nav.astro';
+import WaiverForm from '../../components/WaiverForm.astro';
+import Footer from '../../components/Footer.astro';
+import '../../styles/global.css';
+---
+<Base
+  title="Free Rock Climbing Waiver Generator | Climbing Gym Liability Waiver"
+  description="Generate a rock climbing liability waiver covering equipment risks, falling hazards, and route difficulty. Free preview, $9.99 download. No signup needed."
+>
+  <Nav />
+
+  <!-- Hero + Tool: 2-column on desktop, stacked on mobile -->
+  <section class="seo-hero">
+    <div class="seo-hero-inner">
+      <!-- Left: Hero content -->
+      <div class="seo-hero-left">
+        <div class="hero-badge">✓ Free to generate · $9.99 to download</div>
+        <h1>Rock Climbing Waiver — <span class="highlight">Free Generator for Gyms &amp; Guides</span></h1>
+        <p class="hero-sub">Generate a waiver covering equipment risks, route difficulty, and falling hazards. Free preview, instant download.</p>
+        <div class="hero-trust">
+          <span>🔒 No account needed</span>
+          <span>·</span>
+          <span>Preview free</span>
+          <span>·</span>
+          <span>Pay $9.99 to download</span>
+        </div>
+      </div>
+
+      <!-- Right: Tool -->
+      <div class="seo-hero-right">
+        <WaiverForm preselectedActivity="Rock Climbing" />
+      </div>
+    </div>
+  </section>
+
+  <!-- Supporting content -->
+  <div class="seo-content">
+
+    <!-- Key clauses -->
+    <section class="content-section">
+      <h2>Key Clauses for Rock Climbing Waivers</h2>
+      <p>Rock climbing carries inherent risks that courts recognise as part of the sport — but that does not mean your waiver can be vague. A well-drafted climbing waiver identifies specific hazards, obtains informed consent, and demonstrates that each participant understood what they were agreeing to.</p>
+      <div class="clauses-grid">
+        <div class="clause-card">
+          <div class="clause-num">1</div>
+          <div>
+            <strong>Inherent Risk of Climbing</strong>
+            <p>Acknowledges that falls, impact injuries, and overexertion are inherent to climbing — not the result of facility negligence.</p>
+          </div>
+        </div>
+        <div class="clause-card">
+          <div class="clause-num">2</div>
+          <div>
+            <strong>Equipment Inspection Responsibility</strong>
+            <p>The climber accepts responsibility for inspecting ropes, harnesses, carabiners, and belay devices before use.</p>
+          </div>
+        </div>
+        <div class="clause-card">
+          <div class="clause-num">3</div>
+          <div>
+            <strong>Belayer Competency</strong>
+            <p>Documents that the climber or their belay partner has been assessed or certified for belaying — a key liability defence.</p>
+          </div>
+        </div>
+        <div class="clause-card">
+          <div class="clause-num">4</div>
+          <div>
+            <strong>Route Difficulty Acknowledgement</strong>
+            <p>The climber confirms they understand route grading systems and will only attempt routes appropriate to their ability level.</p>
+          </div>
+        </div>
+        <div class="clause-card">
+          <div class="clause-num">5</div>
+          <div>
+            <strong>Rescue and Evacuation Costs</strong>
+            <p>In outdoor settings, confirms the climber accepts financial responsibility for search and rescue operations if needed.</p>
+          </div>
+        </div>
+        <div class="clause-card">
+          <div class="clause-num">6</div>
+          <div>
+            <strong>Photography Consent</strong>
+            <p>Optional clause permitting the facility to photograph or record climbing sessions for promotional and safety review purposes.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Who needs it -->
+    <section class="content-section alt-bg">
+      <h2>Who Needs a Rock Climbing Waiver</h2>
+      <div class="who-grid">
+        <div class="who-card">
+          <span class="who-icon">🏢</span>
+          <strong>Indoor Climbing Gyms</strong>
+          <p>Every member and day-pass visitor should sign before their first session. Many gyms collect annual waivers for members and per-visit waivers for guests.</p>
+        </div>
+        <div class="who-card">
+          <span class="who-icon">🏔️</span>
+          <strong>Outdoor Guide Companies</strong>
+          <p>Multi-pitch, sport climbing, and trad climbing guides face significant exposure. State laws vary on outdoor operator liability — your waiver must reflect them.</p>
+        </div>
+        <div class="who-card">
+          <span class="who-icon">🪨</span>
+          <strong>Bouldering Facilities</strong>
+          <p>Bouldering carries distinct risks (ground falls without a rope). A waiver specific to bouldering — including spotting responsibilities — is best practice.</p>
+        </div>
+        <div class="who-card">
+          <span class="who-icon">🎓</span>
+          <strong>University Climbing Clubs</strong>
+          <p>Student clubs using university walls or taking trips outdoors often need both their own waiver and compliance with the institution's risk management policy.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="content-section">
+      <h2>Rock Climbing Waiver — Frequently Asked Questions</h2>
+      <div class="faq-list">
+        <details class="faq-item">
+          <summary>Does a waiver cover all climbing accidents?</summary>
+          <p>A waiver covers injuries arising from the inherent risks of climbing that the participant acknowledged and accepted. It does not typically cover injuries caused by the facility's own negligence — for example, failing to maintain equipment in a safe condition, or providing faulty gear. Your operations must remain safe regardless of your waiver.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Do I need separate waivers for lead climbing versus bouldering?</summary>
+          <p>Ideally, yes — or at minimum a single waiver with sections specific to each discipline. Lead climbing introduces rope and belay risks that bouldering does not; bouldering introduces ground-fall risks that lead climbing mitigates. A well-structured waiver addresses both, with climbers initialling the sections relevant to their activity.</p>
+        </details>
+        <details class="faq-item">
+          <summary>What about minors at climbing gyms?</summary>
+          <p>Minors require a parent or guardian to sign on their behalf. Most gyms require an annual parental consent waiver for any climber under 18, which is kept on file. On each visit, the minor checks in against that file. A minor's own signature is not enforceable as a contract in most US states.</p>
+        </details>
+        <details class="faq-item">
+          <summary>How often should climbing waivers be updated?</summary>
+          <p>Review your waiver annually or whenever your services change significantly — for example, if you add lead climbing, a new outdoor venue, or equipment rental. Courts look for waivers that accurately reflect actual activities; a waiver that describes a different facility or programme than the one operating today is weaker in court.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Do climbing waivers hold up in court?</summary>
+          <p>They generally do, particularly in states that take a pro-freedom-of-contract stance (like Colorado and Utah — states with large climbing communities). Waivers are more likely to be upheld when they clearly identify specific risks, are signed without pressure, and are not buried in fine print. Courts are less likely to enforce them against minors or for gross negligence claims.</p>
+        </details>
+      </div>
+    </section>
+
+    <!-- Related -->
+    <section class="content-section related-section">
+      <h2>More Liability Waiver Types</h2>
+      <div class="related-links">
+        <a href="/tattoo-waiver/" class="related-card">
+          <span class="related-icon">🎨</span>
+          <div>
+            <strong>Tattoo Studio Waiver</strong>
+            <p>Generate a tattoo studio waiver covering informed consent, ink allergy, bloodborne pathogen risk, and aftercare.</p>
+          </div>
+          <span class="related-arrow">›</span>
+        </a>
+        <a href="/volunteer-waiver/" class="related-card">
+          <span class="related-icon">🤝</span>
+          <div>
+            <strong>Volunteer Waiver</strong>
+            <p>Create a volunteer liability waiver covering assumption of risk, indemnification, and emergency medical consent.</p>
+          </div>
+          <span class="related-arrow">›</span>
+        </a>
+      </div>
+    </section>
+
+  </div>
+
+  <Footer />
+</Base>
+
+<style>
+  .seo-hero {
+    background: white;
+    padding: 60px 40px;
+    border-bottom: 1px solid #E5E7EB;
+  }
+  .seo-hero-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    align-items: start;
+  }
+  .seo-hero-left { padding-top: 8px; }
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: #ECFDF5;
+    color: #059669;
+    padding: 5px 14px;
+    border-radius: 100px;
+    font-size: 12px;
+    font-weight: 600;
+    margin-bottom: 20px;
+  }
+  .seo-hero-left h1 {
+    font-size: 42px;
+    font-weight: 900;
+    line-height: 1.1;
+    letter-spacing: -1.5px;
+    color: #111827;
+    margin-bottom: 16px;
+  }
+  .highlight { color: #059669; }
+  .hero-sub {
+    font-size: 17px;
+    color: #6B7280;
+    line-height: 1.6;
+    margin-bottom: 20px;
+  }
+  .hero-trust {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: #6B7280;
+    flex-wrap: wrap;
+  }
+
+  .seo-content { background: white; }
+  .content-section {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 60px 40px;
+  }
+  .content-section.alt-bg {
+    max-width: 100%;
+    background: #F9FAFB;
+    border-top: 1px solid #E5E7EB;
+    border-bottom: 1px solid #E5E7EB;
+    padding: 60px 40px;
+  }
+  .content-section h2 {
+    font-size: 28px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    color: #111827;
+    margin-bottom: 16px;
+  }
+  .content-section > p {
+    color: #6B7280;
+    line-height: 1.6;
+    margin-bottom: 28px;
+  }
+
+  .clauses-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  .clause-card {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    background: white;
+    border: 1.5px solid #E5E7EB;
+    border-radius: 12px;
+    padding: 18px;
+  }
+  .clause-num {
+    width: 28px;
+    height: 28px;
+    background: #059669;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  .clause-card strong { display: block; color: #111827; margin-bottom: 4px; font-size: 14px; }
+  .clause-card p { color: #6B7280; font-size: 13px; line-height: 1.5; margin: 0; }
+
+  .who-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  .who-card {
+    background: white;
+    border: 1.5px solid #E5E7EB;
+    border-radius: 12px;
+    padding: 20px;
+  }
+  .who-icon { font-size: 26px; display: block; margin-bottom: 10px; }
+  .who-card strong { display: block; font-size: 14px; color: #111827; margin-bottom: 6px; }
+  .who-card p { font-size: 13px; color: #6B7280; line-height: 1.5; margin: 0; }
+
+  .faq-list { display: flex; flex-direction: column; gap: 10px; }
+  .faq-item {
+    border: 1.5px solid #E5E7EB;
+    border-radius: 10px;
+    padding: 16px 20px;
+  }
+  .faq-item summary {
+    font-weight: 600;
+    color: #111827;
+    font-size: 15px;
+    list-style: none;
+    cursor: pointer;
+  }
+  .faq-item summary::-webkit-details-marker { display: none; }
+  .faq-item[open] summary { color: #059669; margin-bottom: 10px; }
+  .faq-item p { color: #6B7280; font-size: 14px; line-height: 1.6; margin: 0; }
+
+  .related-section { border-top: 1px solid #E5E7EB; }
+  .related-links { display: flex; flex-direction: column; gap: 12px; }
+  .related-card {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    background: white;
+    border: 1.5px solid #E5E7EB;
+    border-radius: 12px;
+    padding: 20px;
+    text-decoration: none;
+    color: #111827;
+    transition: all 0.15s;
+  }
+  .related-card:hover { border-color: #059669; transform: translateY(-1px); }
+  .related-icon { font-size: 24px; }
+  .related-card strong { display: block; font-size: 15px; margin-bottom: 3px; }
+  .related-card p { font-size: 13px; color: #6B7280; margin: 0; }
+  .related-arrow { margin-left: auto; color: #6B7280; font-size: 20px; }
+
+  @media (max-width: 768px) {
+    .seo-hero { padding: 40px 20px; }
+    .seo-hero-inner { grid-template-columns: 1fr; gap: 32px; }
+    .seo-hero-left h1 { font-size: 30px; }
+    .clauses-grid { grid-template-columns: 1fr; }
+    .who-grid { grid-template-columns: 1fr; }
+    .content-section { padding: 40px 20px; }
+    .content-section.alt-bg { padding: 40px 20px; }
+  }
+</style>

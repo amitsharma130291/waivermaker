@@ -1,0 +1,354 @@
+---
+export const prerender = true;
+import Base from '../../layouts/Base.astro';
+import Nav from '../../components/Nav.astro';
+import WaiverForm from '../../components/WaiverForm.astro';
+import Footer from '../../components/Footer.astro';
+import '../../styles/global.css';
+---
+<Base
+  title="Free Tattoo Waiver Generator | Tattoo Studio Liability Waiver"
+  description="Generate a professional tattoo studio liability waiver in 30 seconds. Free preview, download for $9.99. Used by 12,000+ tattoo artists. No account needed."
+>
+  <Nav />
+
+  <!-- Hero + Tool: 2-column on desktop, stacked on mobile -->
+  <section class="seo-hero">
+    <div class="seo-hero-inner">
+      <!-- Left: Hero content -->
+      <div class="seo-hero-left">
+        <div class="hero-badge">✓ Free to generate · $9.99 to download</div>
+        <h1>Free Tattoo Studio Waiver — <span class="highlight">Generated in 30 Seconds</span></h1>
+        <p class="hero-sub">Used by 12,000+ tattoo artists across the US. Fill in your studio name and state — your waiver is ready instantly.</p>
+        <div class="hero-trust">
+          <span>🔒 No account needed</span>
+          <span>·</span>
+          <span>Preview free</span>
+          <span>·</span>
+          <span>Pay $9.99 to download</span>
+        </div>
+      </div>
+
+      <!-- Right: Tool -->
+      <div class="seo-hero-right">
+        <WaiverForm preselectedActivity="Tattoo Studio" />
+      </div>
+    </div>
+  </section>
+
+  <!-- Supporting content -->
+  <div class="seo-content">
+
+    <!-- What a tattoo waiver must include -->
+    <section class="content-section">
+      <h2>What a Tattoo Waiver Must Include</h2>
+      <p>A legally sound tattoo studio waiver does more than collect a signature — it documents informed consent, discloses specific risks, and protects your business under your state's laws. Every tattoo waiver should include these clauses:</p>
+      <div class="clauses-grid">
+        <div class="clause-card">
+          <div class="clause-num">1</div>
+          <div>
+            <strong>Informed Consent</strong>
+            <p>The client confirms they understand the permanent nature of the tattoo and consent to the procedure voluntarily.</p>
+          </div>
+        </div>
+        <div class="clause-card">
+          <div class="clause-num">2</div>
+          <div>
+            <strong>Ink Allergy Acknowledgement</strong>
+            <p>Discloses the risk of allergic reactions to tattoo ink, including metals and pigments in coloured inks.</p>
+          </div>
+        </div>
+        <div class="clause-card">
+          <div class="clause-num">3</div>
+          <div>
+            <strong>Bloodborne Pathogen Risk</strong>
+            <p>Documents that the client is aware of infection risks and that the studio follows sterilisation protocols.</p>
+          </div>
+        </div>
+        <div class="clause-card">
+          <div class="clause-num">4</div>
+          <div>
+            <strong>Aftercare Responsibility</strong>
+            <p>Places responsibility on the client for following aftercare instructions and acknowledges healing outcomes vary.</p>
+          </div>
+        </div>
+        <div class="clause-card">
+          <div class="clause-num">5</div>
+          <div>
+            <strong>Age Verification</strong>
+            <p>Confirms the client is 18+ or has verifiable parental/guardian consent if a minor (where permitted by state law).</p>
+          </div>
+        </div>
+        <div class="clause-card">
+          <div class="clause-num">6</div>
+          <div>
+            <strong>Photographic Consent</strong>
+            <p>An optional clause allowing the studio to photograph the finished tattoo for portfolio and social media use.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Why every tattoo studio needs one -->
+    <section class="content-section alt-bg">
+      <h2>Why Every Tattoo Studio Needs a Waiver</h2>
+      <div class="reasons-grid">
+        <div class="reason-card">
+          <div class="reason-icon">⚖️</div>
+          <h3>Liability Protection</h3>
+          <p>If a client develops an infection or allergic reaction after their tattoo, a signed waiver documents that they were informed of these risks beforehand — reducing your exposure to legal claims.</p>
+        </div>
+        <div class="reason-card">
+          <div class="reason-icon">🗺️</div>
+          <h3>State Regulations</h3>
+          <p>Many states require tattoo studios to obtain written informed consent before performing any procedure. A waiver ensures you meet these regulatory requirements and can demonstrate compliance.</p>
+        </div>
+        <div class="reason-card">
+          <div class="reason-icon">🛡️</div>
+          <h3>Insurance Requirements</h3>
+          <p>Professional liability insurance for tattoo studios often requires documented consent forms. Without them, a claim may be denied — leaving you personally exposed.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="content-section">
+      <h2>Tattoo Waiver — Frequently Asked Questions</h2>
+      <div class="faq-list">
+        <details class="faq-item">
+          <summary>Is a verbal waiver enough for a tattoo studio?</summary>
+          <p>No. A verbal agreement is extremely difficult to prove in court and provides almost no legal protection. A written, signed waiver is the only defensible form of consent. Some states specifically require written documentation for tattoo procedures.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Do I need a new waiver for each client visit?</summary>
+          <p>Best practice is to collect a fresh waiver for each new tattoo session, particularly if the design, body location, or ink colours differ. Many studios use a session-specific waiver alongside a general studio consent form. If your state requires annual renewal, follow that requirement.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Can minors sign a tattoo waiver?</summary>
+          <p>Minors (under 18) cannot legally sign contracts in most US states, which means their waiver signature is not enforceable without a parent or legal guardian co-signing. Most states prohibit tattooing minors entirely, even with parental consent. Check your state's specific laws before accepting minor clients.</p>
+        </details>
+        <details class="faq-item">
+          <summary>How long should I keep signed tattoo waivers?</summary>
+          <p>Retain signed waivers for at least 3–7 years, depending on your state's statute of limitations for personal injury claims. Many studios keep them indefinitely using digital storage. If a claim is made, your waiver is critical evidence.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Does a waiver mean clients can't sue me?</summary>
+          <p>A waiver significantly limits your liability, but it is not an absolute shield. Courts in some states will not enforce waivers that cover gross negligence, intentional misconduct, or violations of public health regulations. A waiver is your best legal protection — but maintaining proper sterilisation practices and following state health codes is equally important.</p>
+        </details>
+      </div>
+    </section>
+
+    <!-- Related pages -->
+    <section class="content-section related-section">
+      <h2>More Tattoo Studio Resources</h2>
+      <div class="related-links">
+        <a href="/tattoo-waiver/form/" class="related-card">
+          <span class="related-icon">📝</span>
+          <div>
+            <strong>Tattoo Waiver Form</strong>
+            <p>Dedicated full-page form — fill out your complete tattoo studio waiver in 2 minutes.</p>
+          </div>
+          <span class="related-arrow">›</span>
+        </a>
+        <a href="/tattoo-waiver/template/" class="related-card">
+          <span class="related-icon">📄</span>
+          <div>
+            <strong>Tattoo Waiver Template</strong>
+            <p>View and customise a free tattoo studio liability waiver template — edit inline, download PDF.</p>
+          </div>
+          <span class="related-arrow">›</span>
+        </a>
+      </div>
+    </section>
+
+  </div>
+
+  <Footer />
+</Base>
+
+<style>
+  /* ── SEO Hero: 2-col desktop, stacked mobile ── */
+  .seo-hero {
+    background: white;
+    padding: 60px 40px 60px;
+    border-bottom: 1px solid #E5E7EB;
+  }
+  .seo-hero-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    align-items: start;
+  }
+  .seo-hero-left {
+    padding-top: 8px;
+  }
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: #ECFDF5;
+    color: #059669;
+    padding: 5px 14px;
+    border-radius: 100px;
+    font-size: 12px;
+    font-weight: 600;
+    margin-bottom: 20px;
+  }
+  .seo-hero-left h1 {
+    font-size: 42px;
+    font-weight: 900;
+    line-height: 1.1;
+    letter-spacing: -1.5px;
+    color: #111827;
+    margin-bottom: 16px;
+  }
+  .highlight { color: #059669; }
+  .hero-sub {
+    font-size: 17px;
+    color: #6B7280;
+    line-height: 1.6;
+    margin-bottom: 20px;
+  }
+  .hero-trust {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: #6B7280;
+    flex-wrap: wrap;
+  }
+
+  /* ── Content sections ── */
+  .seo-content { background: white; }
+  .content-section {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 60px 40px;
+  }
+  .content-section.alt-bg {
+    max-width: 100%;
+    background: #F9FAFB;
+    border-top: 1px solid #E5E7EB;
+    border-bottom: 1px solid #E5E7EB;
+    padding: 60px 40px;
+  }
+  .content-section.alt-bg > * {
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .content-section h2 {
+    font-size: 28px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    color: #111827;
+    margin-bottom: 16px;
+  }
+  .content-section > p {
+    color: #6B7280;
+    line-height: 1.6;
+    margin-bottom: 28px;
+  }
+
+  /* Clauses grid */
+  .clauses-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  .clause-card {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    background: white;
+    border: 1.5px solid #E5E7EB;
+    border-radius: 12px;
+    padding: 18px;
+  }
+  .clause-num {
+    width: 28px;
+    height: 28px;
+    background: #059669;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  .clause-card strong { display: block; color: #111827; margin-bottom: 4px; font-size: 14px; }
+  .clause-card p { color: #6B7280; font-size: 13px; line-height: 1.5; margin: 0; }
+
+  /* Reasons grid */
+  .reasons-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  .reason-card {
+    background: white;
+    border: 1.5px solid #E5E7EB;
+    border-radius: 12px;
+    padding: 24px;
+  }
+  .reason-icon { font-size: 28px; margin-bottom: 12px; }
+  .reason-card h3 { font-size: 15px; font-weight: 700; color: #111827; margin-bottom: 8px; }
+  .reason-card p { font-size: 13px; color: #6B7280; line-height: 1.6; margin: 0; }
+
+  /* FAQ */
+  .faq-list { display: flex; flex-direction: column; gap: 10px; }
+  .faq-item {
+    border: 1.5px solid #E5E7EB;
+    border-radius: 10px;
+    padding: 16px 20px;
+    cursor: pointer;
+  }
+  .faq-item summary {
+    font-weight: 600;
+    color: #111827;
+    font-size: 15px;
+    list-style: none;
+    cursor: pointer;
+  }
+  .faq-item summary::-webkit-details-marker { display: none; }
+  .faq-item[open] summary { color: #059669; margin-bottom: 10px; }
+  .faq-item p { color: #6B7280; font-size: 14px; line-height: 1.6; margin: 0; }
+
+  /* Related */
+  .related-section { border-top: 1px solid #E5E7EB; }
+  .related-links { display: flex; flex-direction: column; gap: 12px; }
+  .related-card {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    background: white;
+    border: 1.5px solid #E5E7EB;
+    border-radius: 12px;
+    padding: 20px;
+    text-decoration: none;
+    color: #111827;
+    transition: all 0.15s;
+  }
+  .related-card:hover { border-color: #059669; transform: translateY(-1px); }
+  .related-icon { font-size: 24px; }
+  .related-card strong { display: block; font-size: 15px; margin-bottom: 3px; }
+  .related-card p { font-size: 13px; color: #6B7280; margin: 0; }
+  .related-arrow { margin-left: auto; color: #6B7280; font-size: 20px; }
+
+  /* Mobile */
+  @media (max-width: 768px) {
+    .seo-hero { padding: 40px 20px; }
+    .seo-hero-inner { grid-template-columns: 1fr; gap: 32px; }
+    .seo-hero-left h1 { font-size: 30px; }
+    .clauses-grid { grid-template-columns: 1fr; }
+    .reasons-grid { grid-template-columns: 1fr; }
+    .content-section { padding: 40px 20px; }
+    .content-section.alt-bg { padding: 40px 20px; }
+  }
+</style>

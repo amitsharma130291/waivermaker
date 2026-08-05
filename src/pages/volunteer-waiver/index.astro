@@ -1,0 +1,345 @@
+---
+export const prerender = true;
+import Base from '../../layouts/Base.astro';
+import Nav from '../../components/Nav.astro';
+import WaiverForm from '../../components/WaiverForm.astro';
+import Footer from '../../components/Footer.astro';
+import '../../styles/global.css';
+---
+<Base
+  title="Free Volunteer Waiver Generator | Volunteer Liability Waiver Form"
+  description="Create a volunteer liability waiver in seconds. Covers assumption of risk, indemnification, medical consent. Free preview — download for $9.99."
+>
+  <Nav />
+
+  <!-- Hero + Tool: 2-column on desktop, stacked on mobile -->
+  <section class="seo-hero">
+    <div class="seo-hero-inner">
+      <!-- Left: Hero content -->
+      <div class="seo-hero-left">
+        <div class="hero-badge">✓ Free to generate · $9.99 to download</div>
+        <h1>Free Volunteer Waiver — <span class="highlight">Ready in Under a Minute</span></h1>
+        <p class="hero-sub">Generate a legally-structured volunteer liability waiver for your organisation. Free to preview, $9.99 to download.</p>
+        <div class="hero-trust">
+          <span>🔒 No account needed</span>
+          <span>·</span>
+          <span>Preview free</span>
+          <span>·</span>
+          <span>Pay $9.99 to download</span>
+        </div>
+      </div>
+
+      <!-- Right: Tool -->
+      <div class="seo-hero-right">
+        <WaiverForm preselectedActivity="Volunteer" />
+      </div>
+    </div>
+  </section>
+
+  <!-- Supporting content -->
+  <div class="seo-content">
+
+    <!-- What a volunteer waiver must cover -->
+    <section class="content-section">
+      <h2>What a Volunteer Waiver Must Cover</h2>
+      <p>A volunteer waiver is not a one-size-fits-all document. It must address the specific risks of your organisation's activities and protect you from the liability gaps that exist because volunteers are not employees. Every effective volunteer waiver should include:</p>
+      <div class="clauses-grid">
+        <div class="clause-card">
+          <div class="clause-num">1</div>
+          <div>
+            <strong>Assumption of Risk</strong>
+            <p>The volunteer explicitly acknowledges the physical and other risks associated with their volunteer role and accepts those risks voluntarily.</p>
+          </div>
+        </div>
+        <div class="clause-card">
+          <div class="clause-num">2</div>
+          <div>
+            <strong>Indemnification</strong>
+            <p>The volunteer agrees to hold the organisation harmless from any claims, damages, or costs arising from their participation.</p>
+          </div>
+        </div>
+        <div class="clause-card">
+          <div class="clause-num">3</div>
+          <div>
+            <strong>Emergency Medical Consent</strong>
+            <p>Authorises the organisation to seek emergency medical treatment on behalf of the volunteer if they are incapacitated.</p>
+          </div>
+        </div>
+        <div class="clause-card">
+          <div class="clause-num">4</div>
+          <div>
+            <strong>Photo / Media Release</strong>
+            <p>Permits the organisation to photograph or record the volunteer for use in promotional materials, social media, and reports.</p>
+          </div>
+        </div>
+        <div class="clause-card">
+          <div class="clause-num">5</div>
+          <div>
+            <strong>Scope of Volunteer Duties</strong>
+            <p>Defines what activities the volunteer is authorised to perform and confirms they understand the boundaries of their role.</p>
+          </div>
+        </div>
+        <div class="clause-card">
+          <div class="clause-num">6</div>
+          <div>
+            <strong>No Employment Relationship</strong>
+            <p>Explicitly states that the volunteer is not an employee, contractor, or agent of the organisation — critical for tax and liability purposes.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Who needs a volunteer waiver -->
+    <section class="content-section alt-bg">
+      <h2>Who Needs a Volunteer Waiver</h2>
+      <p>Any organisation that engages unpaid volunteers should have a signed waiver on file before those volunteers perform any activities. This includes:</p>
+      <div class="who-grid">
+        <div class="who-card">
+          <span class="who-icon">🏛️</span>
+          <strong>Nonprofits &amp; Charities</strong>
+          <p>501(c)(3) organisations are not automatically exempt from liability for volunteer injuries. A waiver is your primary protection.</p>
+        </div>
+        <div class="who-card">
+          <span class="who-icon">🎉</span>
+          <strong>Events &amp; Festivals</strong>
+          <p>One-day events with large volunteer crews face concentrated risk. Collect waivers at check-in — before anyone starts setting up.</p>
+        </div>
+        <div class="who-card">
+          <span class="who-icon">🏘️</span>
+          <strong>Community Organisations</strong>
+          <p>Neighbourhood groups, civic clubs, and community boards all need volunteer waivers for clean-up days, builds, and events.</p>
+        </div>
+        <div class="who-card">
+          <span class="who-icon">⛪</span>
+          <strong>Churches &amp; Faith Groups</strong>
+          <p>Mission trips, food banks, and community outreach programmes carry real physical risks that a waiver documents and addresses.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="content-section">
+      <h2>Volunteer Waiver — Frequently Asked Questions</h2>
+      <div class="faq-list">
+        <details class="faq-item">
+          <summary>Do volunteers have fewer legal rights than employees?</summary>
+          <p>In most US states, volunteers are not covered by workers' compensation, meaning an injured volunteer cannot file a workers' comp claim against your organisation. However, they retain the right to sue for negligence. A signed waiver documents that the volunteer assumed the risks — providing you with a strong legal defence.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Can I use one volunteer waiver for all events?</summary>
+          <p>A general volunteer waiver can cover routine, ongoing volunteer activity. However, if you run events with significantly different risk profiles (for example, a food bank versus a construction project), it is better practice to use event-specific waivers that accurately describe the activities and risks involved. WaiverMaker lets you customise for each event.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Are minor volunteers covered differently?</summary>
+          <p>Yes. Minors cannot legally sign binding contracts in most states, so their waiver must be signed by a parent or legal guardian to be enforceable. If your organisation works with youth volunteers, ensure your waiver form includes a dedicated parental consent section.</p>
+        </details>
+        <details class="faq-item">
+          <summary>What if a volunteer refuses to sign?</summary>
+          <p>You are within your rights to decline that individual's participation until they sign. Most organisations treat the signed waiver as a condition of volunteering — not a formality but a genuine prerequisite. Explain that the waiver protects both them and the organisation.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Does a waiver protect against gross negligence claims?</summary>
+          <p>Generally, no. Courts in most states will not enforce a waiver that attempts to disclaim liability for an organisation's own gross negligence or intentional misconduct. A waiver protects you from claims arising from ordinary, inherent risks — not from failures in your duty of care. Maintain safe conditions regardless of what your waiver says.</p>
+        </details>
+      </div>
+    </section>
+
+    <!-- Related -->
+    <section class="content-section related-section">
+      <h2>More Liability Waiver Types</h2>
+      <div class="related-links">
+        <a href="/tattoo-waiver/" class="related-card">
+          <span class="related-icon">🎨</span>
+          <div>
+            <strong>Tattoo Studio Waiver</strong>
+            <p>Generate a tattoo studio liability waiver covering informed consent, allergy risks, and aftercare.</p>
+          </div>
+          <span class="related-arrow">›</span>
+        </a>
+        <a href="/rock-climbing-waiver/" class="related-card">
+          <span class="related-icon">🧗</span>
+          <div>
+            <strong>Rock Climbing Waiver</strong>
+            <p>Waiver for climbing gyms and outdoor guide services — covers equipment, fall risk, and more.</p>
+          </div>
+          <span class="related-arrow">›</span>
+        </a>
+      </div>
+    </section>
+
+  </div>
+
+  <Footer />
+</Base>
+
+<style>
+  .seo-hero {
+    background: white;
+    padding: 60px 40px;
+    border-bottom: 1px solid #E5E7EB;
+  }
+  .seo-hero-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    align-items: start;
+  }
+  .seo-hero-left { padding-top: 8px; }
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: #ECFDF5;
+    color: #059669;
+    padding: 5px 14px;
+    border-radius: 100px;
+    font-size: 12px;
+    font-weight: 600;
+    margin-bottom: 20px;
+  }
+  .seo-hero-left h1 {
+    font-size: 42px;
+    font-weight: 900;
+    line-height: 1.1;
+    letter-spacing: -1.5px;
+    color: #111827;
+    margin-bottom: 16px;
+  }
+  .highlight { color: #059669; }
+  .hero-sub {
+    font-size: 17px;
+    color: #6B7280;
+    line-height: 1.6;
+    margin-bottom: 20px;
+  }
+  .hero-trust {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: #6B7280;
+    flex-wrap: wrap;
+  }
+
+  .seo-content { background: white; }
+  .content-section {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 60px 40px;
+  }
+  .content-section.alt-bg {
+    max-width: 100%;
+    background: #F9FAFB;
+    border-top: 1px solid #E5E7EB;
+    border-bottom: 1px solid #E5E7EB;
+    padding: 60px 40px;
+  }
+  .content-section h2 {
+    font-size: 28px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    color: #111827;
+    margin-bottom: 16px;
+  }
+  .content-section > p {
+    color: #6B7280;
+    line-height: 1.6;
+    margin-bottom: 28px;
+  }
+
+  .clauses-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  .clause-card {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    background: white;
+    border: 1.5px solid #E5E7EB;
+    border-radius: 12px;
+    padding: 18px;
+  }
+  .clause-num {
+    width: 28px;
+    height: 28px;
+    background: #059669;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  .clause-card strong { display: block; color: #111827; margin-bottom: 4px; font-size: 14px; }
+  .clause-card p { color: #6B7280; font-size: 13px; line-height: 1.5; margin: 0; }
+
+  .who-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  .who-card {
+    background: white;
+    border: 1.5px solid #E5E7EB;
+    border-radius: 12px;
+    padding: 20px;
+  }
+  .who-icon { font-size: 26px; display: block; margin-bottom: 10px; }
+  .who-card strong { display: block; font-size: 14px; color: #111827; margin-bottom: 6px; }
+  .who-card p { font-size: 13px; color: #6B7280; line-height: 1.5; margin: 0; }
+
+  .faq-list { display: flex; flex-direction: column; gap: 10px; }
+  .faq-item {
+    border: 1.5px solid #E5E7EB;
+    border-radius: 10px;
+    padding: 16px 20px;
+  }
+  .faq-item summary {
+    font-weight: 600;
+    color: #111827;
+    font-size: 15px;
+    list-style: none;
+    cursor: pointer;
+  }
+  .faq-item summary::-webkit-details-marker { display: none; }
+  .faq-item[open] summary { color: #059669; margin-bottom: 10px; }
+  .faq-item p { color: #6B7280; font-size: 14px; line-height: 1.6; margin: 0; }
+
+  .related-section { border-top: 1px solid #E5E7EB; }
+  .related-links { display: flex; flex-direction: column; gap: 12px; }
+  .related-card {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    background: white;
+    border: 1.5px solid #E5E7EB;
+    border-radius: 12px;
+    padding: 20px;
+    text-decoration: none;
+    color: #111827;
+    transition: all 0.15s;
+  }
+  .related-card:hover { border-color: #059669; transform: translateY(-1px); }
+  .related-icon { font-size: 24px; }
+  .related-card strong { display: block; font-size: 15px; margin-bottom: 3px; }
+  .related-card p { font-size: 13px; color: #6B7280; margin: 0; }
+  .related-arrow { margin-left: auto; color: #6B7280; font-size: 20px; }
+
+  @media (max-width: 768px) {
+    .seo-hero { padding: 40px 20px; }
+    .seo-hero-inner { grid-template-columns: 1fr; gap: 32px; }
+    .seo-hero-left h1 { font-size: 30px; }
+    .clauses-grid { grid-template-columns: 1fr; }
+    .who-grid { grid-template-columns: 1fr; }
+    .content-section { padding: 40px 20px; }
+    .content-section.alt-bg { padding: 40px 20px; }
+  }
+</style>
