@@ -1,0 +1,19 @@
+---
+export const prerender = true;
+import Base from '../layouts/Base.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import '../styles/global.css';
+---
+<Base title="About WaiverMaker" description="Learn what WaiverMaker does and does not provide.">
+  <Nav />
+  <main class="legal-page"><article class="legal-content">
+    <h1>About WaiverMaker</h1>
+    <p>WaiverMaker builds free tools that help small businesses and activity operators create, customise and manage liability waiver documents.</p>
+    <h2>What we do</h2><p>We generate customisable waiver templates for common business activities: gyms, tattoo studios, climbing facilities, volunteer organisations, dog groomers, yoga studios, and more. Users fill in their business details, choose their activity type, and receive a PDF they can print or use digitally.</p>
+    <h2>What we don't do</h2><p>WaiverMaker is not a law firm. We do not provide legal advice. Our documents are templates: they are not guaranteed to be enforceable in every jurisdiction or to satisfy every legal or regulatory requirement applicable to your specific situation. We recommend consulting a licensed attorney in your state for legal advice.</p>
+    <h2>Contact</h2><p>Questions or feedback: <a href="mailto:support@waivermaker.com">support@waivermaker.com</a></p>
+    <h2>The product</h2><p>WaiverMaker is a free service. PDF downloads require no account or payment.</p>
+  </article></main>
+  <Footer />
+</Base>

@@ -624,3 +624,27 @@ footer {
   .steps { grid-template-columns: 1fr; }
   .nav-links .nav-link-hide { display: none; }
 }
+
+
+.state-helper { margin-top: 6px; color: var(--muted); font-size: 12px; line-height: 1.45; }
+.waiver-includes-card { margin: 4px 0 2px; border: 1px solid var(--border); border-radius: 8px; background: var(--emerald-faint); padding: 14px 16px; }
+.waiver-includes-card strong { display: block; color: var(--dark); font-size: 14px; margin-bottom: 7px; }
+.waiver-includes-card ul { list-style: none; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 5px 16px; color: var(--mid); font-size: 13px; }
+.waiver-includes-card li { margin: 0; }
+.how-waivermaker-works { border: 1px solid var(--border); border-radius: 8px; background: #F9FAFB; padding: 16px; margin: 18px 0; color: var(--mid); }
+.how-waivermaker-works summary { color: var(--muted); cursor: pointer; font-weight: 600; }
+.how-waivermaker-works > div { padding-top: 14px; }
+.how-waivermaker-works h3 { font-size: 14px; margin: 10px 0 4px; color: var(--dark); }
+.how-waivermaker-works p { font-size: 13px; line-height: 1.55; }
+.clause-tooltip { position: relative; display: inline-block; cursor: help; color: var(--muted); font-size: 12px; margin-left: 4px; }
+.clause-tooltip .tooltip-text { visibility: hidden; width: 240px; background: #111827; color: #fff; font-size: 12px; line-height: 1.5; padding: 8px 10px; border-radius: 6px; position: absolute; z-index: 10; bottom: 125%; left: 50%; transform: translateX(-50%); opacity: 0; transition: opacity .15s; }
+.clause-tooltip:hover .tooltip-text, .clause-tooltip:focus .tooltip-text { visibility: visible; opacity: 1; }
+.last-reviewed { text-align: center; font-size: 12px; color: var(--muted); padding: 16px 40px; border-top: 1px solid var(--border); }
+@media (max-width: 640px) { .waiver-includes-card ul { grid-template-columns: 1fr; } }
+.legal-page { background: var(--bg); padding: 56px 24px; }
+.legal-content { max-width: 760px; margin: 0 auto; background: #fff; border: 1px solid var(--border); border-radius: 12px; padding: 40px; color: var(--mid); line-height: 1.7; }
+.legal-content h1, .legal-content h2 { color: var(--dark); line-height: 1.2; }
+.legal-content h1 { font-size: 36px; margin-bottom: 18px; }
+.legal-content h2 { font-size: 20px; margin: 30px 0 8px; }
+.legal-content p + p { margin-top: 12px; }
+.legal-content ul { margin: 10px 0 0 22px; }
