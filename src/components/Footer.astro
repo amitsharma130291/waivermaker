@@ -3,7 +3,17 @@
 <footer class="site-footer">
   <div class="footer-inner">
     <div class="footer-brand">
-      <a href="/" class="footer-logo">waiver<span>template</span></a>
+      <a href="/" class="footer-logo-link" aria-label="WaiverTemplate Home">
+        <div class="footer-logo-mark">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+            <path d="M2 6 L6 18 L10 10 L12 15 L14 10 L18 18 L22 6" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="footer-logo-text">
+          <span class="footer-logo-name">Waiver<em>Template</em></span>
+          <span class="footer-logo-sub">Free · No Account Needed</span>
+        </div>
+      </a>
       <p class="footer-tagline">Free liability waiver generator.<br>No account needed.</p>
       <p class="footer-legal">&copy; 2026 WaiverTemplate.com &middot; Not legal advice</p>
     </div>
@@ -42,6 +52,42 @@
 </footer>
 
 <style>
+  .footer-logo-link {
+    display: flex; align-items: center; gap: 12px; text-decoration: none;
+  }
+  .footer-logo-mark {
+    width: 36px; height: 36px;
+    background: linear-gradient(145deg, #059669, #047857);
+    border-radius: 9px;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 4px 14px rgba(5,150,105,0.25), inset 0 1px 0 rgba(255,255,255,0.12);
+    flex-shrink: 0;
+    position: relative;
+  }
+  .footer-logo-mark::after {
+    content: ''; position: absolute; inset: 1px; border-radius: 8px;
+    background: linear-gradient(145deg, rgba(255,255,255,0.14), transparent 60%);
+  }
+  .footer-logo-mark svg { position: relative; z-index: 1; }
+  .footer-logo-text {
+    display: flex; flex-direction: column; gap: 2px;
+  }
+  .footer-logo-name {
+    font-family: 'Space Grotesk', 'Inter', sans-serif;
+    font-size: 18px; font-weight: 700;
+    color: white; letter-spacing: -0.4px; line-height: 1;
+  }
+  .footer-logo-name em {
+    font-style: normal;
+    background: linear-gradient(90deg, #10B981, #6EE7B7);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  }
+  .footer-logo-sub {
+    display: block;
+    font-size: 9px; font-weight: 500;
+    color: rgba(255,255,255,0.25);
+    letter-spacing: 0.18em; text-transform: uppercase; margin-top: 2px;
+  }
   .site-footer {
     background: #0f172a;
     color: #94a3b8;

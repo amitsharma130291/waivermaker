@@ -21,7 +21,7 @@ export const waiverTypes: WaiverType[] = [
     intro: [
       'A gym and fitness liability waiver protects your business from claims arising from injuries that occur during workouts, personal training sessions, or use of gym equipment. Whether you run a CrossFit box, a traditional gym, or a boutique fitness studio, a signed waiver can form part of your gym\'s broader risk-management and participant-consent process.',
       'Gyms and fitness centers face a unique set of liability risks: dropped weights, equipment malfunctions, overexertion injuries, and slip-and-fall incidents are all common. Your waiver should clearly disclose these risks and obtain the participant\'s informed consent before they step onto your floor.',
-      'WaiverMaker generates a gym waiver customised with your selected governing state, your specific activities, and the risks your business actually faces — in under two minutes.',
+      'WaiverTemplate generates a gym waiver customised with your selected governing state, your specific activities, and the risks your business actually faces — in under two minutes.',
     ],
     clauses: [
       'Equipment safety and proper use acknowledgment',
@@ -66,7 +66,7 @@ export const waiverTypes: WaiverType[] = [
       },
       {
         q: 'Is this legal advice?',
-        a: 'No. WaiverMaker generates template documents to help you document participant consent. For advice specific to your gym, state, and circumstances, consult a licensed attorney.',
+        a: 'No. WaiverTemplate generates template documents to help you document participant consent. For advice specific to your gym, state, and circumstances, consult a licensed attorney.',
       },
     ],
     whyCards: [
@@ -96,7 +96,7 @@ export const waiverTypes: WaiverType[] = [
     intro: [
       'A tattoo studio waiver serves a dual purpose: it protects your business from liability and demonstrates your professionalism to clients. Every reputable tattoo studio requires clients to sign before any work begins.',
       'The risks in tattooing go beyond the needle — clients may have undisclosed health conditions like blood thinners, diabetes, or skin sensitivities that affect healing. Your waiver collects this information and documents that the client was fully informed before consenting to the procedure.',
-      'WaiverMaker generates a tattoo consent form and liability waiver specific to your state, covering everything from health disclosure to aftercare responsibility.',
+      'WaiverTemplate generates a tattoo consent form and liability waiver specific to your state, covering everything from health disclosure to aftercare responsibility.',
     ],
     clauses: [
       'Informed consent for permanent body modification',
@@ -141,7 +141,7 @@ export const waiverTypes: WaiverType[] = [
       },
       {
         q: 'Is this legal advice?',
-        a: 'No. WaiverMaker generates template documents to help you document client consent. For jurisdiction-specific legal advice, consult a licensed attorney in your state.',
+        a: 'No. WaiverTemplate generates template documents to help you document client consent. For jurisdiction-specific legal advice, consult a licensed attorney in your state.',
       },
     ],
     whyCards: [
@@ -171,7 +171,7 @@ export const waiverTypes: WaiverType[] = [
     intro: [
       'Yoga may look gentle, but injuries from overstretching, inversions, and improper technique send thousands of practitioners to the doctor each year. A yoga studio waiver protects your business and ensures every student acknowledges these risks before stepping onto the mat.',
       'Hot yoga studios face additional considerations — heat-related illness, dehydration, and cardiovascular risks are real concerns that your waiver must address. Props like blocks, straps, and bolsters introduce their own liability exposure.',
-      'WaiverMaker creates a yoga-specific waiver that covers your class offerings, your studio\'s environment, and your selected governing state.',
+      'WaiverTemplate creates a yoga-specific waiver that covers your class offerings, your studio\'s environment, and your selected governing state.',
     ],
     clauses: [
       'Physical strain and injury risk from poses',
@@ -204,7 +204,7 @@ export const waiverTypes: WaiverType[] = [
       },
       {
         q: 'Do I need a separate hot yoga waiver?',
-        a: 'You can address hot yoga risks within a single studio waiver by including a specific heat and dehydration risk section — which WaiverMaker does automatically when you select Yoga Studio as your activity type. Some studios prefer separate waivers for hot and non-heated classes.',
+        a: 'You can address hot yoga risks within a single studio waiver by including a specific heat and dehydration risk section — which WaiverTemplate does automatically when you select Yoga Studio as your activity type. Some studios prefer separate waivers for hot and non-heated classes.',
       },
       {
         q: 'Can minors attend yoga classes?',
@@ -216,7 +216,7 @@ export const waiverTypes: WaiverType[] = [
       },
       {
         q: 'Is this legal advice?',
-        a: 'No. WaiverMaker generates template documents. For advice specific to your studio, state, and circumstances, consult a licensed attorney.',
+        a: 'No. WaiverTemplate generates template documents. For advice specific to your studio, state, and circumstances, consult a licensed attorney.',
       },
     ],
     whyCards: [
@@ -246,7 +246,7 @@ export const waiverTypes: WaiverType[] = [
     intro: [
       'Nonprofits, charities, community organizations, and event organizers all need volunteer waivers to protect against liability claims. When someone volunteers for your organization, they may be exposed to physical risks, travel hazards, or other dangers — and your organization could be held responsible without a proper waiver.',
       'Volunteer waivers help document consent and assumption of risk. Workers\' compensation treatment of volunteers varies by state and organisation type — check with your insurer or a local attorney.',
-      'WaiverMaker generates a volunteer waiver tailored to your organization\'s activities, the nature of the volunteer work, and your selected governing state.',
+      'WaiverTemplate generates a volunteer waiver tailored to your organization\'s activities, the nature of the volunteer work, and your selected governing state.',
     ],
     clauses: [
       'Voluntary participation acknowledgment',
@@ -291,7 +291,7 @@ export const waiverTypes: WaiverType[] = [
       },
       {
         q: 'Is this legal advice?',
-        a: 'No. WaiverMaker generates template documents. For advice specific to your organisation, volunteer activities, and state, consult a licensed attorney.',
+        a: 'No. WaiverTemplate generates template documents. For advice specific to your organisation, volunteer activities, and state, consult a licensed attorney.',
       },
     ],
     whyCards: [
@@ -321,7 +321,7 @@ export const waiverTypes: WaiverType[] = [
     intro: [
       'Rock climbing gyms and outdoor guide services face significant liability exposure. Falls, equipment failure, belay errors, and route-related hazards are inherent to the sport — and participants must clearly understand and accept these risks before you allow them to climb.',
       'Whether you run an indoor bouldering gym, a top-rope facility, or take clients on outdoor climbing trips, your waiver needs to address the specific risks of your environment. Indoor walls have different hazards than granite crags, and your waiver should reflect that.',
-      'WaiverMaker generates a climbing-specific waiver that covers your facility type, your equipment rental program, and the liability laws of your state.',
+      'WaiverTemplate generates a climbing-specific waiver that covers your facility type, your equipment rental program, and the liability laws of your state.',
     ],
     clauses: [
       'Fall and impact risk acknowledgment',
@@ -366,7 +366,7 @@ export const waiverTypes: WaiverType[] = [
       },
       {
         q: 'Is this legal advice?',
-        a: 'No. WaiverMaker generates template documents. For advice specific to your climbing facility, guide service, and state, consult a licensed attorney.',
+        a: 'No. WaiverTemplate generates template documents. For advice specific to your climbing facility, guide service, and state, consult a licensed attorney.',
       },
     ],
     whyCards: [
@@ -396,7 +396,7 @@ export const waiverTypes: WaiverType[] = [
     intro: [
       'Dog groomers face liability from multiple angles: injuries to the groomer from biting or scratching, injuries to the pet during grooming, and stress-related health events in dogs with undisclosed medical conditions. A grooming waiver documents the owner\'s consent and protects your business.',
       'Older dogs, brachycephalic breeds (like Bulldogs and Pugs), and pets with heart or respiratory conditions are at elevated risk during grooming sessions. Your waiver collects this information upfront and establishes that the owner is aware of and accepts these risks.',
-      'WaiverMaker generates a grooming-specific waiver that protects your salon, covers your specific services, and identifies your selected governing state.',
+      'WaiverTemplate generates a grooming-specific waiver that protects your salon, covers your specific services, and identifies your selected governing state.',
     ],
     clauses: [
       'Pet health condition and medication disclosure',
@@ -437,11 +437,11 @@ export const waiverTypes: WaiverType[] = [
       },
       {
         q: 'What about brachycephalic breeds like Bulldogs and Pugs?',
-        a: 'Flat-faced breeds face elevated respiratory risk during grooming, particularly in warm environments. Your WaiverMaker waiver includes a breed-specific risk section to ensure owners of these breeds are explicitly informed.',
+        a: 'Flat-faced breeds face elevated respiratory risk during grooming, particularly in warm environments. Your WaiverTemplate waiver includes a breed-specific risk section to ensure owners of these breeds are explicitly informed.',
       },
       {
         q: 'Is this legal advice?',
-        a: 'No. WaiverMaker generates template documents. For advice specific to your grooming business and state, consult a licensed attorney.',
+        a: 'No. WaiverTemplate generates template documents. For advice specific to your grooming business and state, consult a licensed attorney.',
       },
     ],
     whyCards: [
@@ -469,7 +469,7 @@ export const waiverTypes: WaiverType[] = [
     activityType: 'Horse Riding',
     metaDescription: 'Create a horse riding liability waiver for your stable or riding school. Covers fall risk, equine-specific risks, and your selected governing state. Free to preview and download.',
     intro: [
-      'WaiverMaker generates a horse riding waiver with equine-specific risk acknowledgements and your selected governing state. Equine activity laws vary by state, so businesses should verify any state-specific statutory notice or wording requirements separately.',
+      'WaiverTemplate generates a horse riding waiver with equine-specific risk acknowledgements and your selected governing state. Equine activity laws vary by state, so businesses should verify any state-specific statutory notice or wording requirements separately.',
       'Stables, riding schools, trail ride operators, and equine therapy providers all need signed waivers before any rider mounts. The inherent unpredictability of horses — spooking, bucking, biting — must be clearly disclosed to participants regardless of their experience level.',
       'Your waiver documents that participants have been informed of these inherent risks and have chosen to proceed voluntarily.',
     ],
@@ -500,7 +500,7 @@ export const waiverTypes: WaiverType[] = [
     faqs: [
       {
         q: 'Do equine liability laws affect my waiver?',
-        a: 'Many US states have enacted equine activity statutes that may limit liability for inherent risks of equine activities. However, these laws vary significantly by state and do not eliminate all liability. WaiverMaker generates a waiver with your selected governing state — but you should verify any specific statutory notice or wording requirements with a local attorney familiar with equine law in your state.',
+        a: 'Many US states have enacted equine activity statutes that may limit liability for inherent risks of equine activities. However, these laws vary significantly by state and do not eliminate all liability. WaiverTemplate generates a waiver with your selected governing state — but you should verify any specific statutory notice or wording requirements with a local attorney familiar with equine law in your state.',
       },
       {
         q: 'Do I need separate waivers for trail rides vs arena lessons?',
@@ -516,7 +516,7 @@ export const waiverTypes: WaiverType[] = [
       },
       {
         q: 'Is this legal advice?',
-        a: 'No. WaiverMaker generates template documents to help you document participant consent. Equine law is particularly state-specific; consult a licensed attorney in your state before relying on any waiver.',
+        a: 'No. WaiverTemplate generates template documents to help you document participant consent. Equine law is particularly state-specific; consult a licensed attorney in your state before relying on any waiver.',
       },
     ],
     whyCards: [
@@ -528,7 +528,7 @@ export const waiverTypes: WaiverType[] = [
       {
         icon: '⚖️',
         title: 'State Equine Law Considerations',
-        body: 'Many states have equine liability statutes. WaiverMaker includes a governing-law section identifying your selected state. Businesses should verify any specific statutory notice requirements with a local attorney for their jurisdiction.',
+        body: 'Many states have equine liability statutes. WaiverTemplate includes a governing-law section identifying your selected state. Businesses should verify any specific statutory notice requirements with a local attorney for their jurisdiction.',
       },
       {
         icon: '👨‍👩‍👧',
@@ -546,7 +546,7 @@ export const waiverTypes: WaiverType[] = [
     intro: [
       'Personal trainers carry significant professional liability — you\'re prescribing exercise to individual clients with unique health histories, and injuries can and do happen. A proper personal training waiver and health screening document is essential before your first session with any new client.',
       'Beyond the standard liability release, personal trainers should collect a Physical Activity Readiness Questionnaire (PAR-Q) to identify contraindications to exercise. Your waiver should incorporate health screening, informed consent, and a clear statement that your services are not medical advice.',
-      'WaiverMaker generates a trainer-specific waiver that covers your training methods, your clients\' health disclosure obligations, and the liability laws of your state.',
+      'WaiverTemplate generates a trainer-specific waiver that covers your training methods, your clients\' health disclosure obligations, and the liability laws of your state.',
     ],
     clauses: [
       'Physical activity readiness and health screening (PAR-Q)',
@@ -583,15 +583,15 @@ export const waiverTypes: WaiverType[] = [
       },
       {
         q: 'Can I provide nutrition advice to clients?',
-        a: 'The scope of nutrition guidance a personal trainer can legally provide varies by state. Your WaiverMaker waiver includes a nutritional guidance scope limitation clause that clarifies you are not a licensed dietitian — protecting you from claims arising from dietary recommendations.',
+        a: 'The scope of nutrition guidance a personal trainer can legally provide varies by state. Your WaiverTemplate waiver includes a nutritional guidance scope limitation clause that clarifies you are not a licensed dietitian — protecting you from claims arising from dietary recommendations.',
       },
       {
         q: 'Should I use a separate contract for each client?',
-        a: 'Many trainers use a combination of a liability waiver and a separate service agreement covering payment terms, cancellation policy, and session structure. WaiverMaker covers the liability and consent elements; you may want a separate business contract for the commercial terms.',
+        a: 'Many trainers use a combination of a liability waiver and a separate service agreement covering payment terms, cancellation policy, and session structure. WaiverTemplate covers the liability and consent elements; you may want a separate business contract for the commercial terms.',
       },
       {
         q: 'Is this legal advice?',
-        a: 'No. WaiverMaker generates template documents. For advice specific to your training business, client relationships, and state, consult a licensed attorney.',
+        a: 'No. WaiverTemplate generates template documents. For advice specific to your training business, client relationships, and state, consult a licensed attorney.',
       },
     ],
     whyCards: [

@@ -1,7 +1,17 @@
 ---
 ---
 <nav>
-  <a href="/" class="nav-logo">waiver<span>template</span></a>
+  <a href="/" class="logo-link" aria-label="WaiverTemplate Home">
+    <div class="logo-mark">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M2 6 L6 18 L10 10 L12 15 L14 10 L18 18 L22 6" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <div class="logo-text">
+      <span class="logo-name">Waiver<em>Template</em></span>
+      <span class="logo-sub">Free Waiver Generator</span>
+    </div>
+  </a>
   <div class="nav-links">
     <div class="nav-dropdown">
       <button class="nav-link-hide nav-dropdown-toggle" aria-haspopup="true" aria-expanded="false">
@@ -26,6 +36,56 @@
 </nav>
 
 <style>
+  .logo-link {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+  }
+  .logo-mark {
+    width: 38px;
+    height: 38px;
+    background: linear-gradient(145deg, #059669 0%, #047857 100%);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 14px rgba(5,150,105,0.35), inset 0 1px 0 rgba(255,255,255,0.15);
+    flex-shrink: 0;
+    position: relative;
+  }
+  .logo-mark::after {
+    content: '';
+    position: absolute;
+    inset: 1px;
+    border-radius: 9px;
+    background: linear-gradient(145deg, rgba(255,255,255,0.16), transparent 60%);
+  }
+  .logo-mark svg { position: relative; z-index: 1; }
+  .logo-text {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+  }
+  .logo-name {
+    font-family: 'Space Grotesk', 'Inter', sans-serif;
+    font-size: 19px;
+    font-weight: 700;
+    color: #0D1117;
+    letter-spacing: -0.4px;
+    line-height: 1;
+  }
+  .logo-name em {
+    font-style: normal;
+    color: #059669;
+  }
+  .logo-sub {
+    font-size: 9px;
+    font-weight: 500;
+    color: #9CA3AF;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
   .nav-dropdown {
     position: relative;
   }
