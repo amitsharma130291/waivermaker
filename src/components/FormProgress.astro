@@ -1,0 +1,23 @@
+---
+export interface Props {
+  step: number;
+}
+const { step } = Astro.props;
+
+const steps = [
+  { num: 1, label: 'Business Info' },
+  { num: 2, label: 'Waiver Details' },
+  { num: 3, label: 'Preview & Download' },
+];
+---
+<div class="form-progress">
+  {steps.map((s, i) => (
+    <>
+      <div class={`progress-step${step < s.num ? ' inactive' : ''}`}>
+        <div class="dot">{s.num}</div>
+        <span>{s.label}</span>
+      </div>
+      {i < steps.length - 1 && <span class="step-arrow">›</span>}
+    </>
+  ))}
+</div>

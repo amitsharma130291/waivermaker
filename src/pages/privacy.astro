@@ -1,0 +1,25 @@
+---
+export const prerender = true;
+import Base from '../layouts/Base.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import '../styles/global.css';
+---
+<Base title="Privacy Policy — WaiverMaker" description="WaiverMaker.com privacy policy.">
+  <Nav />
+  <div class="landing-content" style="padding-top:60px;">
+    <h1 style="font-size:32px;font-weight:900;margin-bottom:24px;color:var(--dark);">Privacy Policy</h1>
+    <p><strong>Last updated:</strong> August 2026</p>
+    <h2>Information We Collect</h2>
+    <p>When you use WaiverMaker.com, we collect the information you provide in the waiver generator form, including business name, contact email, and activity details. We use this information solely to generate your waiver document.</p>
+    <h2>How We Use Your Information</h2>
+    <p>Your information is used to generate the PDF waiver you request. We do not sell, rent, or share your personal information with third parties except as required to process your payment (Dodo Payments) or comply with law.</p>
+    <h2>Payment Information</h2>
+    <p>Payments are processed by Dodo Payments. We do not store credit card numbers or payment details on our servers.</p>
+    <h2>Cookies</h2>
+    <p>We use essential cookies to operate the site. We do not use third-party tracking cookies.</p>
+    <h2>Contact</h2>
+    <p>Questions? Email us at <a href="mailto:support@waivermaker.com" style="color:var(--emerald);">support@waivermaker.com</a></p>
+  </div>
+  <Footer />
+</Base>

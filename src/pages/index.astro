@@ -1,0 +1,26 @@
+---
+export const prerender = true;
+import Base from '../layouts/Base.astro';
+import Nav from '../components/Nav.astro';
+import Hero from '../components/Hero.astro';
+import TypePicker from '../components/TypePicker.astro';
+import WaiverForm from '../components/WaiverForm.astro';
+import SocialProof from '../components/SocialProof.astro';
+import HowItWorks from '../components/HowItWorks.astro';
+import WaiverTypes from '../components/WaiverTypes.astro';
+import Footer from '../components/Footer.astro';
+import '../styles/global.css';
+---
+<Base
+  title="WaiverMaker — Free Liability Waiver Generator | $9.99 to Download"
+  description="Generate professional liability waivers for gyms, tattoo studios, yoga classes, and more. Free to preview, $9.99 to download. State-specific, legally formatted."
+>
+  <Nav />
+  <Hero />
+  <TypePicker />
+  <WaiverForm />
+  <SocialProof />
+  <HowItWorks />
+  <WaiverTypes />
+  <Footer />
+</Base>

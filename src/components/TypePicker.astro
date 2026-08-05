@@ -1,0 +1,45 @@
+---
+export interface Props {
+  activeType?: string;
+}
+const { activeType = 'Gym/Fitness' } = Astro.props;
+
+const types = [
+  { emoji: '💪', label: 'Gym', value: 'Gym/Fitness', slug: 'gym-waiver' },
+  { emoji: '🎨', label: 'Tattoo', value: 'Tattoo Studio', slug: 'tattoo-waiver' },
+  { emoji: '🧘', label: 'Yoga', value: 'Yoga Studio', slug: 'yoga-waiver' },
+  { emoji: '🐕', label: 'Dog Grooming', value: 'Dog Grooming', slug: 'dog-grooming-waiver' },
+  { emoji: '🧗', label: 'Rock Climbing', value: 'Rock Climbing', slug: 'rock-climbing-waiver' },
+  { emoji: '🏇', label: 'Horse Riding', value: 'Horse Riding', slug: 'horse-riding-waiver' },
+  { emoji: '🤝', label: 'Volunteer', value: 'Volunteer', slug: 'volunteer-waiver' },
+  { emoji: '🏋️', label: 'Personal Training', value: 'Personal Training', slug: 'personal-trainer-waiver' },
+];
+---
+<div class="type-picker" id="type-picker">
+  {types.map(t => (
+    <button
+      class={`type-btn${activeType === t.value ? ' active' : ''}`}
+      data-value={t.value}
+      type="button"
+    >
+      {t.emoji} {t.label}
+    </button>
+  ))}
+</div>
+
+<script>
+  const picker = document.getElementById('type-picker');
+  if (picker) {
+    picker.addEventListener('click', (e) => {
+      const btn = (e.target as HTMLElement).closest('.type-btn') as HTMLButtonElement | null;
+      if (!btn) return;
+      picker.querySelectorAll('.type-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      // Sync the hidden activity select in the form
+      const activitySelect = document.getElementById('activity-type') as HTMLSelectElement | null;
+      if (activitySelect) {
+        activitySelect.value = btn.dataset.value || '';
+      }
+    });
+  }
+</script>

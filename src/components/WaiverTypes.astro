@@ -1,0 +1,25 @@
+---
+const types = [
+  { emoji: '💪', name: 'Gym & Fitness Waiver',      slug: 'gym-waiver' },
+  { emoji: '🎨', name: 'Tattoo Studio Waiver',       slug: 'tattoo-waiver' },
+  { emoji: '🧘', name: 'Yoga Studio Waiver',         slug: 'yoga-waiver' },
+  { emoji: '🤝', name: 'Volunteer Waiver',           slug: 'volunteer-waiver' },
+  { emoji: '🧗', name: 'Rock Climbing Waiver',       slug: 'rock-climbing-waiver' },
+  { emoji: '🐕', name: 'Dog Grooming Waiver',        slug: 'dog-grooming-waiver' },
+  { emoji: '🏇', name: 'Horse Riding Waiver',        slug: 'horse-riding-waiver' },
+  { emoji: '🏋️', name: 'Personal Trainer Waiver',   slug: 'personal-trainer-waiver' },
+];
+---
+<section class="types-section" id="waiver-types">
+  <h2>All Waiver Types</h2>
+  <p>Choose your industry to get a waiver with the right clauses and language</p>
+  <div class="types-grid">
+    {types.map(t => (
+      <a href={`/${t.slug}/`} class="type-card">
+        <span class="tc-icon">{t.emoji}</span>
+        <span class="tc-name">{t.name}</span>
+        <span class="tc-arrow">›</span>
+      </a>
+    ))}
+  </div>
+</section>
