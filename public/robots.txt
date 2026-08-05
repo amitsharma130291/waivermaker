@@ -4,4 +4,4 @@ Disallow: /api/
 Disallow: /privacy/
 Disallow: /terms/
 
-Sitemap: https://waivermaker.com/sitemap.xml
+Sitemap: https://waivertemplate.com/sitemap.xml

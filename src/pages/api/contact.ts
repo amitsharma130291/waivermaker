@@ -6,7 +6,7 @@ export const POST: APIRoute = async ({ request }) => {
     const data = await request.formData();
     const name    = (data.get('name')    as string || '').trim();
     const email   = (data.get('email')   as string || '').trim();
-    const subject = (data.get('subject') as string || 'WaiverMaker Contact').trim();
+    const subject = (data.get('subject') as string || 'WaiverTemplate Contact').trim();
     const message = (data.get('message') as string || '').trim();
 
     if (!name || !email || !message) {
@@ -27,14 +27,14 @@ export const POST: APIRoute = async ({ request }) => {
     });
 
     await transporter.sendMail({
-      from: '"WaiverMaker Contact" <amitsharma00261@gmail.com>',
+      from: '"WaiverTemplate Contact" <amitsharma00261@gmail.com>',
       to:   'amitsharma00261@gmail.com',
       replyTo: email,
-      subject: `[WaiverMaker] ${subject}`,
+      subject: `[WaiverTemplate] ${subject}`,
       text: `Name: ${name}\nEmail: ${email}\n\n${message}`,
       html: `
-        <h2>New WaiverMaker Contact Form Submission</h2>
-        <p><strong>Site:</strong> WaiverMaker.com</p>
+        <h2>New WaiverTemplate Contact Form Submission</h2>
+        <p><strong>Site:</strong> WaiverTemplate.com</p>
         <p><strong>Name:</strong> ${name}</p>
         <p><strong>Email:</strong> ${email}</p>
         <p><strong>Subject:</strong> ${subject}</p>

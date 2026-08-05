@@ -92,7 +92,7 @@ export const GET: APIRoute = async ({ url }) => {
     for (let i = 0; i < range.count; i++) {
       doc.switchToPage(i);
       doc.font(body).fontSize(7).fillColor('#6B7280').text(
-        `Generated with WaiverMaker.com\nTemplate: ${templateVersion}\nGenerated: ${generatedDate}\nThis document is a template provided for informational purposes only. It does not constitute legal advice. Consult a licensed attorney in your jurisdiction.`,
+        `Generated with WaiverTemplate.com\nTemplate: ${templateVersion}\nGenerated: ${generatedDate}\nThis document is a template provided for informational purposes only. It does not constitute legal advice. Consult a licensed attorney in your jurisdiction.`,
         58, 704, { width: 496, align: 'center', lineGap: 1 }
       );
     }

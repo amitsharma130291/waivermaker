@@ -51,8 +51,8 @@ const breadcrumbSchema = {
   '@context': 'https://schema.org',
   '@type': 'BreadcrumbList',
   itemListElement: [
-    { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://waivermaker.com' },
-    { '@type': 'ListItem', position: 2, name: waiver.title, item: `https://waivermaker.com/${waiver.slug}/` },
+    { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://waivertemplate.com' },
+    { '@type': 'ListItem', position: 2, name: waiver.title, item: `https://waivertemplate.com/${waiver.slug}/` },
   ],
 };
 
@@ -60,7 +60,7 @@ const breadcrumbSchema = {
 const businessType = waiver.title.replace(' Waiver', '').replace(' Studio', ' Studio').trim();
 ---
 <Base
-  title={`${waiver.title} | Generate Free — WaiverMaker`}
+  title={`${waiver.title} | Generate Free — WaiverTemplate`}
   description={waiver.metaDescription}
   schema={[faqSchema, breadcrumbSchema]}
 >

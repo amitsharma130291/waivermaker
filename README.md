@@ -1,4 +1,4 @@
-# WaiverMaker.com
+# WaiverTemplate.com
 
 A free liability waiver generator for small businesses. Generate professional, state-specific liability waivers in minutes. Free to preview, $9.99 to download as a PDF.
 
