@@ -21,27 +21,27 @@ const { waiver } = Astro.props;
 
 // Activity map: slug -> activityType for WaiverForm preset
 const activityMap: Record<string, string> = {
-  'gym-waiver':              'Gym/Fitness',
-  'yoga-waiver':             'Yoga Studio',
-  'dog-grooming-waiver':     'Dog Grooming',
-  'horse-riding-waiver':     'Horse Riding',
-  'personal-trainer-waiver': 'Personal Training',
-  'tattoo-waiver':           'Tattoo Studio',
-  'rock-climbing-waiver':    'Rock Climbing',
-  'volunteer-waiver':        'Volunteer',
+  'gym-waiver':             'Gym/Fitness',
+  'yoga-waiver':            'Yoga Studio',
+  'dog-grooming-waiver':    'Dog Grooming',
+  'horse-riding-waiver':    'Horse Riding',
+  'personal-trainer-waiver':'Personal Training',
+  'tattoo-waiver':          'Tattoo Studio',
+  'rock-climbing-waiver':   'Rock Climbing',
+  'volunteer-waiver':       'Volunteer',
 };
 const presetActivity = activityMap[waiver.slug] || waiver.activityType || '';
 
-// FAQPage schema — built from the waiver's clauses as FAQ items
+// FAQPage schema — built from the waiver's faqs array
 const faqSchema = {
   '@context': 'https://schema.org',
   '@type': 'FAQPage',
-  mainEntity: waiver.clauses.slice(0, 6).map((clause: string) => ({
+  mainEntity: waiver.faqs.map((faq: { q: string; a: string }) => ({
     '@type': 'Question',
-    name: `Does a ${waiver.title.toLowerCase()} cover ${clause.toLowerCase()}?`,
+    name: faq.q,
     acceptedAnswer: {
       '@type': 'Answer',
-      text: `Yes. WaiverMaker's ${waiver.title.toLowerCase()} template includes a clause addressing ${clause.toLowerCase()}. The exact language is tailored to your business details and selected governing state. Consult a licensed attorney for advice specific to your situation.`,
+      text: faq.a,
     },
   })),
 };
@@ -55,6 +55,9 @@ const breadcrumbSchema = {
     { '@type': 'ListItem', position: 2, name: waiver.title, item: `https://waivermaker.com/${waiver.slug}/` },
   ],
 };
+
+// Derive a short business-type label from the title for section headings
+const businessType = waiver.title.replace(' Waiver', '').replace(' Studio', ' Studio').trim();
 ---
 <Base
   title={`${waiver.title} | Generate Free — WaiverMaker`}
@@ -63,119 +66,312 @@ const breadcrumbSchema = {
 >
   <Nav />
 
-  <div class="landing-hero">
-    <Breadcrumbs items={[
-      { label: 'Home', href: '/' },
-      { label: waiver.title, href: `/${waiver.slug}/` },
-    ]} />
-    <div class="landing-hero-inner">
-      <div class="waiver-hero-layout">
-        <!-- Left: copy -->
-        <div class="waiver-hero-copy">
-          <div style="font-size:48px;margin-bottom:12px;">{waiver.emoji}</div>
-          <h1>{waiver.title}</h1>
-          {waiver.intro.map((p: string) => <p>{p}</p>)}
+  <Breadcrumbs items={[
+    { label: 'Home', href: '/' },
+    { label: waiver.title, href: `/${waiver.slug}/` },
+  ]} />
 
-          <h2>Key Clauses in Your {waiver.title}</h2>
-          <ul class="clauses-list">
-            {waiver.clauses.map((c: string) => <li>{c}</li>)}
-          </ul>
-
-          <!-- Sub-page cross-links -->
-          {waiver.slug === 'tattoo-waiver' && (
-            <div class="subpage-links">
-              <h3>More tools</h3>
-              <a href="/tattoo-waiver/template/">📄 View the full template</a>
-              <a href="/tattoo-waiver/form/">📝 Go straight to the form</a>
-            </div>
-          )}
-        </div>
-
-        <!-- Right: WaiverForm pre-set -->
-        <div class="waiver-hero-form">
-          <WaiverForm preselectedActivity={presetActivity} />
-          <div class="form-note" style="max-width:620px;margin:12px auto 0;text-align:center;">
-            🔒 Not legal advice · Consult an attorney for your specific situation
-          </div>
+  <!-- Hero + Tool: 2-column on desktop, stacked on mobile -->
+  <section class="seo-hero">
+    <div class="seo-hero-inner">
+      <!-- Left: Hero content -->
+      <div class="seo-hero-left">
+        <div class="hero-badge">✓ 100% Free · No Account Needed</div>
+        <h1><span style="font-size:44px;margin-right:10px;">{waiver.emoji}</span>{waiver.title} — <span class="highlight">Generated in 30 Seconds</span></h1>
+        <p class="hero-sub">{waiver.intro[0]}</p>
+        <div class="hero-trust">
+          <span>🔒 No account needed</span>
+          <span>·</span>
+          <span>Preview free</span>
+          <span>·</span>
+          <span>Download free</span>
         </div>
       </div>
+
+      <!-- Right: Tool -->
+      <div class="seo-hero-right">
+        <WaiverForm preselectedActivity={presetActivity} />
+      </div>
     </div>
+  </section>
+
+  <!-- Supporting content -->
+  <div class="seo-content">
+
+    <!-- What Your Waiver Will Contain -->
+    <section class="content-section">
+      <h2>What Your {waiver.title} Will Contain</h2>
+      <p>Your generated waiver will include these clauses — each worded for your business name and selected state.</p>
+      <div class="clause-preview-list">
+        {waiver.clauseDescriptions.map((desc: string, i: number) => (
+          <div class="clause-preview-item">
+            <strong>{waiver.clauses[i]}</strong>
+            <p>{desc}</p>
+          </div>
+        ))}
+      </div>
+      <p class="see-template-link"><a href="/">See all waiver types →</a></p>
+    </section>
+
+    <!-- What a [Title] Must Include -->
+    <section class="content-section" style="padding-top: 0;">
+      <h2>What a {waiver.title} Must Include</h2>
+      <p>A well-structured {waiver.title.toLowerCase()} does more than collect a signature — it documents informed consent, discloses specific risks, and protects your business under your state's laws. Every {waiver.title.toLowerCase()} should include these clauses:</p>
+      <div class="clauses-grid">
+        {waiver.clauses.map((clause: string, i: number) => (
+          <div class="clause-card">
+            <div class="clause-num">{i + 1}</div>
+            <div>
+              <strong>{clause}</strong>
+              <p>{waiver.clauseDescriptions[i]}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- Why Every [Business Type] Needs a Waiver -->
+    <section class="content-section alt-bg">
+      <h2>Why Every {businessType} Needs a Waiver</h2>
+      <div class="reasons-grid">
+        {waiver.whyCards.map((card: { icon: string; title: string; body: string }) => (
+          <div class="reason-card">
+            <div class="reason-icon">{card.icon}</div>
+            <h3>{card.title}</h3>
+            <p>{card.body}</p>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="content-section">
+      <h2>{waiver.title} — Frequently Asked Questions</h2>
+      <div class="faq-list">
+        {waiver.faqs.map((faq: { q: string; a: string }) => (
+          <details class="faq-item">
+            <summary>{faq.q}</summary>
+            <p>{faq.a}</p>
+          </details>
+        ))}
+      </div>
+    </section>
+
   </div>
 
+  <p class="last-reviewed">Last reviewed for accuracy: August 2026 · Template v1.0</p>
   <RelatedWaivers currentSlug={waiver.slug} />
-
   <Footer />
 </Base>
 
 <style>
-  .landing-hero {
-    padding: 40px 0 0;
+  /* ── SEO Hero: 2-col desktop, stacked mobile ── */
+  .seo-hero {
+    background: white;
+    padding: 60px 40px 60px;
+    border-bottom: 1px solid #E5E7EB;
   }
-  .landing-hero-inner {
-    max-width: 1100px;
+  .seo-hero-inner {
+    max-width: 1200px;
     margin: 0 auto;
-    padding: 0 20px;
-  }
-  .waiver-hero-layout {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 48px;
+    gap: 40px;
     align-items: start;
   }
-  .waiver-hero-copy h1 {
-    font-size: 36px;
+  .seo-hero-left {
+    padding-top: 8px;
+  }
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: #ECFDF5;
+    color: #059669;
+    padding: 5px 14px;
+    border-radius: 100px;
+    font-size: 12px;
+    font-weight: 600;
+    margin-bottom: 20px;
+  }
+  .seo-hero-left h1 {
+    font-size: 38px;
     font-weight: 900;
+    line-height: 1.15;
+    letter-spacing: -1px;
+    color: #111827;
     margin-bottom: 16px;
-    color: var(--dark, #0f172a);
   }
-  .waiver-hero-copy p {
-    color: var(--muted, #475569);
-    line-height: 1.7;
-    margin-bottom: 14px;
+  .highlight { color: #059669; }
+  .hero-sub {
+    font-size: 16px;
+    color: #6B7280;
+    line-height: 1.6;
+    margin-bottom: 20px;
   }
-  .waiver-hero-copy h2 {
-    font-size: 20px;
-    font-weight: 700;
-    margin: 28px 0 12px;
-    color: var(--dark, #0f172a);
+  .hero-trust {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: #6B7280;
+    flex-wrap: wrap;
   }
-  .clauses-list {
-    padding-left: 20px;
-    color: var(--muted, #475569);
-    line-height: 1.8;
+
+  /* ── Content sections ── */
+  .seo-content { background: white; }
+  .content-section {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 60px 40px;
   }
-  .subpage-links {
-    margin-top: 24px;
+  .content-section.alt-bg {
+    max-width: 100%;
+    background: #F9FAFB;
+    border-top: 1px solid #E5E7EB;
+    border-bottom: 1px solid #E5E7EB;
+    padding: 60px 40px;
+  }
+  .content-section.alt-bg > * {
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .content-section h2 {
+    font-size: 28px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    color: #111827;
+    margin-bottom: 16px;
+  }
+  .content-section > p {
+    color: #6B7280;
+    line-height: 1.6;
+    margin-bottom: 28px;
+  }
+
+  /* Clause preview list */
+  .clause-preview-list {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 14px;
+    margin-bottom: 24px;
   }
-  .subpage-links h3 {
+  .clause-preview-item {
+    background: #F9FAFB;
+    border: 1.5px solid #E5E7EB;
+    border-left: 4px solid #059669;
+    border-radius: 8px;
+    padding: 14px 18px;
+  }
+  .clause-preview-item strong {
+    display: block;
+    color: #111827;
     font-size: 14px;
-    font-weight: 600;
-    color: var(--muted, #64748b);
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
     margin-bottom: 4px;
   }
-  .subpage-links a {
+  .clause-preview-item p {
+    color: #6B7280;
+    font-size: 13px;
+    line-height: 1.5;
+    margin: 0;
+  }
+  .see-template-link {
+    margin-top: 12px;
     font-size: 14px;
-    color: var(--emerald, #059669);
+  }
+  .see-template-link a {
+    color: #059669;
+    font-weight: 600;
     text-decoration: none;
   }
-  .subpage-links a:hover {
-    text-decoration: underline;
+  .see-template-link a:hover { text-decoration: underline; }
+
+  /* Clauses grid */
+  .clauses-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
   }
-  .waiver-hero-form {
-    position: sticky;
-    top: 20px;
+  .clause-card {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    background: white;
+    border: 1.5px solid #E5E7EB;
+    border-radius: 12px;
+    padding: 18px;
   }
+  .clause-num {
+    width: 28px;
+    height: 28px;
+    background: #059669;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  .clause-card strong { display: block; color: #111827; margin-bottom: 4px; font-size: 14px; }
+  .clause-card p { color: #6B7280; font-size: 13px; line-height: 1.5; margin: 0; }
+
+  /* Reasons grid */
+  .reasons-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  .reason-card {
+    background: white;
+    border: 1.5px solid #E5E7EB;
+    border-radius: 12px;
+    padding: 24px;
+  }
+  .reason-icon { font-size: 28px; margin-bottom: 12px; }
+  .reason-card h3 { font-size: 15px; font-weight: 700; color: #111827; margin-bottom: 8px; }
+  .reason-card p { font-size: 13px; color: #6B7280; line-height: 1.6; margin: 0; }
+
+  /* FAQ */
+  .faq-list { display: flex; flex-direction: column; gap: 10px; }
+  .faq-item {
+    border: 1.5px solid #E5E7EB;
+    border-radius: 10px;
+    padding: 16px 20px;
+    cursor: pointer;
+  }
+  .faq-item summary {
+    font-weight: 600;
+    color: #111827;
+    font-size: 15px;
+    list-style: none;
+    cursor: pointer;
+  }
+  .faq-item summary::-webkit-details-marker { display: none; }
+  .faq-item[open] summary { color: #059669; margin-bottom: 10px; }
+  .faq-item p { color: #6B7280; font-size: 14px; line-height: 1.6; margin: 0; }
+
+  /* Last reviewed */
+  .last-reviewed {
+    text-align: center;
+    color: #9CA3AF;
+    font-size: 13px;
+    padding: 20px 0 8px;
+    margin: 0;
+  }
+
+  /* Mobile */
   @media (max-width: 768px) {
-    .waiver-hero-layout {
-      grid-template-columns: 1fr;
-    }
-    .waiver-hero-form {
-      position: static;
-    }
+    .seo-hero { padding: 40px 20px; }
+    .seo-hero-inner { grid-template-columns: 1fr; gap: 32px; }
+    .seo-hero-left h1 { font-size: 28px; }
+    .clauses-grid { grid-template-columns: 1fr; }
+    .reasons-grid { grid-template-columns: 1fr; }
+    .content-section { padding: 40px 20px; }
+    .content-section.alt-bg { padding: 40px 20px; }
   }
 </style>
