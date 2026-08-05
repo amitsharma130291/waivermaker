@@ -7,7 +7,7 @@ import '../../styles/global.css';
 ---
 <Base
   title="Tattoo Waiver Template | Free Tattoo Studio Liability Waiver"
-  description="View and customise a free tattoo studio liability waiver template. Edit your studio name and state — preview updates live. Download clean PDF for $9.99."
+  description="View and customise a free tattoo studio liability waiver template. Edit your studio name and state — preview updates live. Download clean PDF free."
 >
   <Nav />
 
@@ -17,9 +17,9 @@ import '../../styles/global.css';
 
       <!-- Left: Controls -->
       <div class="template-left">
-        <div class="hero-badge">✓ Free to view &amp; copy · $9.99 clean PDF</div>
+        <div class="hero-badge">✓ Free to view, copy, and download</div>
         <h1>Tattoo Studio Liability Waiver Template</h1>
-        <p class="hero-sub">Edit the fields below to customise this template for your studio. Free to view and copy — download a clean PDF for $9.99.</p>
+        <p class="hero-sub">Edit the fields below to customise this template for your studio. Free to view, copy, and download.</p>
 
         <div class="template-fields">
           <div class="tfield-group">
@@ -38,7 +38,7 @@ import '../../styles/global.css';
 
         <div class="template-actions">
           <button class="btn-download" id="download-btn">
-            Download PDF — $9.99 →
+            Download Free PDF →
           </button>
           <button class="btn-copy" id="copy-btn">
             Copy Text
@@ -46,7 +46,7 @@ import '../../styles/global.css';
         </div>
 
         <p class="template-disclaimer">This template is provided for informational purposes only and does not constitute legal advice. Enforceability depends on your jurisdiction, how the waiver is presented, and applicable law. Consult a licensed attorney in your state.</p>
-        <p class="template-note">🔒 Preview is free · Watermark removed in paid PDF · Not legal advice</p>
+        <p class="template-note">🔒 Free to view, copy, and download · Not legal advice</p>
       </div>
 
       <!-- Right: Live waiver preview -->
@@ -93,7 +93,7 @@ import '../../styles/global.css';
         <div class="step-item">
           <div class="step-n">2</div>
           <h3>Print or Go Digital</h3>
-          <p>Download a clean, watermark-free PDF for $9.99. Print it for in-person signing, or use a digital signature tool (DocuSign, Adobe Sign) for online clients.</p>
+          <p>Download a clean, watermark-free PDF — completely free. Print it for in-person signing, or use a digital signature tool (DocuSign, Adobe Sign) for online clients.</p>
         </div>
         <div class="step-item">
           <div class="step-n">3</div>
@@ -121,7 +121,7 @@ import '../../styles/global.css';
         </details>
         <details class="faq-item">
           <summary>Can I copy the text and use it for free?</summary>
-          <p>Yes — the template text is free to copy and use. The $9.99 download gives you a professionally formatted, watermark-free PDF ready for printing or digital distribution. If you only need the text, copy it from the preview above using the "Copy Text" button.</p>
+          <p>Yes — the template text is free to copy and use. The free download gives you a professionally formatted, watermark-free PDF ready for printing or digital distribution. If you only need the text, copy it from the preview above using the "Copy Text" button.</p>
         </details>
       </div>
     </section>
@@ -158,7 +158,7 @@ import '../../styles/global.css';
   // Generate the full waiver HTML from current field values
   function generateWaiverHTML(studioName: string, ownerName: string, state: string): string {
     return `
-      <div class="wdoc-watermark">WaiverMaker.com — Preview Only</div>
+      <div class="wdoc-watermark">WaiverMaker.com</div>
 
       <div class="wdoc-header">
         <div class="wdoc-logo">TATTOO STUDIO LIABILITY WAIVER &amp; INFORMED CONSENT</div>
@@ -242,7 +242,7 @@ import '../../styles/global.css';
     });
   });
 
-  // Download (Dodo placeholder)
+  // Download PDF directly
   document.getElementById('download-btn')?.addEventListener('click', () => {
     const params = new URLSearchParams();
     params.set('activityType', 'Tattoo Studio');

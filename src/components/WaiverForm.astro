@@ -69,7 +69,7 @@ const ACTIVITY_TYPES = [
       <button type="button" class="form-submit" id="next-step-1">
         Next: Waiver Details →
       </button>
-      <div class="form-note">🔒 No account needed · Preview free · Pay only to download</div>
+      <div class="form-note">🔒 No account needed · Preview free · Download free</div>
     </div>
 
     <!-- Step 2: Waiver Details -->
@@ -114,7 +114,7 @@ const ACTIVITY_TYPES = [
           Preview My Waiver — Free →
         </button>
       </div>
-      <div class="form-note">🔒 No account needed · Preview free · Pay only to download</div>
+      <div class="form-note">🔒 No account needed · Preview free · Download free</div>
     </div>
 
     <!-- Step 3: Preview & Download -->
@@ -123,9 +123,9 @@ const ACTIVITY_TYPES = [
         <!-- Populated by JS -->
       </div>
       <button type="button" class="form-submit" id="download-btn">
-        Download PDF — $9.99 →
+        Download Free PDF →
       </button>
-      <div class="form-note">🔒 Secure checkout · Instant download · Not legal advice</div>
+      <div class="form-note">🔒 Instant download · Not legal advice</div>
       <div style="margin-top:12px;text-align:center;">
         <button type="button" id="back-step-3" style="background:none;border:none;color:var(--emerald);cursor:pointer;font-size:13px;font-family:Inter,sans-serif;">
           ← Edit details
@@ -232,8 +232,7 @@ const ACTIVITY_TYPES = [
   document.getElementById('back-step-3')?.addEventListener('click', () => showStep(2));
 
   document.getElementById('download-btn')?.addEventListener('click', () => {
-    // TODO Phase 2: replace with Dodo Payments checkout URL
-    // For now, trigger the PDF generation API directly (free preview)
+    // Download the PDF directly — free
     const params = new URLSearchParams();
     Object.entries(formData).forEach(([k, v]) => params.set(k, String(v)));
     window.location.href = `/api/generate-pdf?${params.toString()}`;

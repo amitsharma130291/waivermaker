@@ -14,7 +14,7 @@ export const waiverTypes: WaiverType[] = [
     title: 'Gym & Fitness Waiver',
     emoji: '💪',
     activityType: 'Gym/Fitness',
-    metaDescription: 'Generate a gym & fitness liability waiver for your business. State-specific, legally formatted, free to preview. Download for $9.99.',
+    metaDescription: 'Generate a gym & fitness liability waiver for your business. State-specific, legally formatted, free to preview. Free to preview and download.',
     intro: [
       'A gym and fitness liability waiver protects your business from claims arising from injuries that occur during workouts, personal training sessions, or use of gym equipment. Whether you run a CrossFit box, a traditional gym, or a boutique fitness studio, a signed waiver is your first line of legal defense.',
       'Gyms and fitness centers face a unique set of liability risks: dropped weights, equipment malfunctions, overexertion injuries, and slip-and-fall incidents are all common. Your waiver should clearly disclose these risks and obtain the participant\'s informed consent before they step onto your floor.',
@@ -38,7 +38,7 @@ export const waiverTypes: WaiverType[] = [
     title: 'Tattoo Studio Waiver',
     emoji: '🎨',
     activityType: 'Tattoo Studio',
-    metaDescription: 'Create a tattoo studio liability waiver in minutes. Covers informed consent, health disclosure, aftercare, and state law. Free preview, $9.99 download.',
+    metaDescription: 'Create a tattoo studio liability waiver in minutes. Covers informed consent, health disclosure, aftercare, and state law. Free to preview and download.',
     intro: [
       'A tattoo studio waiver serves a dual purpose: it protects your business from liability and demonstrates your professionalism to clients. Every reputable tattoo studio requires clients to sign before any work begins.',
       'The risks in tattooing go beyond the needle — clients may have undisclosed health conditions like blood thinners, diabetes, or skin sensitivities that affect healing. Your waiver collects this information and documents that the client was fully informed before consenting to the procedure.',
@@ -62,7 +62,7 @@ export const waiverTypes: WaiverType[] = [
     title: 'Yoga Studio Waiver',
     emoji: '🧘',
     activityType: 'Yoga Studio',
-    metaDescription: 'Generate a yoga studio liability waiver for your classes. State-specific, covers injury risk, props, and hot yoga. Free preview, $9.99 to download.',
+    metaDescription: 'Generate a yoga studio liability waiver for your classes. State-specific, covers injury risk, props, and hot yoga. Free to preview and download.',
     intro: [
       'Yoga may look gentle, but injuries from overstretching, inversions, and improper technique send thousands of practitioners to the doctor each year. A yoga studio waiver protects your business and ensures every student acknowledges these risks before stepping onto the mat.',
       'Hot yoga studios face additional considerations — heat-related illness, dehydration, and cardiovascular risks are real concerns that your waiver must address. Props like blocks, straps, and bolsters introduce their own liability exposure.',
@@ -86,10 +86,10 @@ export const waiverTypes: WaiverType[] = [
     title: 'Volunteer Waiver',
     emoji: '🤝',
     activityType: 'Volunteer',
-    metaDescription: 'Create a volunteer liability waiver for your nonprofit or event. Protects your organization from injury claims. Free preview, $9.99 to download.',
+    metaDescription: 'Create a volunteer liability waiver for your nonprofit or event. Protects your organization from injury claims. Free to preview and download.',
     intro: [
       'Nonprofits, charities, community organizations, and event organizers all need volunteer waivers to protect against liability claims. When someone volunteers for your organization, they may be exposed to physical risks, travel hazards, or other dangers — and your organization could be held responsible without a proper waiver.',
-      'Volunteer waivers are particularly important because volunteers aren\'t covered by workers\' compensation in most states. A signed waiver documenting informed consent and assumption of risk is your organization\'s primary protection.',
+      'Volunteer waivers help document consent and assumption of risk. Workers\' compensation treatment of volunteers varies by state and organisation type — check with your insurer or a local attorney.',
       'WaiverMaker generates a volunteer waiver tailored to your organization\'s activities, the nature of the volunteer work, and the laws of your state.',
     ],
     clauses: [
@@ -110,7 +110,7 @@ export const waiverTypes: WaiverType[] = [
     title: 'Rock Climbing Waiver',
     emoji: '🧗',
     activityType: 'Rock Climbing',
-    metaDescription: 'Generate a rock climbing liability waiver for your gym or guide service. Covers fall risk, equipment, and state law. Free preview, $9.99 to download.',
+    metaDescription: 'Generate a rock climbing liability waiver for your gym or guide service. Covers fall risk, equipment, and state law. Free to preview and download.',
     intro: [
       'Rock climbing gyms and outdoor guide services face significant liability exposure. Falls, equipment failure, belay errors, and route-related hazards are inherent to the sport — and participants must clearly understand and accept these risks before you allow them to climb.',
       'Whether you run an indoor bouldering gym, a top-rope facility, or take clients on outdoor climbing trips, your waiver needs to address the specific risks of your environment. Indoor walls have different hazards than granite crags, and your waiver should reflect that.',
@@ -134,7 +134,7 @@ export const waiverTypes: WaiverType[] = [
     title: 'Dog Grooming Waiver',
     emoji: '🐕',
     activityType: 'Dog Grooming',
-    metaDescription: 'Generate a dog grooming liability waiver for your salon or mobile service. Covers stress, medical conditions, and state law. Free preview, $9.99 download.',
+    metaDescription: 'Generate a dog grooming liability waiver for your salon or mobile service. Covers stress, medical conditions, and state law. Free to preview and download.',
     intro: [
       'Dog groomers face liability from multiple angles: injuries to the groomer from biting or scratching, injuries to the pet during grooming, and stress-related health events in dogs with undisclosed medical conditions. A grooming waiver documents the owner\'s consent and protects your business.',
       'Older dogs, brachycephalic breeds (like Bulldogs and Pugs), and pets with heart or respiratory conditions are at elevated risk during grooming sessions. Your waiver collects this information upfront and establishes that the owner is aware of and accepts these risks.',
@@ -158,7 +158,7 @@ export const waiverTypes: WaiverType[] = [
     title: 'Horse Riding Waiver',
     emoji: '🏇',
     activityType: 'Horse Riding',
-    metaDescription: 'Create a horse riding liability waiver for your stable or riding school. State-specific, covers fall risk and equine liability laws. Free preview, $9.99.',
+    metaDescription: 'Create a horse riding liability waiver for your stable or riding school. State-specific, covers fall risk and equine liability laws. Free to preview and download.',
     intro: [
       'Horse riding is one of the highest-risk leisure activities available to the public, and most states have enacted specific Equine Liability Acts that affect how waivers must be written. Your horse riding waiver must acknowledge both common law liability and your state\'s specific equine statutes.',
       'Stables, riding schools, trail ride operators, and equine therapy providers all need signed waivers before any rider mounts. The inherent unpredictability of horses — spooking, bucking, biting — must be clearly disclosed to participants regardless of their experience level.',
@@ -182,7 +182,7 @@ export const waiverTypes: WaiverType[] = [
     title: 'Personal Trainer Waiver',
     emoji: '🏋️',
     activityType: 'Personal Training',
-    metaDescription: 'Generate a personal trainer liability waiver for your clients. State-specific, covers injury risk, PAR-Q, and professional liability. Free preview, $9.99.',
+    metaDescription: 'Generate a personal trainer liability waiver for your clients. State-specific, covers injury risk, PAR-Q, and professional liability. Free to preview and download.',
     intro: [
       'Personal trainers carry significant professional liability — you\'re prescribing exercise to individual clients with unique health histories, and injuries can and do happen. A proper personal training waiver and health screening document is essential before your first session with any new client.',
       'Beyond the standard liability release, personal trainers should collect a Physical Activity Readiness Questionnaire (PAR-Q) to identify contraindications to exercise. Your waiver should incorporate health screening, informed consent, and a clear statement that your services are not medical advice.',
