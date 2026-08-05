@@ -15,7 +15,7 @@ const {
   schema,
 } = Astro.props;
 
-const canonicalUrl = canonical || `https://waivertemplate.com${Astro.url.pathname}`;
+const canonicalUrl = canonical || `https://www.waivertemplate.com${Astro.url.pathname}`;
 
 // Normalise schema to array for multi-block support
 const schemaBlocks: object[] = schema
@@ -26,7 +26,7 @@ const webAppSchema = {
   '@context': 'https://schema.org',
   '@type': 'WebApplication',
   name: 'WaiverTemplate',
-  url: 'https://waivertemplate.com',
+  url: 'https://www.waivertemplate.com',
   description: 'Free liability waiver generator for gyms, tattoo studios, climbing facilities, volunteer organisations and more.',
   applicationCategory: 'BusinessApplication',
   offers: {
