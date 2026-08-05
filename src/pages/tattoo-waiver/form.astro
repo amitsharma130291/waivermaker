@@ -8,9 +8,10 @@ import '../../styles/global.css';
   title="Tattoo Waiver Form | Fill Out Your Studio Liability Waiver"
   description="Complete your tattoo studio liability waiver form in 2 minutes. Free preview, $9.99 download. No account required."
 >
-  <!-- Minimal nav: logo only, no distractions -->
+  <!-- Minimal nav: logo + back link only -->
   <nav class="form-nav">
     <a href="/" class="nav-logo">waiver<span>maker</span></a>
+    <a href="/tattoo-waiver/" class="nav-back">← Back to Tattoo Waiver</a>
   </nav>
 
   <main class="form-page">
@@ -56,6 +57,14 @@ import '../../styles/global.css';
     text-decoration: none;
   }
   .nav-logo span { color: #059669; }
+  .nav-back {
+    margin-left: auto;
+    font-size: 14px;
+    color: #6B7280;
+    text-decoration: none;
+    font-weight: 500;
+  }
+  .nav-back:hover { color: #059669; }
 
   /* Main form page layout */
   .form-page {
